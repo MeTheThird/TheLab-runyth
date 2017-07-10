@@ -18,7 +18,6 @@
 		B2A307331F13E40C0059637F /* TheLab_runythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A307321F13E40C0059637F /* TheLab_runythTests.swift */; };
 		B2A3073E1F13E40C0059637F /* TheLab_runythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3073D1F13E40C0059637F /* TheLab_runythUITests.swift */; };
 		B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2DF09C61F13FA7C009E833E /* Hero.sks */; };
-		B2DF09C91F13FBEA009E833E /* EvilChar.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2DF09C81F13FBEA009E833E /* EvilChar.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +55,6 @@
 		B2A3073D1F13E40C0059637F /* TheLab_runythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheLab_runythUITests.swift; sourceTree = "<group>"; };
 		B2A3073F1F13E40C0059637F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2DF09C61F13FA7C009E833E /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
-		B2DF09C81F13FBEA009E833E /* EvilChar.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EvilChar.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +109,6 @@
 				B2A307191F13E40C0059637F /* Level_1.sks */,
 				B2A3071B1F13E40C0059637F /* Actions.sks */,
 				B2DF09C61F13FA7C009E833E /* Hero.sks */,
-				B2DF09C81F13FBEA009E833E /* EvilChar.sks */,
 				B2A3071D1F13E40C0059637F /* GameScene.swift */,
 				B2A3071F1F13E40C0059637F /* GameViewController.swift */,
 				B2A307211F13E40C0059637F /* Main.storyboard */,
@@ -249,7 +246,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2A307231F13E40C0059637F /* Main.storyboard in Resources */,
-				B2DF09C91F13FBEA009E833E /* EvilChar.sks in Resources */,
 				B2A3071A1F13E40C0059637F /* Level_1.sks in Resources */,
 				B2A307251F13E40C0059637F /* Assets.xcassets in Resources */,
 				B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */,
