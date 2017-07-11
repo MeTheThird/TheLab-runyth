@@ -23,20 +23,23 @@ enum timeMovingState {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var grav = CGVector()
     var hero: SKSpriteNode!
     var heroPrevPos = [CGPoint]()
     var heroPrevState = [heroMovingState]()
+    var previousGravity = [CGVector]()
     var cameraNode: SKCameraNode!
     var restartButton: ButtonNode!
     var pauseButton: ButtonNode!
     var playButton: ButtonNode!
+    var nextButton: ButtonNode!
     var movingDoorLayer: SKSpriteNode!
     var finalDoor: SKSpriteNode!
     var heroState: heroMovingState = .running
     var timeState: timeMovingState = .forward
-    var phaseCoolDown: CFTimeInterval = 5.0
+    var phaseCoolDown: CFTimeInterval = 0.0
     var phaseDuration: CFTimeInterval = 0.0
-    var timeCoolDown: CFTimeInterval = 5.0
+    var timeCoolDown: CFTimeInterval = 0.0
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false
     static var level: Int = 1
@@ -48,12 +51,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         restartButton = childNode(withName: "//restartButton") as! ButtonNode
         pauseButton = childNode(withName: "//pauseButton") as! ButtonNode
         playButton = childNode(withName: "//playButton") as! ButtonNode
+        nextButton = childNode(withName: "//nextButton") as! ButtonNode
         if let mDL = childNode(withName: "movingDoorLayer") as? SKSpriteNode {
             movingDoorLayer = mDL
         }
         
         restartButton.state = .hidden
         playButton.state = .hidden
+        nextButton.state = .hidden
         self.camera = cameraNode
         physicsWorld.contactDelegate = self
         
@@ -115,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 hero.physicsBody?.collisionBitMask = 2147483648
                 hero.physicsBody?.contactTestBitMask = 0
                 hero.position.x += heroSpeed
-                hero.alpha = 0.8
+                hero.alpha = 0.4
                 phaseDuration += 1 / 60
             case .running:
                 hero.alpha = 1.0
@@ -154,11 +159,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 heroState = last
                 heroPrevState.removeLast()
             }
+            if let last = previousGravity.last {
+                self.physicsWorld.gravity = last
+                previousGravity.removeLast()
+                grav = self.physicsWorld.gravity
+            }
             if heroState == .phasing {
                 hero.physicsBody?.categoryBitMask = 0
                 hero.physicsBody?.collisionBitMask = 2147483648
                 hero.physicsBody?.contactTestBitMask = 0
-                hero.alpha = 0.8
+                hero.alpha = 0.4
                 phaseDuration += 1 / 60
             }
         }
@@ -176,7 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if movingDoorLayer != nil {
             for i in movingDoorLayer.children {
                 let door = i as! MovingObstacle
-                if heroState != .reversingEverything && heroState != .reversingOtherStuff {
+                if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     door.previousPosition.append(door.position)
                 }
                 if door.previousPosition.count > 240 {
@@ -200,10 +210,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if timeState != .backward && heroState != .reversingOtherStuff {
             heroPrevPos.append(hero.position)
             heroPrevState.append(heroState)
+            previousGravity.append(self.physicsWorld.gravity)
         }
         if heroPrevPos.count > 240 {
             heroPrevPos.remove(at: 0)
             heroPrevState.remove(at: 0)
+            previousGravity.remove(at: 0)
         }
         
         if !cameraNode.contains(hero) {
@@ -215,8 +227,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view!.presentScene(scene)
         }
         
-        phaseCoolDown += 1 / 60
-        timeCoolDown += 1 / 60
+        if heroState == .running && timeState == .forward {
+            phaseCoolDown -= 1 / 60
+            timeCoolDown -= 1 / 60
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -250,16 +264,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.left:
-                if timeCoolDown >= 5.0 {
-                    timeCoolDown = 0.0
+                if timeCoolDown <= 0.0 {
+                    timeCoolDown = 5.0
                     heroState = .reversingEverything
                 }
             case UISwipeGestureRecognizerDirection.right:
-                if phaseCoolDown >= 5.0 {
+                if phaseCoolDown <= 0.0 && timeState == .forward {
                     phaseDuration = 0.0
-                    phaseCoolDown = 0.0
+                    phaseCoolDown = 5.0
                     timeState = .forward
                     heroState = .phasing
+                }
+                if timeState == .backward {
+                    timeState = .forward
                 }
             case UISwipeGestureRecognizerDirection.up:
                 self.physicsWorld.gravity = CGVector(dx: 0, dy: 9.8)
@@ -277,8 +294,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("All is lost")
                 heroState = .running
             } else if longPressGesture.state == .began {
-                if timeCoolDown >= 5.0 {
-                    timeCoolDown = 0.0
+                if timeCoolDown <= 0.0 {
+                    timeCoolDown = 5.0
                     heroState = .reversingOtherStuff
                     print("PANIC")
                 }
