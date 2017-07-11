@@ -47,6 +47,8 @@ class ButtonNode: SKSpriteNode {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         selectedHandler()
-        state = .active
+        if state == .selected {
+            state = .active
+        }
     }
 }
