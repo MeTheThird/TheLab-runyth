@@ -17,6 +17,9 @@
 		B2A307281F13E40C0059637F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A307261F13E40C0059637F /* LaunchScreen.storyboard */; };
 		B2A307331F13E40C0059637F /* TheLab_runythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A307321F13E40C0059637F /* TheLab_runythTests.swift */; };
 		B2A3073E1F13E40C0059637F /* TheLab_runythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3073D1F13E40C0059637F /* TheLab_runythUITests.swift */; };
+		B2B06C901F142CCE000A728E /* restart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B06C8F1F142CCE000A728E /* restart@2x.png */; };
+		B2B06C921F142DA9000A728E /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B06C911F142DA9000A728E /* ButtonNode.swift */; };
+		B2B06C941F143B21000A728E /* MovingObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B06C931F143B21000A728E /* MovingObstacle.swift */; };
 		B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2DF09C61F13FA7C009E833E /* Hero.sks */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +57,9 @@
 		B2A307391F13E40C0059637F /* TheLabrunythUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheLabrunythUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2A3073D1F13E40C0059637F /* TheLab_runythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheLab_runythUITests.swift; sourceTree = "<group>"; };
 		B2A3073F1F13E40C0059637F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2B06C8F1F142CCE000A728E /* restart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "restart@2x.png"; sourceTree = "<group>"; };
+		B2B06C911F142DA9000A728E /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
+		B2B06C931F143B21000A728E /* MovingObstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovingObstacle.swift; sourceTree = "<group>"; };
 		B2DF09C61F13FA7C009E833E /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,9 +116,12 @@
 				B2A3071B1F13E40C0059637F /* Actions.sks */,
 				B2DF09C61F13FA7C009E833E /* Hero.sks */,
 				B2A3071D1F13E40C0059637F /* GameScene.swift */,
+				B2B06C911F142DA9000A728E /* ButtonNode.swift */,
 				B2A3071F1F13E40C0059637F /* GameViewController.swift */,
+				B2B06C931F143B21000A728E /* MovingObstacle.swift */,
 				B2A307211F13E40C0059637F /* Main.storyboard */,
 				B2A307241F13E40C0059637F /* Assets.xcassets */,
+				B2B06C8F1F142CCE000A728E /* restart@2x.png */,
 				B2A307261F13E40C0059637F /* LaunchScreen.storyboard */,
 				B2A307291F13E40C0059637F /* Info.plist */,
 			);
@@ -246,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2A307231F13E40C0059637F /* Main.storyboard in Resources */,
+				B2B06C901F142CCE000A728E /* restart@2x.png in Resources */,
 				B2A3071A1F13E40C0059637F /* Level_1.sks in Resources */,
 				B2A307251F13E40C0059637F /* Assets.xcassets in Resources */,
 				B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */,
@@ -276,6 +286,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2A3071E1F13E40C0059637F /* GameScene.swift in Sources */,
+				B2B06C941F143B21000A728E /* MovingObstacle.swift in Sources */,
+				B2B06C921F142DA9000A728E /* ButtonNode.swift in Sources */,
 				B2A307201F13E40C0059637F /* GameViewController.swift in Sources */,
 				B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */,
 			);
