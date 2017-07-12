@@ -14,7 +14,7 @@ func clamp<T: Comparable>(value: T, lower: T, upper: T) -> T {
 }
 
 enum heroMovingState {
-    case phasing, reversingEverything, reversingOtherStuff, running
+    case phasing, reversingEverything, reversingOtherStuff, running, stationary
 }
 
 enum timeMovingState {
@@ -23,11 +23,12 @@ enum timeMovingState {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var grav = CGVector()
     var hero: SKSpriteNode!
     var heroPrevPos = [CGPoint]()
     var heroPrevState = [heroMovingState]()
     var previousGravity = [CGVector]()
+    var phaseCool: SKLabelNode!
+    var timeCool: SKLabelNode!
     var cameraNode: SKCameraNode!
     var restartButton: ButtonNode!
     var pauseButton: ButtonNode!
@@ -52,6 +53,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton = childNode(withName: "//pauseButton") as! ButtonNode
         playButton = childNode(withName: "//playButton") as! ButtonNode
         nextButton = childNode(withName: "//nextButton") as! ButtonNode
+        phaseCool = childNode(withName: "//phaseCool") as! SKLabelNode
+        timeCool = childNode(withName: "//timeCool") as! SKLabelNode
         if let mDL = childNode(withName: "movingDoorLayer") as? SKSpriteNode {
             movingDoorLayer = mDL
         }
@@ -105,7 +108,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
             }
-            scene.scaleMode = .aspectFit
+            self.view!.presentScene(scene)
+        }
+        
+        nextButton.selectedHandler = {
+            guard let scene = GameScene.level(GameScene.level + 1) else {
+                print("NO NEXT LEVEL FOR YOU!!!")
+                return
+            }
+            GameScene.level += 1
             self.view!.presentScene(scene)
         }
     }
@@ -122,12 +133,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 hero.position.x += heroSpeed
                 hero.alpha = 0.4
                 phaseDuration += 1 / 60
+                break
             case .running:
                 hero.alpha = 1.0
                 hero.physicsBody?.categoryBitMask = 1
                 hero.physicsBody?.collisionBitMask = 4294967295
                 hero.physicsBody?.contactTestBitMask = 1
                 hero.position.x += heroSpeed
+                break
             case .reversingOtherStuff:
                 if movingDoorLayer != nil {
                     for i in movingDoorLayer.children {
@@ -140,6 +153,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             case .reversingEverything:
                 timeState = .backward
+            default:
+                break
             }
         case .backward:
             if movingDoorLayer != nil {
@@ -162,7 +177,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let last = previousGravity.last {
                 self.physicsWorld.gravity = last
                 previousGravity.removeLast()
-                grav = self.physicsWorld.gravity
             }
             if heroState == .phasing {
                 hero.physicsBody?.categoryBitMask = 0
@@ -231,6 +245,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             phaseCoolDown -= 1 / 60
             timeCoolDown -= 1 / 60
         }
+        
+        if phaseCoolDown <= 0.0 {
+            phaseCool.text = "Phase: 0.0"
+        } else {
+            phaseCool.text = String(format: "Phase: %.1f", phaseCoolDown)
+        }
+        
+        if timeCoolDown <= 0.0 {
+            timeCool.text = "Time: 0.0"
+        } else {
+            timeCool.text = String(format: "Time: %.1f", timeCoolDown)
+        }
+        
+        let heroPos = hero.convert(CGPoint(x: 0, y: 0), to: self)
+        
+        if heroPos.x >= finalDoor.position.x {
+            nextButton.state = .active
+            heroState = .stationary
+        }
+        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -254,6 +288,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     class func level(_ levelNumber: Int) -> GameScene? {
         guard let scene = GameScene(fileNamed: "Level_\(levelNumber)") else {
+            return nil
+        }
+        scene.scaleMode = .aspectFit
+        return scene
+    }
+    
+    class func levelPreview(_ levelNumber: Int) -> GameScene? {
+        guard let scene = GameScene(fileNamed: "Level_\(levelNumber)_Preview") else {
             return nil
         }
         scene.scaleMode = .aspectFit

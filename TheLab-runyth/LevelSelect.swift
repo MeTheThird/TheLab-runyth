@@ -68,7 +68,7 @@ class LevelSelect: SKScene {
         }
         
         /* 2) Load Game scene */
-        guard let scene = GameScene.level(level) else {
+        guard let scene = GameScene.levelPreview(level) else {
             print("Could not make GameScene, check the name is spelled correctly")
             return
         }
