@@ -35,6 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var playButton: ButtonNode!
     var nextButton: ButtonNode!
     var movingDoorLayer: SKSpriteNode!
+    var chainSpikeLayer: SKSpriteNode!
     var finalDoor: SKSpriteNode!
     var heroState: heroMovingState = .running
     var timeState: timeMovingState = .forward
@@ -58,6 +59,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let mDL = childNode(withName: "movingDoorLayer") as? SKSpriteNode {
             movingDoorLayer = mDL
         }
+        if let cSL = childNode(withName: "chainSpikeLayer") as? SKSpriteNode {
+            chainSpikeLayer = cSL
+        }
+
         
         restartButton.state = .hidden
         playButton.state = .hidden
