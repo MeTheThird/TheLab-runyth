@@ -26,8 +26,8 @@ class PreviewScene: SKScene {
         
         let longRightPress = UILongPressGestureRecognizer(target: self, action: #selector(self.respondToLongPressGesture))
         longRightPress.minimumPressDuration = 0.1
-        longRightPress.allowableMovement = 0
         view.addGestureRecognizer(longRightPress)
+        
         
         playLevelButton.selectedHandler = {
             /* 1) Grab reference to our SpriteKit view */
@@ -41,6 +41,8 @@ class PreviewScene: SKScene {
                 print("Could not make GameScene, check the name is spelled correctly")
                 return
             }
+            
+            view.removeGestureRecognizer(longRightPress)
             
             /* Show debug */
             skView.showsPhysics = false

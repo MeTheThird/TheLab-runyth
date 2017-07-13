@@ -35,8 +35,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var playButton: ButtonNode!
     var nextButton: ButtonNode!
     var movingDoorLayer: SKSpriteNode!
-    var chainSpikeLayer: SKSpriteNode!
+    var chainGroundSpikeLayer: SKSpriteNode!
     var finalDoor: SKSpriteNode!
+    var ground: SKSpriteNode!
     var heroState: heroMovingState = .running
     var timeState: timeMovingState = .forward
     var phaseCoolDown: CFTimeInterval = 0.0
@@ -56,13 +57,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         nextButton = childNode(withName: "//nextButton") as! ButtonNode
         phaseCool = childNode(withName: "//phaseCool") as! SKLabelNode
         timeCool = childNode(withName: "//timeCool") as! SKLabelNode
+        ground = childNode(withName: "ground") as! SKSpriteNode
         if let mDL = childNode(withName: "movingDoorLayer") as? SKSpriteNode {
             movingDoorLayer = mDL
         }
-        if let cSL = childNode(withName: "chainSpikeLayer") as? SKSpriteNode {
-            chainSpikeLayer = cSL
+        if let cSL = childNode(withName: "chainGroundSpikeLayer") as? SKSpriteNode {
+            chainGroundSpikeLayer = cSL
+            for spike in chainGroundSpikeLayer.children {
+                var pinLocation = spike.children[0].position
+                pinLocation.y += 20
+                let spikeJoint = SKPhysicsJointPin.joint(withBodyA: spike.physicsBody!, bodyB: spike.children[0].physicsBody!, anchor: pinLocation)
+                physicsWorld.add(spikeJoint)
+                
+                var pin2Location = spike.children[0].position
+                pin2Location.y -= 20
+                let spikeJoint2 = SKPhysicsJointPin.joint(withBodyA: ground.physicsBody!, bodyB: spike.children[0].physicsBody!, anchor: pin2Location)
+                physicsWorld.add(spikeJoint2)
+            }
         }
-
+        
         
         restartButton.state = .hidden
         playButton.state = .hidden
@@ -91,7 +104,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.respondToLongPressGesture))
         longPress.minimumPressDuration = 0.3
-        longPress.allowableMovement = 0
         view.addGestureRecognizer(longPress)
         
         pauseButton.selectedHandler = {
@@ -117,11 +129,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         nextButton.selectedHandler = {
-            guard let scene = GameScene.level(GameScene.level + 1) else {
+            guard let scene = GameScene.levelPreview(GameScene.level + 1) else {
                 print("NO NEXT LEVEL FOR YOU!!!")
                 return
             }
             GameScene.level += 1
+            view.removeGestureRecognizer(longPress)
             self.view!.presentScene(scene)
         }
     }
@@ -147,30 +160,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 hero.position.x += heroSpeed
                 break
             case .reversingOtherStuff:
-                if movingDoorLayer != nil {
-                    for i in movingDoorLayer.children {
-                        let door = i as! MovingObstacle
-                        if let last = door.previousPosition.last {
-                            door.position = last
-                            door.previousPosition.removeLast()
-                        }
-                    }
-                }
+                moveObstacleBackInTime()
             case .reversingEverything:
                 timeState = .backward
             default:
                 break
             }
         case .backward:
-            if movingDoorLayer != nil {
-                for i in movingDoorLayer.children {
-                    let door = i as! MovingObstacle
-                    if let last = door.previousPosition.last {
-                        door.position = last
-                        door.previousPosition.removeLast()
-                    }
-                }
-            }
+            moveObstacleBackInTime()
             if let last = heroPrevPos.last {
                 hero.position = last
                 heroPrevPos.removeLast()
@@ -192,7 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        if phaseDuration >= 2.0 {
+        if phaseDuration >= 1.0 {
             if heroState == .phasing {
                 heroState = .running
             }
@@ -202,73 +199,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let x = clamp(value: targetX, lower: targetX, upper: finalDoor.position.x + 12.5 - size.width / 2)
         cameraNode.position.x = x
         
-        if movingDoorLayer != nil {
-            for i in movingDoorLayer.children {
-                let door = i as! MovingObstacle
-                if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
-                    door.previousPosition.append(door.position)
-                }
-                if door.previousPosition.count > 240 {
-                    door.previousPosition.remove(at: 0)
-                }
-                if door.position.y > 0.0 {
-                    door.position.y -= 1
-                }
-                if heroState == .reversingOtherStuff || timeState == .backward {
-                    if heroPrevPos.last == nil || door.previousPosition.last == nil{
-                        heroState = .running
-                        end = true
-                        if timeState == .backward {
-                            timeState = .forward
-                        }
-                    }
-                }
-            }
-        }
+        updatePreviousMovingObstaclePositions()
         
-        if timeState != .backward && heroState != .reversingOtherStuff {
-            heroPrevPos.append(hero.position)
-            heroPrevState.append(heroState)
-            previousGravity.append(self.physicsWorld.gravity)
-        }
-        if heroPrevPos.count > 240 {
-            heroPrevPos.remove(at: 0)
-            heroPrevState.remove(at: 0)
-            previousGravity.remove(at: 0)
-        }
+        updatePreviousHeroPositions()
         
-        if !cameraNode.contains(hero) {
-            guard let scene = GameScene.level(GameScene.level) else {
-                print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
-                return
-            }
-            scene.scaleMode = .aspectFit
-            self.view!.presentScene(scene)
-        }
+        checkIfHeroIsDEAD()
         
-        if heroState == .running && timeState == .forward {
-            phaseCoolDown -= 1 / 60
-            timeCoolDown -= 1 / 60
-        }
+        updateCooldowns()
         
-        if phaseCoolDown <= 0.0 {
-            phaseCool.text = "Phase: 0.0"
-        } else {
-            phaseCool.text = String(format: "Phase: %.1f", phaseCoolDown)
-        }
-        
-        if timeCoolDown <= 0.0 {
-            timeCool.text = "Time: 0.0"
-        } else {
-            timeCool.text = String(format: "Time: %.1f", timeCoolDown)
-        }
-        
-        let heroPos = hero.convert(CGPoint(x: 0, y: 0), to: self)
-        
-        if heroPos.x >= finalDoor.position.x {
-            nextButton.state = .active
-            heroState = .stationary
-        }
+        checkIfLevelIsBEATEN()
         
     }
     
@@ -350,4 +289,115 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+
+    func moveObstacleBackInTime() {
+        if movingDoorLayer != nil {
+            for i in movingDoorLayer.children {
+                let door = i as! MovingObstacle
+                if let last = door.previousPosition.last {
+                    door.position = last
+                    door.previousPosition.removeLast()
+                }
+            }
+        }
+        if chainGroundSpikeLayer != nil {
+            for i in chainGroundSpikeLayer.children {
+                let chainSpike = i as! MovingObstacle
+                if let last = chainSpike.previousPosition.last {
+                    chainSpike.position = last
+                    chainSpike.previousPosition.removeLast()
+                }
+            }
+        }
+    }
+    
+    func updatePreviousMovingObstaclePositions() {
+        if movingDoorLayer != nil {
+            for i in movingDoorLayer.children {
+                let door = i as! MovingObstacle
+                if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
+                    door.previousPosition.append(door.position)
+                }
+                if door.previousPosition.count > 240 {
+                    door.previousPosition.remove(at: 0)
+                }
+                if door.position.y > 0.0 {
+                    door.position.y -= 1
+                }
+                if heroState == .reversingOtherStuff || timeState == .backward {
+                    if heroPrevPos.last == nil || door.previousPosition.last == nil{
+                        heroState = .running
+                        end = true
+                        if timeState == .backward {
+                            timeState = .forward
+                        }
+                    }
+                }
+            }
+        }
+        
+        if chainGroundSpikeLayer != nil {
+            for i in chainGroundSpikeLayer.children {
+                let spike = i as! MovingObstacle
+                if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
+                    spike.previousPosition.append(spike.position)
+                }
+                if spike.previousPosition.count > 240 {
+                    spike.previousPosition.remove(at: 0)
+                }
+            }
+        }
+    }
+    
+    func updatePreviousHeroPositions() {
+        if timeState != .backward && heroState != .reversingOtherStuff {
+            heroPrevPos.append(hero.position)
+            heroPrevState.append(heroState)
+            previousGravity.append(self.physicsWorld.gravity)
+        }
+        if heroPrevPos.count > 240 {
+            heroPrevPos.remove(at: 0)
+            heroPrevState.remove(at: 0)
+            previousGravity.remove(at: 0)
+        }
+    }
+    
+    func checkIfHeroIsDEAD() {
+        if !cameraNode.contains(hero) {
+            guard let scene = GameScene.level(GameScene.level) else {
+                print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
+                return
+            }
+            scene.scaleMode = .aspectFit
+            self.view!.presentScene(scene)
+        }
+    }
+    
+    func updateCooldowns() {
+        if heroState == .running && timeState == .forward {
+            phaseCoolDown -= 1 / 60
+            timeCoolDown -= 1 / 60
+        }
+        
+        if phaseCoolDown <= 0.0 {
+            phaseCool.text = "Phase: 0.0"
+        } else {
+            phaseCool.text = String(format: "Phase: %.1f", phaseCoolDown)
+        }
+        
+        if timeCoolDown <= 0.0 {
+            timeCool.text = "Time: 0.0"
+        } else {
+            timeCool.text = String(format: "Time: %.1f", timeCoolDown)
+        }
+    }
+    
+    func checkIfLevelIsBEATEN() {
+        let heroPos = hero.convert(CGPoint(x: 0, y: 0), to: self)
+        
+        if heroPos.x >= finalDoor.position.x {
+            nextButton.state = .active
+            heroState = .stationary
+        }
+    }
 }

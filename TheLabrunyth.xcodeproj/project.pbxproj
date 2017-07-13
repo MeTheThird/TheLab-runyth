@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B206037F1F16EF65000DBF0E /* Level_2_Preview.sks in Resources */ = {isa = PBXBuildFile; fileRef = B206037E1F16EF65000DBF0E /* Level_2_Preview.sks */; };
 		B218CA161F16936B00E560E9 /* Level_1_Preview.sks in Resources */ = {isa = PBXBuildFile; fileRef = B218CA151F16936B00E560E9 /* Level_1_Preview.sks */; };
 		B218CA191F16957400E560E9 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B218CA171F16957400E560E9 /* arrow.png */; };
 		B218CA1A1F16957400E560E9 /* playLevel.png in Resources */ = {isa = PBXBuildFile; fileRef = B218CA181F16957400E560E9 /* playLevel.png */; };
 		B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218CA1B1F16971C00E560E9 /* PreviewScene.swift */; };
+		B228DD251F17F89200E0C06F /* Level_1.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD241F17F89200E0C06F /* Level_1.sks */; };
+		B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD281F18217D00E0C06F /* ChainSpike.sks */; };
 		B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A307171F13E40C0059637F /* AppDelegate.swift */; };
-		B2A3071A1F13E40C0059637F /* Level_1.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A307191F13E40C0059637F /* Level_1.sks */; };
 		B2A3071C1F13E40C0059637F /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A3071B1F13E40C0059637F /* Actions.sks */; };
 		B2A3071E1F13E40C0059637F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3071D1F13E40C0059637F /* GameScene.swift */; };
 		B2A307201F13E40C0059637F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3071F1F13E40C0059637F /* GameViewController.swift */; };
@@ -53,13 +55,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B206037E1F16EF65000DBF0E /* Level_2_Preview.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_2_Preview.sks; sourceTree = "<group>"; };
 		B218CA151F16936B00E560E9 /* Level_1_Preview.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_1_Preview.sks; sourceTree = "<group>"; };
 		B218CA171F16957400E560E9 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B218CA181F16957400E560E9 /* playLevel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playLevel.png; sourceTree = "<group>"; };
 		B218CA1B1F16971C00E560E9 /* PreviewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewScene.swift; sourceTree = "<group>"; };
+		B228DD241F17F89200E0C06F /* Level_1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_1.sks; sourceTree = "<group>"; };
+		B228DD281F18217D00E0C06F /* ChainSpike.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChainSpike.sks; sourceTree = "<group>"; };
 		B2A307141F13E40C0059637F /* TheLabrunyth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheLabrunyth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2A307171F13E40C0059637F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B2A307191F13E40C0059637F /* Level_1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_1.sks; sourceTree = "<group>"; };
 		B2A3071B1F13E40C0059637F /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		B2A3071D1F13E40C0059637F /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		B2A3071F1F13E40C0059637F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -136,12 +140,14 @@
 			isa = PBXGroup;
 			children = (
 				B2A307171F13E40C0059637F /* AppDelegate.swift */,
-				B2A307191F13E40C0059637F /* Level_1.sks */,
+				B228DD241F17F89200E0C06F /* Level_1.sks */,
 				B218CA151F16936B00E560E9 /* Level_1_Preview.sks */,
 				B2B06CA31F157123000A728E /* Level_2.sks */,
+				B206037E1F16EF65000DBF0E /* Level_2_Preview.sks */,
 				B2A3071B1F13E40C0059637F /* Actions.sks */,
 				B2A3071F1F13E40C0059637F /* GameViewController.swift */,
 				B2DF09C61F13FA7C009E833E /* Hero.sks */,
+				B228DD281F18217D00E0C06F /* ChainSpike.sks */,
 				B2A3071D1F13E40C0059637F /* GameScene.swift */,
 				B218CA1B1F16971C00E560E9 /* PreviewScene.swift */,
 				B2B06C911F142DA9000A728E /* ButtonNode.swift */,
@@ -290,11 +296,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B228DD251F17F89200E0C06F /* Level_1.sks in Resources */,
 				B2A307231F13E40C0059637F /* Main.storyboard in Resources */,
 				B2B06CA41F157123000A728E /* Level_2.sks in Resources */,
 				B2B06C901F142CCE000A728E /* restart@2x.png in Resources */,
 				B218CA161F16936B00E560E9 /* Level_1_Preview.sks in Resources */,
-				B2A3071A1F13E40C0059637F /* Level_1.sks in Resources */,
 				B2B06C9C1F157022000A728E /* LevelSelect.sks in Resources */,
 				B2B06CA61F157D2F000A728E /* nextLevel.png in Resources */,
 				B218CA191F16957400E560E9 /* arrow.png in Resources */,
@@ -302,11 +308,13 @@
 				B2B06C981F15391E000A728E /* pauseButton.png in Resources */,
 				B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */,
 				B2A307281F13E40C0059637F /* LaunchScreen.storyboard in Resources */,
+				B206037F1F16EF65000DBF0E /* Level_2_Preview.sks in Resources */,
 				B2B06C9A1F153B55000A728E /* playButton.png in Resources */,
 				B2B06C9F1F15708E000A728E /* Level1pic.png in Resources */,
 				B2B06CA01F15708E000A728E /* Level2pic.png in Resources */,
 				B218CA1A1F16957400E560E9 /* playLevel.png in Resources */,
 				B2A3071C1F13E40C0059637F /* Actions.sks in Resources */,
+				B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
