@@ -49,6 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     static var level: Int = 1
     
     override func didMove(to view: SKView) {
+        view.showsFPS = true
         hero = childNode(withName: "//hero") as! SKSpriteNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
@@ -74,23 +75,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 var groundPinLocation = chainBot.position
                 groundPinLocation.x += 12.374
                 groundPinLocation.y -= 15.91
+                groundPinLocation = spike.convert(groundPinLocation, to: self)
                 let groundPinJoint = SKPhysicsJointPin.joint(withBodyA: ground.physicsBody!, bodyB: chainBot.physicsBody!, anchor: groundPinLocation)
                 physicsWorld.add(groundPinJoint)
                 
                 var botMidPinLocation = chainMid.position
                 botMidPinLocation.y -= 15.91
                 botMidPinLocation.x -= 12.374
+                botMidPinLocation = spike.convert(botMidPinLocation, to: self)
                 let botMidPinJoint = SKPhysicsJointPin.joint(withBodyA: chainMid.physicsBody!, bodyB: chainBot.physicsBody!, anchor: botMidPinLocation)
                 physicsWorld.add(botMidPinJoint)
                 
                 var midTopPinLocation = chainTop.position
                 midTopPinLocation.y -= 15.91
                 midTopPinLocation.x += 12.374
+                midTopPinLocation = spike.convert(midTopPinLocation, to: self)
                 let midTopPinJoint = SKPhysicsJointPin.joint(withBodyA: chainMid.physicsBody!, bodyB: chainTop.physicsBody!, anchor: midTopPinLocation)
                 physicsWorld.add(midTopPinJoint)
                 
-                var spikePinLocation = spike.position
-                spikePinLocation.y -= 12.5
+                var spikePinLocation = chainTop.position
+                spikePinLocation.y += 15.91
+                spikePinLocation.x -= 12.374
+                spikePinLocation = spike.convert(spikePinLocation, to: self)
                 let spikePinJoint = SKPhysicsJointPin.joint(withBodyA: spike.physicsBody!, bodyB: chainTop.physicsBody!, anchor: spikePinLocation)
                 physicsWorld.add(spikePinJoint)
             }
@@ -123,7 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view.addGestureRecognizer(swipeDown)
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.respondToLongPressGesture))
-        longPress.minimumPressDuration = 0.3
+        longPress.minimumPressDuration = 0.2
         view.addGestureRecognizer(longPress)
         
         pauseButton.selectedHandler = {
@@ -302,7 +308,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func respondToLongPressGesture(gesture: UIGestureRecognizer) {
         if let longPressGesture = gesture as? UILongPressGestureRecognizer {
-            if end || longPressGesture.state == .ended {
+            if !end && longPressGesture.state == .ended {
                 print("All is lost")
                 heroState = .running
             } else if longPressGesture.state == .began {
