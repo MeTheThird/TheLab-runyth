@@ -43,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var phaseCoolDown: CFTimeInterval = 0.0
     var phaseDuration: CFTimeInterval = 0.0
     var timeCoolDown: CFTimeInterval = 0.0
+    let framesBack: Int = 150
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false
     static var level: Int = 1
@@ -63,16 +64,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if let cSL = childNode(withName: "chainGroundSpikeLayer") as? SKSpriteNode {
             chainGroundSpikeLayer = cSL
-            for spike in chainGroundSpikeLayer.children {
-                var pinLocation = spike.children[0].position
-                pinLocation.y += 20
-                let spikeJoint = SKPhysicsJointPin.joint(withBodyA: spike.physicsBody!, bodyB: spike.children[0].physicsBody!, anchor: pinLocation)
-                physicsWorld.add(spikeJoint)
+            var spike: SKSpriteNode
+            for reference in chainGroundSpikeLayer.children {
+                spike = reference.children[0].children[0] as! MovingObstacle
+                let chainTop = spike.childNode(withName: "chainTop") as! SKSpriteNode
+                let chainMid = spike.childNode(withName: "chainMid") as! SKSpriteNode
+                let chainBot = spike.childNode(withName: "chainBot") as! SKSpriteNode
                 
-                var pin2Location = spike.children[0].position
-                pin2Location.y -= 20
-                let spikeJoint2 = SKPhysicsJointPin.joint(withBodyA: ground.physicsBody!, bodyB: spike.children[0].physicsBody!, anchor: pin2Location)
-                physicsWorld.add(spikeJoint2)
+                var groundPinLocation = chainBot.position
+                groundPinLocation.x += 12.374
+                groundPinLocation.y -= 15.91
+                let groundPinJoint = SKPhysicsJointPin.joint(withBodyA: ground.physicsBody!, bodyB: chainBot.physicsBody!, anchor: groundPinLocation)
+                physicsWorld.add(groundPinJoint)
+                
+                var botMidPinLocation = chainMid.position
+                botMidPinLocation.y -= 15.91
+                botMidPinLocation.x -= 12.374
+                let botMidPinJoint = SKPhysicsJointPin.joint(withBodyA: chainMid.physicsBody!, bodyB: chainBot.physicsBody!, anchor: botMidPinLocation)
+                physicsWorld.add(botMidPinJoint)
+                
+                var midTopPinLocation = chainTop.position
+                midTopPinLocation.y -= 15.91
+                midTopPinLocation.x += 12.374
+                let midTopPinJoint = SKPhysicsJointPin.joint(withBodyA: chainMid.physicsBody!, bodyB: chainTop.physicsBody!, anchor: midTopPinLocation)
+                physicsWorld.add(midTopPinJoint)
+                
+                var spikePinLocation = spike.position
+                spikePinLocation.y -= 12.5
+                let spikePinJoint = SKPhysicsJointPin.joint(withBodyA: spike.physicsBody!, bodyB: chainTop.physicsBody!, anchor: spikePinLocation)
+                physicsWorld.add(spikePinJoint)
             }
         }
         
@@ -224,9 +244,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let categoryB = contactB.categoryBitMask
         
         if categoryA == 1 && categoryB == 2 {
-            nodeA.parent!.parent!.removeFromParent()
+            let removal = SKAction.removeFromParent()
+            nodeA.parent!.parent!.run(removal)
         } else if categoryA == 2 && categoryB == 1 {
-            nodeB.parent!.parent!.removeFromParent()
+            let removal = SKAction.removeFromParent()
+            nodeB.parent!.parent!.run(removal)
         }
     }
     
@@ -265,9 +287,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     timeState = .forward
                 }
             case UISwipeGestureRecognizerDirection.up:
-                self.physicsWorld.gravity = CGVector(dx: 0, dy: 9.8)
+                if heroState != .stationary {
+                    self.physicsWorld.gravity = CGVector(dx: 0, dy: 9.8)
+                }
             case UISwipeGestureRecognizerDirection.down:
-                self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
+                if heroState != .stationary {
+                    self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
+                }
             default:
                 break
             }
@@ -276,7 +302,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func respondToLongPressGesture(gesture: UIGestureRecognizer) {
         if let longPressGesture = gesture as? UILongPressGestureRecognizer {
-            if !end && longPressGesture.state == .ended {
+            if end || longPressGesture.state == .ended {
                 print("All is lost")
                 heroState = .running
             } else if longPressGesture.state == .began {
@@ -289,7 +315,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-
+    
     func moveObstacleBackInTime() {
         if movingDoorLayer != nil {
             for i in movingDoorLayer.children {
@@ -302,7 +328,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if chainGroundSpikeLayer != nil {
             for i in chainGroundSpikeLayer.children {
-                let chainSpike = i as! MovingObstacle
+                let chainSpike = i.children[0].children[0] as! MovingObstacle
                 if let last = chainSpike.previousPosition.last {
                     chainSpike.position = last
                     chainSpike.previousPosition.removeLast()
@@ -318,7 +344,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     door.previousPosition.append(door.position)
                 }
-                if door.previousPosition.count > 240 {
+                if door.previousPosition.count > framesBack {
                     door.previousPosition.remove(at: 0)
                 }
                 if door.position.y > 0.0 {
@@ -338,11 +364,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if chainGroundSpikeLayer != nil {
             for i in chainGroundSpikeLayer.children {
-                let spike = i as! MovingObstacle
+                let spike = i.children[0].children[0] as! MovingObstacle
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     spike.previousPosition.append(spike.position)
                 }
-                if spike.previousPosition.count > 240 {
+                if spike.previousPosition.count > framesBack {
                     spike.previousPosition.remove(at: 0)
                 }
             }
@@ -355,7 +381,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             heroPrevState.append(heroState)
             previousGravity.append(self.physicsWorld.gravity)
         }
-        if heroPrevPos.count > 240 {
+        if heroPrevPos.count > framesBack {
             heroPrevPos.remove(at: 0)
             heroPrevState.remove(at: 0)
             previousGravity.remove(at: 0)
