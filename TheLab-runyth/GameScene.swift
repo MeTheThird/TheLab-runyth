@@ -47,9 +47,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false
     static var level: Int = 1
+    static var preview: Bool = false
     
     override func didMove(to view: SKView) {
-        view.showsFPS = true
+        if GameScene.preview {
+            
+        }
         hero = childNode(withName: "//hero") as! SKSpriteNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
@@ -267,9 +270,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     class func levelPreview(_ levelNumber: Int) -> GameScene? {
-        guard let scene = GameScene(fileNamed: "Level_\(levelNumber)_Preview") else {
+        guard let scene = GameScene.level(GameScene.level) else {
             return nil
         }
+        GameScene.preview = true
         scene.scaleMode = .aspectFit
         return scene
     }
