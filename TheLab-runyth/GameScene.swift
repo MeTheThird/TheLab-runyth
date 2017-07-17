@@ -36,6 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var nextButton: ButtonNode!
     var movingDoorLayer: SKSpriteNode!
     var chainGroundSpikeLayer: SKSpriteNode!
+    var evilScientistLayer: SKSpriteNode!
     var finalDoor: SKSpriteNode!
     var ground: SKSpriteNode!
     var heroState: heroMovingState = .running
@@ -43,16 +44,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var phaseCoolDown: CFTimeInterval = 0.0
     var phaseDuration: CFTimeInterval = 0.0
     var timeCoolDown: CFTimeInterval = 0.0
+    var timeSinceESShot: CFTimeInterval = 1.0
+    var enemyBullets = [Bullet]()
     let framesBack: Int = 150
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false
     static var level: Int = 1
-    static var preview: Bool = false
     
     override func didMove(to view: SKView) {
-        if GameScene.preview {
-            
-        }
         hero = childNode(withName: "//hero") as! SKSpriteNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
@@ -65,6 +64,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground = childNode(withName: "ground") as! SKSpriteNode
         if let mDL = childNode(withName: "movingDoorLayer") as? SKSpriteNode {
             movingDoorLayer = mDL
+        }
+        if let eSL = childNode(withName: "evilScientistLayer") as? SKSpriteNode {
+            evilScientistLayer = eSL
         }
         if let cSL = childNode(withName: "chainGroundSpikeLayer") as? SKSpriteNode {
             chainGroundSpikeLayer = cSL
@@ -135,35 +137,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         longPress.minimumPressDuration = 0.2
         view.addGestureRecognizer(longPress)
         
-        pauseButton.selectedHandler = {
+        pauseButton.selectedHandler = { [unowned self] in
             self.isPaused = true
             self.restartButton.state = .active
             self.playButton.state = .active
             self.pauseButton.state = .hidden
+            view.gestureRecognizers?.removeAll()
         }
         
-        playButton.selectedHandler = {
+        playButton.selectedHandler = { [unowned self] in
             self.restartButton.state = .hidden
             self.playButton.state = .hidden
             self.pauseButton.state = .active
             self.isPaused = false
+            view.addGestureRecognizer(swipeRight)
+            view.addGestureRecognizer(swipeLeft)
+            view.addGestureRecognizer(swipeUp)
+            view.addGestureRecognizer(swipeDown)
+            view.addGestureRecognizer(longPress)
         }
         
-        restartButton.selectedHandler = {
+        restartButton.selectedHandler = { [unowned self] in
             guard let scene = GameScene.level(GameScene.level) else {
                 print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
             }
+            view.gestureRecognizers?.removeAll()
             self.view!.presentScene(scene)
         }
         
-        nextButton.selectedHandler = {
+        nextButton.selectedHandler = { [unowned self] in
             guard let scene = GameScene.levelPreview(GameScene.level + 1) else {
                 print("NO NEXT LEVEL FOR YOU!!!")
                 return
             }
             GameScene.level += 1
-            view.removeGestureRecognizer(longPress)
+            view.gestureRecognizers?.removeAll()
             self.view!.presentScene(scene)
         }
     }
@@ -232,6 +241,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         updatePreviousHeroPositions()
         
+        evilScientistsShoot()
+        
         checkIfHeroIsDEAD()
         
         updateCooldowns()
@@ -252,12 +263,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let categoryA = contactA.categoryBitMask
         let categoryB = contactB.categoryBitMask
         
+        let removal = SKAction.removeFromParent()
+        
         if categoryA == 1 && categoryB == 2 {
-            let removal = SKAction.removeFromParent()
             nodeA.parent!.parent!.run(removal)
         } else if categoryA == 2 && categoryB == 1 {
-            let removal = SKAction.removeFromParent()
             nodeB.parent!.parent!.run(removal)
+        } else if categoryA == 1 && categoryB == 4 {
+            nodeA.parent!.parent!.run(removal)
+            nodeB.run(removal)
+            enemyBullets.remove(at: enemyBullets.index(of: nodeB as! Bullet)!)
+        } else if categoryA == 4 && categoryB == 1 {
+            nodeA.run(removal)
+            nodeB.parent!.parent!.run(removal)
+        } else if categoryA == 4 {
+            nodeA.run(removal)
+        } else if categoryB == 4 {
+            nodeB.run(removal)
         }
     }
     
@@ -270,10 +292,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     class func levelPreview(_ levelNumber: Int) -> GameScene? {
-        guard let scene = GameScene.level(GameScene.level) else {
+        guard let scene = GameScene.level(levelNumber) else {
             return nil
         }
-        GameScene.preview = true
         scene.scaleMode = .aspectFit
         return scene
     }
@@ -404,6 +425,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
             }
+            view!.gestureRecognizers?.removeAll()
             scene.scaleMode = .aspectFit
             self.view!.presentScene(scene)
         }
@@ -413,6 +435,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if heroState == .running && timeState == .forward {
             phaseCoolDown -= 1 / 60
             timeCoolDown -= 1 / 60
+            timeSinceESShot -= 1 / 60
         }
         
         if phaseCoolDown <= 0.0 {
@@ -425,6 +448,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             timeCool.text = "Time: 0.0"
         } else {
             timeCool.text = String(format: "Time: %.1f", timeCoolDown)
+        }
+    }
+    
+    func evilScientistsShoot() {
+        if timeSinceESShot < 0.0 {
+            for baddie in evilScientistLayer.children {
+                let bullet = Bullet()
+                baddie.addChild(bullet)
+                bullet.position.x = -22.5
+                bullet.position.y = 0
+                enemyBullets.append(bullet)
+                timeSinceESShot = 1.0
+            }
+        }
+        
+        for bullet in enemyBullets {
+            bullet.position.x -= 10
+            if bullet.position.x <= -250 {
+                let removal = SKAction.removeFromParent()
+                bullet.run(removal)
+            }
         }
     }
     

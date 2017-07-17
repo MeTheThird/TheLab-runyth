@@ -14,6 +14,7 @@
 		B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218CA1B1F16971C00E560E9 /* PreviewScene.swift */; };
 		B228DD251F17F89200E0C06F /* Level_1.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD241F17F89200E0C06F /* Level_1.sks */; };
 		B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD281F18217D00E0C06F /* ChainSpike.sks */; };
+		B24D976E1F1D6A4D0098954E /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24D976D1F1D6A4D0098954E /* Bullet.swift */; };
 		B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A307171F13E40C0059637F /* AppDelegate.swift */; };
 		B2A3071C1F13E40C0059637F /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A3071B1F13E40C0059637F /* Actions.sks */; };
 		B2A3071E1F13E40C0059637F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3071D1F13E40C0059637F /* GameScene.swift */; };
@@ -62,6 +63,7 @@
 		B218CA1B1F16971C00E560E9 /* PreviewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewScene.swift; sourceTree = "<group>"; };
 		B228DD241F17F89200E0C06F /* Level_1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_1.sks; sourceTree = "<group>"; };
 		B228DD281F18217D00E0C06F /* ChainSpike.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChainSpike.sks; sourceTree = "<group>"; };
+		B24D976D1F1D6A4D0098954E /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		B2A307141F13E40C0059637F /* TheLabrunyth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheLabrunyth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2A307171F13E40C0059637F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2A3071B1F13E40C0059637F /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				B218CA1B1F16971C00E560E9 /* PreviewScene.swift */,
 				B2B06C911F142DA9000A728E /* ButtonNode.swift */,
 				B2B06C931F143B21000A728E /* MovingObstacle.swift */,
+				B24D976D1F1D6A4D0098954E /* Bullet.swift */,
 				B2A307211F13E40C0059637F /* Main.storyboard */,
 				B2A307241F13E40C0059637F /* Assets.xcassets */,
 				B2B06C8F1F142CCE000A728E /* restart@2x.png */,
@@ -346,6 +349,7 @@
 				B2A307201F13E40C0059637F /* GameViewController.swift in Sources */,
 				B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */,
 				B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */,
+				B24D976E1F1D6A4D0098954E /* Bullet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +428,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -501,10 +505,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = TNR595CQ49;
+				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "TheLab-runyth/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "RKT.TheLab-runyth";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = debugging;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -514,10 +521,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = TNR595CQ49;
+				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "TheLab-runyth/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "RKT.TheLab-runyth";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = debugging;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
