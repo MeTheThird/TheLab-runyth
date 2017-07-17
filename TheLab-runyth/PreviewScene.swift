@@ -37,7 +37,7 @@ class PreviewScene: SKScene {
             }
             
             /* 2) Load Game scene */
-            guard let scene = GameScene.level(GameScene.level) else {
+            guard let scene = GameScene.levelPreview(GameScene.level) else {
                 print("Could not make GameScene, check the name is spelled correctly")
                 return
             }

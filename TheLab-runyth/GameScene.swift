@@ -452,22 +452,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func evilScientistsShoot() {
-        if timeSinceESShot < 0.0 {
-            for baddie in evilScientistLayer.children {
-                let bullet = Bullet()
-                baddie.addChild(bullet)
-                bullet.position.x = -22.5
-                bullet.position.y = 0
-                enemyBullets.append(bullet)
-                timeSinceESShot = 1.0
+        if evilScientistLayer != nil {
+            if timeSinceESShot < 0.0 {
+                for baddie in evilScientistLayer.children {
+                    let bullet = Bullet()
+                    baddie.addChild(bullet)
+                    bullet.position.x = -22.5
+                    bullet.position.y = 0
+                    enemyBullets.append(bullet)
+                    timeSinceESShot = 1.0
+                }
             }
-        }
-        
-        for bullet in enemyBullets {
-            bullet.position.x -= 10
-            if bullet.position.x <= -250 {
-                let removal = SKAction.removeFromParent()
-                bullet.run(removal)
+            
+            for bullet in enemyBullets {
+                bullet.position.x -= 10
+                if bullet.position.x <= -250 {
+                    let removal = SKAction.removeFromParent()
+                    bullet.run(removal)
+                }
             }
         }
     }
