@@ -9,6 +9,9 @@
 import SpriteKit
 
 class Bullet: MovingObstacle {
+    
+    var timeWhenDeleted: Date = Date()
+    
     init() {
         let color = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
         let size = CGSize(width: 15.0, height: 10.0)
@@ -19,6 +22,7 @@ class Bullet: MovingObstacle {
         physicsBody?.affectedByGravity = false
         physicsBody?.allowsRotation = false
         physicsBody?.categoryBitMask = 4
+        physicsBody?.collisionBitMask = 0
         physicsBody?.contactTestBitMask = 1
     }
     

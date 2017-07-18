@@ -45,6 +45,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var phaseDuration: CFTimeInterval = 0.0
     var timeCoolDown: CFTimeInterval = 0.0
     var timeSinceESShot: CFTimeInterval = 1.0
+    var dateReversalStarted: Date = Date()
+    var timeReversed: TimeInterval = 0.0
     var enemyBullets = [Bullet]()
     var recentlyRemovedBullets = [Bullet]()
     let framesBack: Int = 150
@@ -272,14 +274,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             nodeB.parent!.parent!.run(removal)
         } else if categoryA == 1 && categoryB == 4 {
             nodeA.parent!.parent!.run(removal)
+            let bullet = nodeB as! Bullet
+            bullet.timeWhenDeleted = Date()
+            enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
             nodeB.run(removal)
-            enemyBullets.remove(at: enemyBullets.index(of: nodeB as! Bullet)!)
         } else if categoryA == 4 && categoryB == 1 {
-            nodeA.run(removal)
+            let bullet = nodeA as! Bullet
+            bullet.timeWhenDeleted = Date()
             nodeB.parent!.parent!.run(removal)
+            enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
+            nodeA.run(removal)
         } else if categoryA == 4 {
+            let bullet = nodeA as! Bullet
+            bullet.timeWhenDeleted = Date()
+            enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
             nodeA.run(removal)
         } else if categoryB == 4 {
+            let bullet = nodeB as! Bullet
+            bullet.timeWhenDeleted = Date()
+            enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
             nodeB.run(removal)
         }
     }
@@ -307,6 +320,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if timeCoolDown <= 0.0 {
                     timeCoolDown = 5.0
                     heroState = .reversingEverything
+                    dateReversalStarted = Date()
                 }
             case UISwipeGestureRecognizerDirection.right:
                 if phaseCoolDown <= 0.0 && timeState == .forward {
@@ -341,6 +355,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if timeCoolDown <= 0.0 {
                     timeCoolDown = 5.0
                     heroState = .reversingOtherStuff
+                    dateReversalStarted = Date()
                     print("PANIC")
                 }
             }
@@ -349,6 +364,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     func moveObstacleBackInTime() {
+        timeReversed = dateReversalStarted.timeIntervalSinceNow
         if movingDoorLayer != nil {
             for i in movingDoorLayer.children {
                 let door = i as! MovingObstacle
@@ -364,6 +380,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if let last = chainSpike.previousPosition.last {
                     chainSpike.position = last
                     chainSpike.previousPosition.removeLast()
+                }
+            }
+        }
+        if evilScientistLayer != nil {
+            for bullet in enemyBullets {
+                bullet.position.x += 10
+            }
+            for bullet in recentlyRemovedBullets {
+                let timeBetweenBulletRemovalAndReversalStart = bullet.timeWhenDeleted.timeIntervalSince(dateReversalStarted)
+                if timeBetweenBulletRemovalAndReversalStart - timeReversed <= 0.5 && timeBetweenBulletRemovalAndReversalStart - timeReversed >= -0.5 {
+                    print("foo")
                 }
             }
         }
@@ -457,10 +484,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if timeSinceESShot < 0.0 {
                 for baddie in evilScientistLayer.children {
                     let bullet = Bullet()
+                    enemyBullets.append(bullet)
                     baddie.addChild(bullet)
                     bullet.position.x = -22.5
                     bullet.position.y = 0
-                    enemyBullets.append(bullet)
                     timeSinceESShot = 1.0
                 }
             }
@@ -469,6 +496,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 bullet.position.x -= 10
                 if bullet.position.x <= -250 {
                     let removal = SKAction.removeFromParent()
+                    recentlyRemovedBullets.append(bullet)
+                    bullet.timeWhenDeleted = Date()
                     bullet.run(removal)
                 }
             }
