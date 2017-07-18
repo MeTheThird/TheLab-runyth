@@ -46,6 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeCoolDown: CFTimeInterval = 0.0
     var timeSinceESShot: CFTimeInterval = 1.0
     var enemyBullets = [Bullet]()
+    var recentlyRemovedBullets = [Bullet]()
     let framesBack: Int = 150
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false

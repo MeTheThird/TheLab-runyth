@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Bullet: SKSpriteNode {
+class Bullet: MovingObstacle {
     init() {
         let color = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
         let size = CGSize(width: 15.0, height: 10.0)
