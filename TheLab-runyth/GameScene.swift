@@ -52,6 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let framesBack: Int = 150
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false
+    var bulletsBeingReversed: Bool = false
     static var level: Int = 1
     
     override func didMove(to view: SKView) {
@@ -277,22 +278,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let bullet = nodeB as! Bullet
             bullet.timeWhenDeleted = Date()
             enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
+            recentlyRemovedBullets.append(bullet)
             nodeB.run(removal)
         } else if categoryA == 4 && categoryB == 1 {
             let bullet = nodeA as! Bullet
             bullet.timeWhenDeleted = Date()
             nodeB.parent!.parent!.run(removal)
             enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
+            recentlyRemovedBullets.append(bullet)
             nodeA.run(removal)
         } else if categoryA == 4 {
             let bullet = nodeA as! Bullet
             bullet.timeWhenDeleted = Date()
             enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
+            recentlyRemovedBullets.append(bullet)
             nodeA.run(removal)
         } else if categoryB == 4 {
             let bullet = nodeB as! Bullet
             bullet.timeWhenDeleted = Date()
             enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
+            recentlyRemovedBullets.append(bullet)
             nodeB.run(removal)
         }
     }
@@ -364,6 +369,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     func moveObstacleBackInTime() {
+        bulletsBeingReversed = true
         timeReversed = dateReversalStarted.timeIntervalSinceNow
         if movingDoorLayer != nil {
             for i in movingDoorLayer.children {
@@ -385,14 +391,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if evilScientistLayer != nil {
             for bullet in enemyBullets {
-                bullet.position.x += 10
+                if bullet.position.x < -22.5 {
+                    bullet.position.x += 10
+                    print("double foo")
+                }
             }
+            //            if recentlyRemovedBullets.count > 0 {
             for bullet in recentlyRemovedBullets {
                 let timeBetweenBulletRemovalAndReversalStart = bullet.timeWhenDeleted.timeIntervalSince(dateReversalStarted)
-                if timeBetweenBulletRemovalAndReversalStart - timeReversed <= 0.5 && timeBetweenBulletRemovalAndReversalStart - timeReversed >= -0.5 {
+                if timeBetweenBulletRemovalAndReversalStart - timeReversed <= 0.5 && timeBetweenBulletRemovalAndReversalStart - timeReversed >= -0.5 && !bullet.reAdded {
+                    bullet.reAdded = true
                     print("foo")
                 }
             }
+            //            }
         }
     }
     
@@ -410,12 +422,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     door.position.y -= 1
                 }
                 if heroState == .reversingOtherStuff || timeState == .backward {
-                    if heroPrevPos.last == nil || door.previousPosition.last == nil{
+                    if heroPrevPos.last == nil || door.previousPosition.last == nil {
                         heroState = .running
                         end = true
                         if timeState == .backward {
                             timeState = .forward
                         }
+                        bulletsBeingReversed = false
                     }
                 }
             }
@@ -429,6 +442,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 if spike.previousPosition.count > framesBack {
                     spike.previousPosition.remove(at: 0)
+                }
+            }
+        }
+        
+        if evilScientistLayer != nil {
+            for bullet in recentlyRemovedBullets {
+                if bullet.timeWhenDeleted.timeIntervalSince(dateReversalStarted) < 2.5 {
+                    recentlyRemovedBullets.remove(at: recentlyRemovedBullets.index(of: bullet)!)
                 }
             }
         }
@@ -493,12 +514,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             for bullet in enemyBullets {
-                bullet.position.x -= 10
-                if bullet.position.x <= -250 {
-                    let removal = SKAction.removeFromParent()
-                    recentlyRemovedBullets.append(bullet)
-                    bullet.timeWhenDeleted = Date()
-                    bullet.run(removal)
+                if !bulletsBeingReversed {
+                    bullet.position.x -= 10
+                    if bullet.position.x <= -250 {
+                        let removal = SKAction.removeFromParent()
+                        enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
+                        recentlyRemovedBullets.append(bullet)
+                        bullet.timeWhenDeleted = Date()
+                        bullet.run(removal)
+                    }
                 }
             }
         }
