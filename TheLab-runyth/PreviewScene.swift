@@ -14,22 +14,34 @@ class PreviewScene: SKScene {
     var playLevelButton: ButtonNode!
     var cameraNode: SKCameraNode!
     var finalDoor: SKSpriteNode!
-    var moveRight: Bool = false
-    var moveLeft: Bool = false
+    var levelRealScene: SKScene!
+//    var moveRight: Bool = false
+//    var moveLeft: Bool = false
     
     override func didMove(to view: SKView) {
+        levelRealScene = GameScene.level(GameScene.level)!.scene
         playLevelButton = childNode(withName: "//playLevelButton") as! ButtonNode
-        cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
-        finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
-        
+        cameraNode = childNode(withName: "cameraNodePreview") as! SKCameraNode
+        physicsWorld.speed = 0
         self.camera = cameraNode
         
-        let longRightPress = UILongPressGestureRecognizer(target: self, action: #selector(self.respondToLongPressGesture))
-        longRightPress.minimumPressDuration = 0.1
-        view.addGestureRecognizer(longRightPress)
+        for node in levelRealScene.children {
+            if let sprite = node as? SKSpriteNode {
+                sprite.removeFromParent()
+                self.addChild(sprite)
+            }
+        }
+        finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         
+//        let longRightPress = UILongPressGestureRecognizer(target: self, action: #selector(self.respondToLongPressGesture))
+//        longRightPress.minimumPressDuration = 0.1
+//        view.addGestureRecognizer(longRightPress)
         
-        playLevelButton.selectedHandler = {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToPanGesture))
+        panGesture.minimumNumberOfTouches = 1
+        view.addGestureRecognizer(panGesture)
+        
+        playLevelButton.selectedHandler = { [unowned self] in
             /* 1) Grab reference to our SpriteKit view */
             guard let skView = self.view as SKView! else {
                 print("Could not get Skview")
@@ -37,12 +49,12 @@ class PreviewScene: SKScene {
             }
             
             /* 2) Load Game scene */
-            guard let scene = GameScene.levelPreview(GameScene.level) else {
+            guard let scene = GameScene.level(GameScene.level) else {
                 print("Could not make GameScene, check the name is spelled correctly")
                 return
             }
             
-            view.removeGestureRecognizer(longRightPress)
+            view.gestureRecognizers?.removeAll()
             
             /* Show debug */
             skView.showsPhysics = false
@@ -56,32 +68,42 @@ class PreviewScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        if moveRight {
-            if cameraNode.position.x < finalDoor.position.x + 12.5 - size.width / 2 {
-                cameraNode.position.x += 10
-            }
-        }
-        if moveLeft {
-            if cameraNode.position.x > 0.0 {
-                cameraNode.position.x -= 10
-            }
+//        if moveRight {
+//            if cameraNode.position.x < finalDoor.position.x + 12.5 - size.width / 2 {
+//                cameraNode.position.x += 10
+//            }
+//        }
+//        if moveLeft {
+//            if cameraNode.position.x > 0.0 {
+//                cameraNode.position.x -= 10
+//            }
+//        }
+    }
+    
+    func respondToPanGesture(gesture: UIGestureRecognizer) {
+        print("hi pan")
+        if let gestureOfPan = gesture as? UIPanGestureRecognizer {
+            let targetX = cameraNode.position.x - 0.03*gestureOfPan.velocity(in: self.view!).x
+            let x = clamp(value: targetX, lower: 0, upper: finalDoor.position.x + 12.5 - size.width / 2)
+            cameraNode.position.x = x
+            print("The kettle calls the pot metal... ;-;")
         }
     }
     
-    func respondToLongPressGesture(gesture: UIGestureRecognizer) {
-        if let longPressGesture = gesture as? UILongPressGestureRecognizer {
-            let gesturePos = longPressGesture.location(in: self.view)
-            if gesturePos.x >= cameraNode.position.x {
-                moveRight = true
-                moveLeft = false
-            } else if gesturePos.x < cameraNode.position.x {
-                moveLeft = true
-                moveRight = false
-            }
-            if longPressGesture.state == .ended {
-                moveLeft = false
-                moveRight = false
-            }
-        }
-    }
+//    func respondToLongPressGesture(gesture: UIGestureRecognizer) {
+//        if let longPressGesture = gesture as? UILongPressGestureRecognizer {
+//            let gesturePos = longPressGesture.location(in: self.view)
+//            if gesturePos.x >= cameraNode.position.x {
+//                moveRight = true
+//                moveLeft = false
+//            } else if gesturePos.x < cameraNode.position.x {
+//                moveLeft = true
+//                moveRight = false
+//            }
+//            if longPressGesture.state == .ended {
+//                moveLeft = false
+//                moveRight = false
+//            }
+//        }
+//    }
 }
