@@ -91,12 +91,10 @@ class PreviewScene: SKScene {
     }
     
     func respondToPanGesture(gesture: UIGestureRecognizer) {
-        print("hi pan")
         if let gestureOfPan = gesture as? UIPanGestureRecognizer {
             let targetX = cameraNode.position.x - 0.03*gestureOfPan.velocity(in: self.view!).x
             let x = clamp(value: targetX, lower: 0, upper: finalDoor.position.x + 12.5 - size.width / 2)
             cameraNode.position.x = x
-            print("The kettle calls the pot metal... ;-;")
         }
     }
     
