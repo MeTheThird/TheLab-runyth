@@ -34,7 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var pauseButton: ButtonNode!
     var playButton: ButtonNode!
     var nextButton: ButtonNode!
-    var movingDoorLayer: SKSpriteNode!
+    var movingCeilingDoorLayer: SKSpriteNode!
     var chainGroundSpikeLayer: SKSpriteNode!
     var evilScientistLayer: SKSpriteNode!
     var finalDoor: SKSpriteNode!
@@ -65,8 +65,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         phaseCool = childNode(withName: "//phaseCool") as! SKLabelNode
         timeCool = childNode(withName: "//timeCool") as! SKLabelNode
         ground = childNode(withName: "ground") as! SKSpriteNode
-        if let mDL = childNode(withName: "movingDoorLayer") as? SKSpriteNode {
-            movingDoorLayer = mDL
+        if let mDL = childNode(withName: "movingCeilingDoorLayer") as? SKSpriteNode {
+            movingCeilingDoorLayer = mDL
         }
         if let eSL = childNode(withName: "evilScientistLayer") as? SKSpriteNode {
             evilScientistLayer = eSL
@@ -367,8 +367,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func moveObstacleBackInTime() {
         timeReversed = Date().timeIntervalSince(dateReversalStarted)
-        if movingDoorLayer != nil {
-            for i in movingDoorLayer.children {
+        if movingCeilingDoorLayer != nil {
+            for i in movingCeilingDoorLayer.children {
                 let door = i as! MovingObstacle
                 if let last = door.previousPosition.last {
                     door.position = last
@@ -419,8 +419,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updatePreviousMovingObstaclePositions() {
-        if movingDoorLayer != nil {
-            for i in movingDoorLayer.children {
+        if movingCeilingDoorLayer != nil {
+            for i in movingCeilingDoorLayer.children {
                 let door = i as! MovingObstacle
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     door.previousPosition.append(door.position)

@@ -14,6 +14,7 @@ class PreviewScene: SKScene {
     var playLevelButton: ButtonNode!
     var cameraNode: SKCameraNode!
     var finalDoor: SKSpriteNode!
+    var movingCeilingDoorLayer: SKSpriteNode!
     var levelRealScene: SKScene!
 //    var moveRight: Bool = false
 //    var moveLeft: Bool = false
@@ -32,6 +33,15 @@ class PreviewScene: SKScene {
             }
         }
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
+        if let mDL = childNode(withName: "movingCeilingDoorLayer") as? SKSpriteNode {
+            movingCeilingDoorLayer = mDL
+            for node in movingCeilingDoorLayer.children {
+                let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow.png"))
+                self.addChild(arrow)
+                arrow.zRotation = -CGFloat.pi / 2
+                arrow.position = CGPoint(x: movingCeilingDoorLayer.convert(node.position, to: self).x, y: 0)
+            }
+        }
         
 //        let longRightPress = UILongPressGestureRecognizer(target: self, action: #selector(self.respondToLongPressGesture))
 //        longRightPress.minimumPressDuration = 0.1
