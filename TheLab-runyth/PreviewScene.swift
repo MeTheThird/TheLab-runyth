@@ -14,17 +14,35 @@ class PreviewScene: SKScene {
     var playLevelButton: ButtonNode!
     var cameraNode: SKCameraNode!
     var finalDoor: SKSpriteNode!
-    var movingCeilingDoorLayer: SKSpriteNode!
+    var instructionsLabel: SKLabelNode!
+    var buttonTapLabel: SKLabelNode!
     var levelRealScene: SKScene!
 //    var moveRight: Bool = false
 //    var moveLeft: Bool = false
     
     override func didMove(to view: SKView) {
-        levelRealScene = GameScene.level(GameScene.level)!.scene
+        guard let theRealGameScene = GameScene.level(GameScene.level) else {
+            print("NO NEXT LEVEL FOR YOU!!!")
+            return
+        }
+        levelRealScene = theRealGameScene.scene
         playLevelButton = childNode(withName: "//playLevelButton") as! ButtonNode
         cameraNode = childNode(withName: "cameraNodePreview") as! SKCameraNode
+        instructionsLabel = childNode(withName: "instructionsLabel") as! SKLabelNode
+        buttonTapLabel = childNode(withName: "buttonTapLabel") as! SKLabelNode
         physicsWorld.speed = 0
         self.camera = cameraNode
+        
+        if GameScene.level != 1 {
+            instructionsLabel.isHidden = true
+            buttonTapLabel.isHidden = true
+        }
+        
+        for node in self.children {
+            if let sprite = node as? SKSpriteNode {
+                sprite.removeFromParent()
+            }
+        }
         
         for node in levelRealScene.children {
             if let sprite = node as? SKSpriteNode {
@@ -32,14 +50,22 @@ class PreviewScene: SKScene {
                 self.addChild(sprite)
             }
         }
+        
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
-        if let mDL = childNode(withName: "movingCeilingDoorLayer") as? SKSpriteNode {
-            movingCeilingDoorLayer = mDL
+        if let movingCeilingDoorLayer = childNode(withName: "movingCeilingDoorLayer") as? SKSpriteNode {
             for node in movingCeilingDoorLayer.children {
                 let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow.png"))
                 self.addChild(arrow)
                 arrow.zRotation = -CGFloat.pi / 2
                 arrow.position = CGPoint(x: movingCeilingDoorLayer.convert(node.position, to: self).x, y: 0)
+            }
+        }
+        if let movingGroundDoorLayer = childNode(withName: "movingGroundDoorLayer") as? SKSpriteNode {
+            for node in movingGroundDoorLayer.children {
+                let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow.png"))
+                self.addChild(arrow)
+                arrow.zRotation = -CGFloat.pi / 2
+                arrow.position = CGPoint(x: movingGroundDoorLayer.convert(node.position, to: self).x, y: 0)
             }
         }
         
