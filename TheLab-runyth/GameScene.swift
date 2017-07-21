@@ -22,7 +22,7 @@ enum timeMovingState {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
+
     var hero: SKSpriteNode!
     var heroPrevPos = [CGPoint]()
     var heroPrevState = [heroMovingState]()
@@ -39,6 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var movingGroundDoorLayer: SKSpriteNode!
     var chainGroundSpikeLayer: SKSpriteNode!
     var evilScientistLayer: SKSpriteNode!
+    var movingSpikeLayer: SKSpriteNode!
     var finalDoor: SKSpriteNode!
     var ground: SKSpriteNode!
     var heroState: heroMovingState = .running
@@ -77,6 +78,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if let eSL = childNode(withName: "evilScientistLayer") as? SKSpriteNode {
             evilScientistLayer = eSL
+        }
+        if let mSL = childNode(withName: "movingSpikeLayer") as? SKSpriteNode {
+            movingSpikeLayer = mSL
         }
         if let cSL = childNode(withName: "chainGroundSpikeLayer") as? SKSpriteNode {
             chainGroundSpikeLayer = cSL
@@ -234,25 +238,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             case .backward:
                 moveObstacleBackInTime()
-                if let last = heroPrevPos.last {
-                    hero.position = last
-                    heroPrevPos.removeLast()
-                }
-                if let last = heroPrevState.last {
-                    heroState = last
-                    heroPrevState.removeLast()
-                }
-                if let last = previousGravity.last {
-                    self.physicsWorld.gravity = last
-                    previousGravity.removeLast()
-                }
-                if heroState == .phasing {
-                    hero.physicsBody?.categoryBitMask = 0
-                    hero.physicsBody?.collisionBitMask = 2147483648
-                    hero.physicsBody?.contactTestBitMask = 0
-                    hero.alpha = 0.4
-                    phaseDuration += 1 / 60
-                }
+                moveHeroBackInTime()
             }
         }
         
@@ -417,6 +403,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
+        if movingSpikeLayer != nil {
+            for i in movingSpikeLayer.children {
+                let spike = i as! MovingObstacle
+                if let last = spike.previousPosition.last {
+                    spike.position = last
+                    spike.previousPosition.removeLast()
+                }
+            }
+        }
         if chainGroundSpikeLayer != nil {
             for i in chainGroundSpikeLayer.children {
                 let chainSpike = i.children[0].children[0] as! MovingObstacle
@@ -460,6 +455,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updatePreviousMovingObstaclePositions() {
+        if timeReversed > 2.5 {
+            heroState = .running
+            end = true
+            if timeState == .backward {
+                timeState = .forward
+            }
+            timeReversed = 0.0
+        }
+        
         if movingCeilingDoorLayer != nil {
             for i in movingCeilingDoorLayer.children {
                 let door = i as! MovingObstacle
@@ -471,15 +475,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y > 0.0 && !notMoved {
                     door.position.y -= 1
-                }
-                if heroState == .reversingOtherStuff || timeState == .backward {
-                    if heroPrevPos.last == nil || door.previousPosition.last == nil {
-                        heroState = .running
-                        end = true
-                        if timeState == .backward {
-                            timeState = .forward
-                        }
-                    }
                 }
             }
         }
@@ -495,6 +490,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y < 0.0 && !notMoved {
                     door.position.y += 1
+                }
+            }
+        }
+        
+        if movingSpikeLayer != nil {
+            for i in movingSpikeLayer.children {
+                let spike = i as! MovingObstacle
+                if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
+                    spike.previousPosition.append(spike.position)
+                }
+                if spike.previousPosition.count > framesBack {
+                    spike.previousPosition.remove(at: 0)
                 }
             }
         }
@@ -529,6 +536,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func moveHeroBackInTime() {
+        if let last = heroPrevPos.last {
+            hero.position = last
+            heroPrevPos.removeLast()
+        }
+        if let last = heroPrevState.last {
+            heroState = last
+            heroPrevState.removeLast()
+        }
+        if let last = previousGravity.last {
+            self.physicsWorld.gravity = last
+            previousGravity.removeLast()
+        }
+        if heroState == .phasing {
+            hero.physicsBody?.categoryBitMask = 0
+            hero.physicsBody?.collisionBitMask = 2147483648
+            hero.physicsBody?.contactTestBitMask = 0
+            hero.alpha = 0.4
+            phaseDuration += 1 / 60
+        }
+    }
+    
     func updatePreviousHeroPositions() {
         if timeState != .backward && heroState != .reversingOtherStuff {
             heroPrevPos.append(hero.position)
@@ -539,6 +568,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             heroPrevPos.remove(at: 0)
             heroPrevState.remove(at: 0)
             previousGravity.remove(at: 0)
+        }
+        if heroState == .reversingOtherStuff || timeState == .backward {
+            if heroPrevPos.last == nil {
+                heroState = .running
+                end = true
+                if timeState == .backward {
+                    timeState = .forward
+                }
+            }
         }
     }
     
