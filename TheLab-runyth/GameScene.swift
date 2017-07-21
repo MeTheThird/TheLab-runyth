@@ -22,7 +22,7 @@ enum timeMovingState {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-
+    
     var hero: SKSpriteNode!
     var heroPrevPos = [CGPoint]()
     var heroPrevState = [heroMovingState]()
@@ -41,6 +41,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var evilScientistLayer: SKSpriteNode!
     var movingSpikeLayer: SKSpriteNode!
     var finalDoor: SKSpriteNode!
+    var dummyDoor: MovingObstacle!
+    var meowMeow: MovingObstacle!
     var ground: SKSpriteNode!
     var heroState: heroMovingState = .running
     var timeState: timeMovingState = .forward
@@ -52,13 +54,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeReversed: TimeInterval = 0.0
     var enemyBullets = [Bullet]()
     var recentlyRemovedBullets = [Bullet]()
-    let framesBack: Int = 150
+    var framesBack: Int = 150
+    var phaseDurationMax: Double = 1.0
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false
-    var notMoved: Bool = true
+    var notMoved: Bool = false
     static var level: Int = 1
     
     override func didMove(to view: SKView) {
+        if GameScene.level == 1 || GameScene.level == 2 || GameScene.level == 3 || GameScene.level == 5 {
+            notMoved = true
+        }
+        if GameScene.level == 3 {
+            dummyDoor = childNode(withName: "//dummyDoor") as! MovingObstacle
+            meowMeow = childNode(withName: "//meowMeow") as! MovingObstacle
+            let x = dummyDoor.position.x
+            let y = dummyDoor.position.y
+            for i in 0...149 {
+                dummyDoor.previousPosition.append(CGPoint(x: x, y: y + CGFloat(150 - i)))
+                meowMeow.previousPosition.append(meowMeow.position)
+            }
+        }
         hero = childNode(withName: "//hero") as! SKSpriteNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
@@ -78,9 +94,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if let eSL = childNode(withName: "evilScientistLayer") as? SKSpriteNode {
             evilScientistLayer = eSL
+            for i in evilScientistLayer.children {
+                let scientist = i as! MovingObstacle
+                scientist.physicsBody?.restitution = 0.5
+            }
         }
         if let mSL = childNode(withName: "movingSpikeLayer") as? SKSpriteNode {
             movingSpikeLayer = mSL
+            for i in movingSpikeLayer.children {
+                let spike = i as! MovingObstacle
+                spike.physicsBody?.restitution = 0.5
+            }
         }
         if let cSL = childNode(withName: "chainGroundSpikeLayer") as? SKSpriteNode {
             chainGroundSpikeLayer = cSL
@@ -129,8 +153,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.camera = cameraNode
         physicsWorld.contactDelegate = self
         
-//        let targetX = hero.position.x
-//        cameraNode.position.x = targetX
+        //        let targetX = hero.position.x
+        //        cameraNode.position.x = targetX
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeRight.direction = .right
@@ -242,7 +266,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        if phaseDuration >= 1.0 {
+        
+        if phaseDuration >= phaseDurationMax {
             if heroState == .phasing {
                 heroState = .running
             }
@@ -252,7 +277,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let x = clamp(value: targetX, lower: targetX, upper: finalDoor.position.x + finalDoor.size.width / 2 - size.width / 2)
         cameraNode.position.x = x
         
-        updatePreviousMovingObstaclePositions()
+        if !notMoved {
+            updatePreviousMovingObstaclePositions()
+        }
         
         updatePreviousHeroPositions()
         
@@ -263,6 +290,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         updateCooldowns()
         
         checkIfLevelIsBEATEN()
+        
         
     }
     
