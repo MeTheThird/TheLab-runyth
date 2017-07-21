@@ -16,6 +16,11 @@
 		B2A001FA1F2116D200E6C528 /* playLevelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A001F91F2116D200E6C528 /* playLevelButton.png */; };
 		B2A001FC1F21174700E6C528 /* levelSelectButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A001FB1F21174700E6C528 /* levelSelectButton.png */; };
 		B2A001FE1F212D8000E6C528 /* Level_2.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A001FD1F212D8000E6C528 /* Level_2.sks */; };
+		B2A002001F21325700E6C528 /* Level_3.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A001FF1F21325700E6C528 /* Level_3.sks */; };
+		B2A002021F2133E700E6C528 /* LevelSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A002011F2133E700E6C528 /* LevelSelectButton.swift */; };
+		B2A002041F2177C400E6C528 /* Level_4.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A002031F2177C400E6C528 /* Level_4.sks */; };
+		B2A002061F2179A300E6C528 /* Level_5.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A002051F2179A300E6C528 /* Level_5.sks */; };
+		B2A002081F217B6300E6C528 /* Level_6.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A002071F217B6300E6C528 /* Level_6.sks */; };
 		B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A307171F13E40C0059637F /* AppDelegate.swift */; };
 		B2A3071C1F13E40C0059637F /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A3071B1F13E40C0059637F /* Actions.sks */; };
 		B2A3071E1F13E40C0059637F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3071D1F13E40C0059637F /* GameScene.swift */; };
@@ -66,6 +71,11 @@
 		B2A001F91F2116D200E6C528 /* playLevelButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playLevelButton.png; sourceTree = "<group>"; };
 		B2A001FB1F21174700E6C528 /* levelSelectButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelSelectButton.png; sourceTree = "<group>"; };
 		B2A001FD1F212D8000E6C528 /* Level_2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_2.sks; sourceTree = "<group>"; };
+		B2A001FF1F21325700E6C528 /* Level_3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_3.sks; sourceTree = "<group>"; };
+		B2A002011F2133E700E6C528 /* LevelSelectButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectButton.swift; sourceTree = "<group>"; };
+		B2A002031F2177C400E6C528 /* Level_4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_4.sks; sourceTree = "<group>"; };
+		B2A002051F2179A300E6C528 /* Level_5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_5.sks; sourceTree = "<group>"; };
+		B2A002071F217B6300E6C528 /* Level_6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_6.sks; sourceTree = "<group>"; };
 		B2A307141F13E40C0059637F /* TheLabrunyth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheLabrunyth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2A307171F13E40C0059637F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2A3071B1F13E40C0059637F /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -147,6 +157,10 @@
 				B218CA151F16936B00E560E9 /* PreviewScene.sks */,
 				B228DD241F17F89200E0C06F /* Level_1.sks */,
 				B2A001FD1F212D8000E6C528 /* Level_2.sks */,
+				B2A001FF1F21325700E6C528 /* Level_3.sks */,
+				B2A002031F2177C400E6C528 /* Level_4.sks */,
+				B2A002051F2179A300E6C528 /* Level_5.sks */,
+				B2A002071F217B6300E6C528 /* Level_6.sks */,
 				B2B06CA31F157123000A728E /* Level_7.sks */,
 				B2A3071B1F13E40C0059637F /* Actions.sks */,
 				B2A3071F1F13E40C0059637F /* GameViewController.swift */,
@@ -166,6 +180,7 @@
 				B2A307291F13E40C0059637F /* Info.plist */,
 				B2B06C9B1F157022000A728E /* LevelSelect.sks */,
 				B2B06CA11F1570C4000A728E /* LevelSelect.swift */,
+				B2A002011F2133E700E6C528 /* LevelSelectButton.swift */,
 				B2B06C9D1F15708E000A728E /* Level1pic.png */,
 				B2B06C9E1F15708E000A728E /* Level2pic.png */,
 				B2B06CA51F157D2F000A728E /* nextLevel.png */,
@@ -316,10 +331,14 @@
 				B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */,
 				B2A307281F13E40C0059637F /* LaunchScreen.storyboard in Resources */,
 				B2B06C9A1F153B55000A728E /* playButton.png in Resources */,
+				B2A002061F2179A300E6C528 /* Level_5.sks in Resources */,
+				B2A002081F217B6300E6C528 /* Level_6.sks in Resources */,
 				B2B06C9F1F15708E000A728E /* Level1pic.png in Resources */,
 				B2A001FE1F212D8000E6C528 /* Level_2.sks in Resources */,
 				B2A001FC1F21174700E6C528 /* levelSelectButton.png in Resources */,
+				B2A002041F2177C400E6C528 /* Level_4.sks in Resources */,
 				B2B06CA01F15708E000A728E /* Level2pic.png in Resources */,
+				B2A002001F21325700E6C528 /* Level_3.sks in Resources */,
 				B2A3071C1F13E40C0059637F /* Actions.sks in Resources */,
 				B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */,
 			);
@@ -350,6 +369,7 @@
 				B2A3071E1F13E40C0059637F /* GameScene.swift in Sources */,
 				B2B06C941F143B21000A728E /* MovingObstacle.swift in Sources */,
 				B2B06C921F142DA9000A728E /* ButtonNode.swift in Sources */,
+				B2A002021F2133E700E6C528 /* LevelSelectButton.swift in Sources */,
 				B2A307201F13E40C0059637F /* GameViewController.swift in Sources */,
 				B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */,
 				B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */,

@@ -125,8 +125,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.camera = cameraNode
         physicsWorld.contactDelegate = self
         
-        let targetX = hero.position.x
-        cameraNode.position.x = targetX
+//        let targetX = hero.position.x
+//        cameraNode.position.x = targetX
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeRight.direction = .right
@@ -182,11 +182,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         nextButton.selectedHandler = { [unowned self] in
-            guard let scene = GameScene.levelPreview(GameScene.level + 1) else {
+            guard let _ = GameScene.level(GameScene.level + 1) else {
                 print("NO NEXT LEVEL FOR YOU!!!")
                 return
             }
             GameScene.level += 1
+            let scene = GameScene.levelPreview(GameScene.level + 1)!
             view.gestureRecognizers?.removeAll()
             scene.scaleMode = .aspectFit
             self.view!.presentScene(scene)
@@ -468,7 +469,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if door.previousPosition.count > framesBack {
                     door.previousPosition.remove(at: 0)
                 }
-                if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y > 0.0 {
+                if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y > 0.0 && !notMoved {
                     door.position.y -= 1
                 }
                 if heroState == .reversingOtherStuff || timeState == .backward {
@@ -492,7 +493,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if door.previousPosition.count > framesBack {
                     door.previousPosition.remove(at: 0)
                 }
-                if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y < 0.0 {
+                if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y < 0.0 && !notMoved {
                     door.position.y += 1
                 }
             }
@@ -575,7 +576,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func evilScientistsShoot() {
-        if evilScientistLayer != nil {
+        if evilScientistLayer != nil && !notMoved {
             if timeSinceESShot < 0.0 {
                 for baddie in evilScientistLayer.children {
                     let bullet = Bullet()
