@@ -64,7 +64,7 @@ class PreviewScene: SKScene {
             for node in movingGroundDoorLayer.children {
                 let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow.png"))
                 self.addChild(arrow)
-                arrow.zRotation = -CGFloat.pi / 2
+                arrow.zRotation = CGFloat.pi / 2
                 arrow.position = CGPoint(x: movingGroundDoorLayer.convert(node.position, to: self).x, y: 0)
             }
         }

@@ -160,9 +160,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
         
+        /*
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeLeft.direction = .left
         view.addGestureRecognizer(swipeLeft)
+ */
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
@@ -176,7 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         longPress.minimumPressDuration = 0.2
         view.addGestureRecognizer(longPress)
         
-        pauseButton.selectedHandler = { [unowned self] in
+        pauseButton.selectedHandler = { [unowned self, unowned view] in
             self.isPaused = true
             self.restartButton.state = .active
             self.levelSelectButton.state = .active
@@ -185,20 +187,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             view.gestureRecognizers?.removeAll()
         }
         
-        playButton.selectedHandler = { [unowned self] in
+        playButton.selectedHandler = { [unowned self, unowned view] in
             self.restartButton.state = .hidden
             self.levelSelectButton.state = .hidden
             self.playButton.state = .hidden
             self.pauseButton.state = .active
             self.isPaused = false
             view.addGestureRecognizer(swipeRight)
-            view.addGestureRecognizer(swipeLeft)
             view.addGestureRecognizer(swipeUp)
             view.addGestureRecognizer(swipeDown)
             view.addGestureRecognizer(longPress)
         }
         
-        restartButton.selectedHandler = { [unowned self] in
+        restartButton.selectedHandler = { [unowned self, unowned view] in
             guard let scene = GameScene.level(GameScene.level) else {
                 print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
@@ -209,7 +210,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view!.presentScene(scene)
         }
         
-        nextButton.selectedHandler = { [unowned self] in
+        nextButton.selectedHandler = { [unowned self, unowned view] in
             guard let _ = GameScene.level(GameScene.level + 1) else {
                 print("NO NEXT LEVEL FOR YOU!!!")
                 return
@@ -221,7 +222,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.view!.presentScene(scene)
         }
         
-        levelSelectButton.selectedHandler = { [unowned self] in
+        levelSelectButton.selectedHandler = { [unowned self, unowned view] in
             guard let scene = GameScene(fileNamed: "LevelSelect") else {
                 print("Bye level select!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
