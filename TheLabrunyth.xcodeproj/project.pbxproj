@@ -56,6 +56,9 @@
 		B2B06CA61F157D2F000A728E /* nextLevel.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B06CA51F157D2F000A728E /* nextLevel.png */; };
 		B2B9F0741F266C9900C59318 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B9F0731F266C9900C59318 /* MainMenu.swift */; };
 		B2B9F0761F266CC000C59318 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2B9F0751F266CC000C59318 /* MainMenu.sks */; };
+		B2B9F07A1F266E2000C59318 /* settingsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B9F0771F266E2000C59318 /* settingsButton.png */; };
+		B2B9F07B1F266E2000C59318 /* levelsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B9F0781F266E2000C59318 /* levelsButton.png */; };
+		B2B9F07E1F266EB100C59318 /* button_play.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B9F07D1F266EB100C59318 /* button_play.png */; };
 		B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2DF09C61F13FA7C009E833E /* Hero.sks */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +135,9 @@
 		B2B06CA51F157D2F000A728E /* nextLevel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nextLevel.png; sourceTree = "<group>"; };
 		B2B9F0731F266C9900C59318 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		B2B9F0751F266CC000C59318 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
+		B2B9F0771F266E2000C59318 /* settingsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsButton.png; sourceTree = "<group>"; };
+		B2B9F0781F266E2000C59318 /* levelsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelsButton.png; sourceTree = "<group>"; };
+		B2B9F07D1F266EB100C59318 /* button_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_play.png; sourceTree = "<group>"; };
 		B2DF09C61F13FA7C009E833E /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -233,6 +239,9 @@
 				B218CA171F16957400E560E9 /* arrow.png */,
 				B2A001F91F2116D200E6C528 /* playLevelButton.png */,
 				B2A001FB1F21174700E6C528 /* levelSelectButton.png */,
+				B2B9F0771F266E2000C59318 /* settingsButton.png */,
+				B2B9F0781F266E2000C59318 /* levelsButton.png */,
+				B2B9F07D1F266EB100C59318 /* button_play.png */,
 			);
 			name = Photos;
 			sourceTree = "<group>";
@@ -388,9 +397,11 @@
 			files = (
 				B24C35E91F226BCA006CA8D6 /* Level4pic.png in Resources */,
 				B228DD251F17F89200E0C06F /* Level_1.sks in Resources */,
+				B2B9F07B1F266E2000C59318 /* levelsButton.png in Resources */,
 				B24C35E81F226BCA006CA8D6 /* Level5pic.png in Resources */,
 				B2A307231F13E40C0059637F /* Main.storyboard in Resources */,
 				B24C35EA1F226BCA006CA8D6 /* Level3pic.png in Resources */,
+				B2B9F07E1F266EB100C59318 /* button_play.png in Resources */,
 				B260A0161F22A89600D3058B /* Level_10.sks in Resources */,
 				B2B06CA41F157123000A728E /* Level_11.sks in Resources */,
 				B2B06C901F142CCE000A728E /* restart@2x.png in Resources */,
@@ -422,6 +433,7 @@
 				B24C35DE1F226540006CA8D6 /* Level_7.sks in Resources */,
 				B2B06CA01F15708E000A728E /* Level2pic.png in Resources */,
 				B2A002001F21325700E6C528 /* Level_3.sks in Resources */,
+				B2B9F07A1F266E2000C59318 /* settingsButton.png in Resources */,
 				B2A3071C1F13E40C0059637F /* Actions.sks in Resources */,
 				B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */,
 			);

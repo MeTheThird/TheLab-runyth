@@ -9,5 +9,11 @@
 import SpriteKit
 
 class MainMenu: SKScene {
+    var playButton: ButtonNode!
+    var settingsButton: ButtonNode!
+    var levelsButton: ButtonNode!
     
+    override func didMove(to view: SKView) {
+        
+    }
 }
