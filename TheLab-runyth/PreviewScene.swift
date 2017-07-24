@@ -77,7 +77,7 @@ class PreviewScene: SKScene {
         panGesture.minimumNumberOfTouches = 1
         view.addGestureRecognizer(panGesture)
         
-        playLevelButton.selectedHandler = { [unowned self] in
+        playLevelButton.selectedHandler = { [unowned self, unowned view] in
             /* 1) Grab reference to our SpriteKit view */
             guard let skView = self.view as SKView! else {
                 print("Could not get Skview")

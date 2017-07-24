@@ -59,11 +59,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false
     var notMoved: Bool = false
+    var phaseActive: Bool = true
+    var timeActive: Bool = true
     static var level: Int = 1
     
     override func didMove(to view: SKView) {
         if GameScene.level == 1 || GameScene.level == 2 || GameScene.level == 3 || GameScene.level == 5 {
             notMoved = true
+        }
+        if GameScene.level < 3 {
+            timeActive = false
+        }
+        if GameScene.level < 5 {
+            phaseActive = false
         }
         if GameScene.level == 3 {
             dummyDoor = childNode(withName: "//dummyDoor") as! MovingObstacle
@@ -161,10 +169,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view.addGestureRecognizer(swipeRight)
         
         /*
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeLeft.direction = .left
-        view.addGestureRecognizer(swipeLeft)
- */
+         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+         swipeLeft.direction = .left
+         view.addGestureRecognizer(swipeLeft)
+         */
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
@@ -365,13 +373,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.left:
-                if timeCoolDown <= 0.0 {
+                if timeActive && timeCoolDown <= 0.0 {
                     timeCoolDown = 5.0
                     heroState = .reversingEverything
                     dateReversalStarted = Date()
                 }
             case UISwipeGestureRecognizerDirection.right:
-                if phaseCoolDown <= 0.0 && timeState == .forward {
+                if phaseActive && phaseCoolDown <= 0.0 && timeState == .forward {
                     phaseDuration = 0.0
                     phaseCoolDown = 5.0
                     timeState = .forward
@@ -396,16 +404,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func respondToLongPressGesture(gesture: UIGestureRecognizer) {
         if let longPressGesture = gesture as? UILongPressGestureRecognizer {
-            if notMoved {
-                notMoved = false
-            }
-            if !end && longPressGesture.state == .ended {
-                heroState = .running
-            } else if longPressGesture.state == .began {
-                if timeCoolDown <= 0.0 {
-                    timeCoolDown = 5.0
-                    heroState = .reversingOtherStuff
-                    dateReversalStarted = Date()
+            if timeActive {
+                if notMoved {
+                    notMoved = false
+                }
+                if !end && longPressGesture.state == .ended {
+                    heroState = .running
+                } else if longPressGesture.state == .began {
+                    if timeCoolDown <= 0.0 {
+                        timeCoolDown = 5.0
+                        heroState = .reversingOtherStuff
+                        dateReversalStarted = Date()
+                    }
                 }
             }
         }
