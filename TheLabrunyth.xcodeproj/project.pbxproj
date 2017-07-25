@@ -22,6 +22,8 @@
 		B24C35EC1F228431006CA8D6 /* Level9pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B24C35EB1F228431006CA8D6 /* Level9pic.png */; };
 		B24C35EE1F22848E006CA8D6 /* Level_8.sks in Resources */ = {isa = PBXBuildFile; fileRef = B24C35ED1F22848E006CA8D6 /* Level_8.sks */; };
 		B24D976E1F1D6A4D0098954E /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24D976D1F1D6A4D0098954E /* Bullet.swift */; };
+		B24FD64C1F27AC8B00331464 /* TheShop.sks in Resources */ = {isa = PBXBuildFile; fileRef = B24FD64B1F27AC8B00331464 /* TheShop.sks */; };
+		B24FD64E1F27B5CD00331464 /* TheShop.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24FD64D1F27B5CD00331464 /* TheShop.swift */; };
 		B260A0141F22A6BA00D3058B /* Level_9.sks in Resources */ = {isa = PBXBuildFile; fileRef = B260A0131F22A6BA00D3058B /* Level_9.sks */; };
 		B260A0161F22A89600D3058B /* Level_10.sks in Resources */ = {isa = PBXBuildFile; fileRef = B260A0151F22A89600D3058B /* Level_10.sks */; };
 		B260A01D1F22ABE100D3058B /* Level11pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B260A01B1F22ABE100D3058B /* Level11pic.png */; };
@@ -97,6 +99,8 @@
 		B24C35EB1F228431006CA8D6 /* Level9pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level9pic.png; sourceTree = "<group>"; };
 		B24C35ED1F22848E006CA8D6 /* Level_8.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_8.sks; sourceTree = "<group>"; };
 		B24D976D1F1D6A4D0098954E /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
+		B24FD64B1F27AC8B00331464 /* TheShop.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TheShop.sks; sourceTree = "<group>"; };
+		B24FD64D1F27B5CD00331464 /* TheShop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheShop.swift; sourceTree = "<group>"; };
 		B260A0131F22A6BA00D3058B /* Level_9.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_9.sks; sourceTree = "<group>"; };
 		B260A0151F22A89600D3058B /* Level_10.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_10.sks; sourceTree = "<group>"; };
 		B260A01B1F22ABE100D3058B /* Level11pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level11pic.png; sourceTree = "<group>"; };
@@ -260,6 +264,7 @@
 				B228DD281F18217D00E0C06F /* ChainSpike.sks */,
 				B2B06C9B1F157022000A728E /* LevelSelect.sks */,
 				B2B9F0751F266CC000C59318 /* MainMenu.sks */,
+				B24FD64B1F27AC8B00331464 /* TheShop.sks */,
 				B228DD241F17F89200E0C06F /* Level_1.sks */,
 				B2A001FD1F212D8000E6C528 /* Level_2.sks */,
 				B2A001FF1F21325700E6C528 /* Level_3.sks */,
@@ -289,6 +294,7 @@
 				B2B06CA11F1570C4000A728E /* LevelSelect.swift */,
 				B2A002011F2133E700E6C528 /* LevelSelectButton.swift */,
 				B2B9F0731F266C9900C59318 /* MainMenu.swift */,
+				B24FD64D1F27B5CD00331464 /* TheShop.swift */,
 			);
 			name = SwiftFiles;
 			sourceTree = "<group>";
@@ -442,6 +448,7 @@
 				B2A002001F21325700E6C528 /* Level_3.sks in Resources */,
 				B26D44DD1F26B87900E72C78 /* Level12pic.png in Resources */,
 				B2B9F07A1F266E2000C59318 /* settingsButton.png in Resources */,
+				B24FD64C1F27AC8B00331464 /* TheShop.sks in Resources */,
 				B2A3071C1F13E40C0059637F /* Actions.sks in Resources */,
 				B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */,
 			);
@@ -478,6 +485,7 @@
 				B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */,
 				B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */,
 				B24D976E1F1D6A4D0098954E /* Bullet.swift in Sources */,
+				B24FD64E1F27B5CD00331464 /* TheShop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

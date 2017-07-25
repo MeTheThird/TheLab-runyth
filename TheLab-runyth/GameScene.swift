@@ -54,8 +54,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeReversed: TimeInterval = 0.0
     var enemyBullets = [Bullet]()
     var recentlyRemovedBullets = [Bullet]()
-    var framesBack: Int = 150
-    var phaseDurationMax: Double = 1.0
+    static var framesBack: Int = 150
+    static var phaseDurationMax: Double = 1.0
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false
     var notMoved: Bool = false
@@ -276,7 +276,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-        if phaseDuration >= phaseDurationMax {
+        if phaseDuration >= GameScene.phaseDurationMax {
             if heroState == .phasing {
                 heroState = .running
             }
@@ -509,7 +509,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     door.previousPosition.append(door.position)
                 }
-                if door.previousPosition.count > framesBack {
+                if door.previousPosition.count > GameScene.framesBack {
                     door.previousPosition.remove(at: 0)
                 }
                 if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y > 0.0 && !notMoved {
@@ -524,7 +524,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     door.previousPosition.append(door.position)
                 }
-                if door.previousPosition.count > framesBack {
+                if door.previousPosition.count > GameScene.framesBack {
                     door.previousPosition.remove(at: 0)
                 }
                 if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y < 0.0 && !notMoved {
@@ -539,7 +539,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     spike.previousPosition.append(spike.position)
                 }
-                if spike.previousPosition.count > framesBack {
+                if spike.previousPosition.count > GameScene.framesBack {
                     spike.previousPosition.remove(at: 0)
                 }
             }
@@ -551,7 +551,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     spike.previousPosition.append(spike.position)
                 }
-                if spike.previousPosition.count > framesBack {
+                if spike.previousPosition.count > GameScene.framesBack {
                     spike.previousPosition.remove(at: 0)
                 }
             }
@@ -563,7 +563,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     scientist.previousPosition.append(scientist.position)
                 }
-                if scientist.previousPosition.count > framesBack {
+                if scientist.previousPosition.count > GameScene.framesBack {
                     scientist.previousPosition.remove(at: 0)
                 }
             }
@@ -603,7 +603,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             heroPrevState.append(heroState)
             previousGravity.append(self.physicsWorld.gravity)
         }
-        if heroPrevPos.count > framesBack {
+        if heroPrevPos.count > GameScene.framesBack {
             heroPrevPos.remove(at: 0)
             heroPrevState.remove(at: 0)
             previousGravity.remove(at: 0)
