@@ -335,12 +335,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
             recentlyRemovedBullets.append(bullet)
             nodeA.run(removal)
-        } else if categoryA == 1 && categoryB == 8 {
+        } else if categoryA == 1 && categoryB == 0 {
             nodeB.run(removal)
             print("Your money went from \(TheShop.currency)")
             TheShop.currency += 10
             print("To \(TheShop.currency)")
-        } else if categoryA == 8 && categoryB == 1 {
+        } else if categoryA == 0 && categoryB == 1 {
             print("Your money went from \(TheShop.currency)")
             nodeA.run(removal)
             TheShop.currency += 10
