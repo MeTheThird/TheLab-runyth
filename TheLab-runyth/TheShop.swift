@@ -15,6 +15,7 @@ class TheShop: SKScene {
     var timeUpgradeButton: ButtonNode!
     var phasingAnimationSequence: SKAction! = nil
     var phasingCharInitialPosition: CGPoint! = nil
+    static var currency: Int = 0
     
     // add time reversal animation - maybe a falling securtiy door, and the hero comes in and reverses it?
     // Also, make the phasing SKAction better - currently it moves, then fades after it's done moving - because of sequence
@@ -27,20 +28,30 @@ class TheShop: SKScene {
         timeUpgradeButton = childNode(withName: "timeUpgradeButton") as! ButtonNode
         
         phaseUpgradeButton.selectedHandler = {
-            if GameScene.phaseDurationMax < 2.0 {
-                GameScene.phaseDurationMax += 0.25
-                print("increased phase")
+            if TheShop.currency >= 10 {
+                if GameScene.phaseDurationMax < 2.0 {
+                    GameScene.phaseDurationMax += 0.25
+                    TheShop.currency -= 10
+                    print("increased phase")
+                } else {
+                    print("NO PHASE UPGRADE FOR YOU!!!")
+                }
             } else {
-                print("NO PHASE UPGRADE FOR YOU!!!")
+                print("YOUR LIFESTYLE'S HIIIIIIGH, BUT YOUR FUNDS ARE LOOOOOOW :(")
             }
         }
         
         timeUpgradeButton.selectedHandler = {
-            if GameScene.framesBack < 180 {
-                GameScene.framesBack += 10
-                print("Greater time abilities hath been granted to thee.")
+            if TheShop.currency >= 10 {
+                if GameScene.framesBack < 180 {
+                    GameScene.framesBack += 10
+                    TheShop.currency -= 10
+                    print("Greater time abilities hath been granted to thee.")
+                } else {
+                    print("THOU SHALT NOT OBTAIN TIME ABILITIES MORE POWERFUL THAN MINE!!!")
+                }
             } else {
-                print("THOU SHALT NOT OBTAIN TIME ABILITIES MORE POWERFUL THAN MINE!!!")
+                print("YOUR LIFESTYLE'S HIIIIIIGH, BUT YOUR FUNDS ARE LOOOOOOW :(")
             }
         }
         

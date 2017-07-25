@@ -64,7 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     static var level: Int = 1
     
     override func didMove(to view: SKView) {
-        if GameScene.level == 1 || GameScene.level == 2 || GameScene.level == 3 || GameScene.level == 5 {
+        if GameScene.level == 1 || GameScene.level == 2 || GameScene.level == 3 || GameScene.level == 5 || GameScene.level == 7 {
             notMoved = true
         }
         if GameScene.level < 3 {
@@ -335,6 +335,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
             recentlyRemovedBullets.append(bullet)
             nodeA.run(removal)
+        } else if categoryA == 1 && categoryB == 8 {
+            nodeB.run(removal)
+            print("Your money went from \(TheShop.currency)")
+            TheShop.currency += 10
+            print("To \(TheShop.currency)")
+        } else if categoryA == 8 && categoryB == 1 {
+            print("Your money went from \(TheShop.currency)")
+            nodeA.run(removal)
+            TheShop.currency += 10
+            print("To \(TheShop.currency)")
         } else if categoryA == 4 {
             let bullet = nodeA as! Bullet
             bullet.timeWhenDeleted = Date()
