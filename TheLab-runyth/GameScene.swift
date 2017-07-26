@@ -62,6 +62,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var phaseActive: Bool = true
     var timeActive: Bool = true
     var treasureCollected: Bool = false
+    var currencyIncreased: Bool = false
     static var level: Int = 1
     
     override func didMove(to view: SKView) {
@@ -697,11 +698,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level)) {
             LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level)
             }
-            if treasureCollected {
+            if treasureCollected && !currencyIncreased {
                 print("Your money went from \(TheShop.currency)")
                 TheShop.currency += 10
+                currencyIncreased = true
                 print("To \(TheShop.currency)")
-                if TheShop.currency <= 100 {
+                if TheShop.currency <= 1000 {
                     print("Your funds are still somewhat LOW... :(")
                 }
             }
