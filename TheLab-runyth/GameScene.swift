@@ -61,6 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var notMoved: Bool = false
     var phaseActive: Bool = true
     var timeActive: Bool = true
+    var treasureCollected: Bool = false
     static var level: Int = 1
     
     override func didMove(to view: SKView) {
@@ -337,14 +338,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             nodeA.run(removal)
         } else if categoryA == 1 && categoryB == 0 {
             nodeB.run(removal)
-            print("Your money went from \(TheShop.currency)")
-            TheShop.currency += 10
-            print("To \(TheShop.currency)")
+            treasureCollected = true
         } else if categoryA == 0 && categoryB == 1 {
-            print("Your money went from \(TheShop.currency)")
             nodeA.run(removal)
-            TheShop.currency += 10
-            print("To \(TheShop.currency)")
+            treasureCollected = true
         } else if categoryA == 4 {
             let bullet = nodeA as! Bullet
             bullet.timeWhenDeleted = Date()
@@ -697,6 +694,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if heroPos.x >= finalDoor.position.x {
             nextButton.state = .active
             heroState = .stationary
+            if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level)) {
+            LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level)
+            }
+            if treasureCollected {
+                print("Your money went from \(TheShop.currency)")
+                TheShop.currency += 10
+                print("To \(TheShop.currency)")
+                if TheShop.currency <= 100 {
+                    print("Your funds are still somewhat LOW... :(")
+                }
+            }
         }
     }
 }

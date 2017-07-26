@@ -11,60 +11,43 @@ import SpriteKit
 class LevelSelect: SKScene {
     
     /* UI Connections */
-//    var play1: ButtonNode!
-//    var play2: ButtonNode!
-//    var play3: ButtonNode!
-//    var play4: ButtonNode!
-//    var play5: ButtonNode!
-//    var play6: ButtonNode!
-//    var play7: ButtonNode!
-//    var play8: ButtonNode!
     var levelSelectButtonLayer: SKSpriteNode!
+    static var beatenLevelManager = levelBeatManager()
     
     
     override func didMove(to view: SKView) {
         levelSelectButtonLayer = childNode(withName: "levelSelectButtonLayer") as! SKSpriteNode
         
+        var numOfLevels: Int = 0
+        var level: Int = 1
+        while GameScene.level(level) != nil {
+            numOfLevels += 1
+            level += 1
+        }
+        print(numOfLevels)
+        
+        var numOfLevelsNotBeaten: Int = 0
+        for i in 1...numOfLevels {
+            if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: i)) {
+                print("Level number \(i) has not been beaten yet...")
+                print("PATHETIC!")
+                numOfLevelsNotBeaten += 1
+            }
+        }
+        if numOfLevelsNotBeaten == 0 {
+            print("You're half-decent")
+        }
+        
         for a in levelSelectButtonLayer.children {
             let button = a as! LevelSelectButton
             button.selectedHandler = { [unowned self, unowned button] in
-                self.loadGame(level: button.number)
+                print(LevelSelect.beatenLevelManager.lastLevelBeatenNumber)
+                if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: button.number)) || button.number == LevelSelect.beatenLevelManager.lastLevelBeatenNumber + 1 {
+                    self.loadGame(level: button.number)
+                }
             }
         }
-        /* Set UI connections */
-//        play1 = self.childNode(withName: "play1") as! ButtonNode
-//        play2 = self.childNode(withName: "play2") as! ButtonNode
-//        play3 = self.childNode(withName: "play3") as! ButtonNode
-//        play4 = self.childNode(withName: "play4") as! ButtonNode
-//        play5 = self.childNode(withName: "play5") as! ButtonNode
-//        play6 = self.childNode(withName: "play6") as! ButtonNode
-//        play7 = self.childNode(withName: "play7") as! ButtonNode
-//        play8 = self.childNode(withName: "play8") as! ButtonNode
         
-//        play1.selectedHandler = {
-//            self.loadGame(level: 1)
-//        }
-//        play2.selectedHandler = {
-//            self.loadGame(level: 2)
-//        }
-//        play3.selectedHandler = {
-//            self.loadGame(level: 3)
-//        }
-//        play4.selectedHandler = {
-//            self.loadGame(level: 4)
-//        }
-//        play5.selectedHandler = {
-//            self.loadGame(level: 5)
-//        }
-//        play6.selectedHandler = {
-//            self.loadGame(level: 6)
-//        }
-//        play7.selectedHandler = {
-//            self.loadGame(level: 7)
-//        }
-//        play8.selectedHandler = {
-//            self.loadGame(level: 8)
-//        }
     }
     
     func loadGame(level: Int) {

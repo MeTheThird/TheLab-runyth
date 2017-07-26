@@ -9,50 +9,90 @@
 import Foundation
 
 class levelBeat: NSObject, NSCoding {
-    let beaten: Bool
     let levelNumber: Int
     
-    init(beaten: Bool, levelNum: Int) {
-        self.beaten = beaten
+    init(levelNum: Int) {
         self.levelNumber = levelNum
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.beaten = aDecoder.decodeObject(forKey: "beaten") as! Bool
-        self.levelNumber = aDecoder.decodeObject(forKey: "levelNumber") as! Int
+        self.levelNumber = aDecoder.decodeInteger(forKey: "levelNumber")
         super.init()
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.beaten, forKey: "beaten")
         aCoder.encode(self.levelNumber, forKey: "levelNumber")
+    }
+    
+    override var hash: Int {
+        return levelNumber
+    }
+    
+    override func isEqual(_ object: Any?) -> Bool {
+        if let other = object as? levelBeat {
+            return self.levelNumber == other.levelNumber
+        } else {
+            return false
+        }
     }
 }
 
 class levelBeatManager {
     
     var beatenLevels = [levelBeat]()
+    var lastLevelBeatenNumber: Int = 0
     
     init() {
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDirectory = paths[0]
-        let path = URL(fileURLWithPath: documentsDirectory).appendingPathComponent("beatenLevels.plist").absoluteString
+        let path = URL(fileURLWithPath: documentsDirectory).appendingPathComponent("beatenLevels.plist")
         let fileManager = FileManager.default
         
-        if !fileManager.fileExists(atPath: path) {
+        if !fileManager.fileExists(atPath: path.absoluteString) {
             if let bundle = Bundle.main.path(forResource: "DefaultFile", ofType: "plist") {
                 do {
-                    try fileManager.copyItem(atPath: bundle, toPath: path)
+                    try fileManager.copyItem(atPath: bundle, toPath: path.absoluteString)
                 }
                 catch {
                     print(error)
                 }
             }
         }
-        
-        if let rawData = NSData(contentsOfFile: path) {
-            let beatenArray: AnyObject? = NSKeyedUnarchiver.unarchiveObject(with: rawData as Data) as AnyObject
+        do {
+            let rawData = try Data(contentsOf: path)
+            let beatenArray: Any? = NSKeyedUnarchiver.unarchiveObject(with: rawData)
             self.beatenLevels = beatenArray as? [levelBeat] ?? []
         }
+        catch {
+            print(error)
+        }
+        
+        for x in beatenLevels {
+            if x.levelNumber > lastLevelBeatenNumber {
+                lastLevelBeatenNumber = x.levelNumber
+            }
+        }
+    }
+    
+    func save() {
+        let saveData = NSKeyedArchiver.archivedData(withRootObject: self.beatenLevels)
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let documentsDirectory = paths[0]
+        let path = URL(fileURLWithPath: documentsDirectory).appendingPathComponent("beatenLevels.plist")
+        do {
+            try saveData.write(to: path)
+        }
+        catch {
+            print(error)
+        }
+    }
+    
+    func addNewBeatenLevel(beatenLevelNumber: Int) {
+        let newBeatenLevel = levelBeat(levelNum: beatenLevelNumber)
+        if beatenLevelNumber > lastLevelBeatenNumber {
+            lastLevelBeatenNumber = beatenLevelNumber
+        }
+        self.beatenLevels.append(newBeatenLevel)
+        self.save()
     }
 }
