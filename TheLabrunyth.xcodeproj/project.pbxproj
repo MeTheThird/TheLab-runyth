@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B20ED61C1F27F1C10034AC4F /* TheShopUpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20ED61B1F27F1C10034AC4F /* TheShopUpgradeButton.swift */; };
+		B20ED61E1F2800BE0034AC4F /* RandomPListStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20ED61D1F2800BE0034AC4F /* RandomPListStuff.swift */; };
 		B218CA161F16936B00E560E9 /* PreviewScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B218CA151F16936B00E560E9 /* PreviewScene.sks */; };
 		B218CA191F16957400E560E9 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B218CA171F16957400E560E9 /* arrow.png */; };
 		B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218CA1B1F16971C00E560E9 /* PreviewScene.swift */; };
@@ -86,6 +87,7 @@
 
 /* Begin PBXFileReference section */
 		B20ED61B1F27F1C10034AC4F /* TheShopUpgradeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheShopUpgradeButton.swift; sourceTree = "<group>"; };
+		B20ED61D1F2800BE0034AC4F /* RandomPListStuff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPListStuff.swift; sourceTree = "<group>"; };
 		B218CA151F16936B00E560E9 /* PreviewScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PreviewScene.sks; sourceTree = "<group>"; };
 		B218CA171F16957400E560E9 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B218CA1B1F16971C00E560E9 /* PreviewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewScene.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				B2A002011F2133E700E6C528 /* LevelSelectButton.swift */,
 				B2B9F0731F266C9900C59318 /* MainMenu.swift */,
 				B24FD64D1F27B5CD00331464 /* TheShop.swift */,
+				B20ED61D1F2800BE0034AC4F /* RandomPListStuff.swift */,
 			);
 			name = SwiftFiles;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				B2B06C941F143B21000A728E /* MovingObstacle.swift in Sources */,
 				B2B06C921F142DA9000A728E /* ButtonNode.swift in Sources */,
 				B2A002021F2133E700E6C528 /* LevelSelectButton.swift in Sources */,
+				B20ED61E1F2800BE0034AC4F /* RandomPListStuff.swift in Sources */,
 				B2B9F0741F266C9900C59318 /* MainMenu.swift in Sources */,
 				B2A307201F13E40C0059637F /* GameViewController.swift in Sources */,
 				B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */,
