@@ -57,7 +57,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enemyBullets = [Bullet]()
     var recentlyRemovedBullets = [Bullet]()
     var heroSpeed: CGFloat = 2.0
-    var end: Bool = false
     var notMoved: Bool = false
     var phaseActive: Bool = true
     var timeActive: Bool = true
@@ -87,8 +86,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 meowMeow.previousPosition.append(meowMeow.position)
             }
         }
+        if GameScene.level >= 7 {
+            treasure = childNode(withName: "treasure") as! SKSpriteNode
+        }
+        if GameScene.level == 7 {
+            if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: 7, treasureCollected: true)) {
+                treasure.alpha = 0.0
+                treasure.physicsBody?.contactTestBitMask = 0
+            }
+        }
         if GameScene.level > 7 {
-            
+            let randInt = arc4random_uniform(100)
+            if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: true)) {
+                if randInt < 2 {
+                    treasure.alpha = 1.0
+                    treasure.physicsBody?.contactTestBitMask = 1
+                }
+            } else {
+                if randInt < 5 {
+                    treasure.alpha = 1.0
+                    treasure.physicsBody?.contactTestBitMask = 1
+                }
+            }
         }
         hero = childNode(withName: "//hero") as! SKSpriteNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
@@ -249,7 +268,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         levelSelectButton.selectedHandler = { [unowned self, unowned view] in
-            guard let scene = GameScene(fileNamed: "LevelSelect") else {
+            guard let scene = LevelSelect(fileNamed: "LevelSelect") else {
                 print("Bye level select!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
             }
@@ -301,7 +320,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         let targetX = hero.position.x
-        let x = clamp(value: targetX, lower: targetX, upper: finalDoor.position.x + finalDoor.size.width / 2 - size.width / 2)
+        let rightMostSideOfFinalDoor = finalDoor.position.x + finalDoor.size.width / 2
+        let x = clamp(value: targetX - 75, lower: 0, upper: rightMostSideOfFinalDoor - size.width / 2)
         cameraNode.position.x = x
         
         if !notMoved {
@@ -432,8 +452,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if notMoved {
                     notMoved = false
                 }
-                if !end && longPressGesture.state == .ended {
+                if longPressGesture.state == .ended {
                     heroState = .running
+                    if timeState == .backward {
+                        timeState = .forward
+                    }
+                    timeReversed = 0.0
                 } else if longPressGesture.state == .began {
                     if timeCoolDown <= 0.0 {
                         timeCoolDown = 5.0
@@ -457,7 +481,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 if door.previousPosition.last == nil && heroState == .reversingOtherStuff {
                     heroState = .running
-                    end = true
                     if timeState == .backward {
                         timeState = .forward
                     }
@@ -528,7 +551,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func updatePreviousMovingObstaclePositions() {
         if timeReversed > 2.5 {
             heroState = .running
-            end = true
             if timeState == .backward {
                 timeState = .forward
             }
@@ -643,7 +665,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if heroState == .reversingOtherStuff || timeState == .backward {
             if heroPrevPos.last == nil {
                 heroState = .running
-                end = true
                 if timeState == .backward {
                     timeState = .forward
                 }
@@ -657,6 +678,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
             }
+            
             view!.gestureRecognizers?.removeAll()
             scene.scaleMode = .aspectFit
             scene.notMoved = false
@@ -717,11 +739,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let heroPos = hero.convert(CGPoint(x: 0, y: 0), to: self)
         
         if heroPos.x >= finalDoor.position.x {
-            nextButton.state = .active
-            replayButton.state = .active
+            if GameScene.level(GameScene.level + 1) != nil {
+                nextButton.state = .active
+                replayButton.state = .active
+            } else {
+                guard let scene = SKScene(fileNamed: "WinScreen") else {
+                    print("YOU'LL NEVER WIN!!! HAHAHAHAHAHAHAHAHA!!!")
+                    return
+                }
+                scene.scaleMode = .aspectFit
+                view?.gestureRecognizers?.removeAll()
+                self.view!.presentScene(scene)
+            }
             heroState = .stationary
             if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: treasureFound)) {
-            LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level, treasureCollected: treasureFound)
+                LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level, treasureCollected: treasureFound)
             }
             if treasureFound && !currencyIncreased {
                 print("Your money went from \(TheShop.managerOfCurrency.currency)")
