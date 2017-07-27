@@ -37,7 +37,7 @@ class MainMenu: SKScene {
             print("TEEHEE")
         }
         
-        theShopButton.selectedHandler = {
+        theShopButton.selectedHandler = { [unowned self] in
             guard let skView = self.view as SKView! else {
                 print("Could not get Skview")
                 return

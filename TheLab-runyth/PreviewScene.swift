@@ -26,7 +26,7 @@ class PreviewScene: SKScene {
         }
         levelRealScene = theRealGameScene.scene
         playLevelButton = childNode(withName: "//playLevelButton") as! ButtonNode
-        backButton = childNode(withName: "backButton") as! ButtonNode
+        backButton = childNode(withName: "//backButton") as! ButtonNode
         cameraNode = childNode(withName: "cameraNodePreview") as! SKCameraNode
         instructionsLabel = childNode(withName: "instructionsLabel") as! SKLabelNode
         buttonTapLabel = childNode(withName: "buttonTapLabel") as! SKLabelNode
@@ -99,7 +99,7 @@ class PreviewScene: SKScene {
             skView.presentScene(scene)
         }
         
-        backButton.selectedHandler = {
+        backButton.selectedHandler = { [unowned self] in
             guard let skView = self.view as SKView! else {
                 print("Could not get Skview")
                 return

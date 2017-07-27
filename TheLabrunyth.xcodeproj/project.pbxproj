@@ -14,6 +14,8 @@
 		B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218CA1B1F16971C00E560E9 /* PreviewScene.swift */; };
 		B228DD251F17F89200E0C06F /* Level_1.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD241F17F89200E0C06F /* Level_1.sks */; };
 		B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD281F18217D00E0C06F /* ChainSpike.sks */; };
+		B247DB551F2A4EFE00BA7E63 /* replayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B247DB541F2A4EFE00BA7E63 /* replayButton.png */; };
+		B247DB571F2A4F1900BA7E63 /* button_restart.png in Resources */ = {isa = PBXBuildFile; fileRef = B247DB561F2A4F1900BA7E63 /* button_restart.png */; };
 		B24C35DE1F226540006CA8D6 /* Level_7.sks in Resources */ = {isa = PBXBuildFile; fileRef = B24C35DD1F226540006CA8D6 /* Level_7.sks */; };
 		B24C35E51F226BCA006CA8D6 /* Level8pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B24C35DF1F226BCA006CA8D6 /* Level8pic.png */; };
 		B24C35E61F226BCA006CA8D6 /* Level7pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B24C35E01F226BCA006CA8D6 /* Level7pic.png */; };
@@ -49,7 +51,6 @@
 		B2A307281F13E40C0059637F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A307261F13E40C0059637F /* LaunchScreen.storyboard */; };
 		B2A307331F13E40C0059637F /* TheLab_runythTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A307321F13E40C0059637F /* TheLab_runythTests.swift */; };
 		B2A3073E1F13E40C0059637F /* TheLab_runythUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3073D1F13E40C0059637F /* TheLab_runythUITests.swift */; };
-		B2B06C901F142CCE000A728E /* restart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B06C8F1F142CCE000A728E /* restart@2x.png */; };
 		B2B06C921F142DA9000A728E /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B06C911F142DA9000A728E /* ButtonNode.swift */; };
 		B2B06C941F143B21000A728E /* MovingObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B06C931F143B21000A728E /* MovingObstacle.swift */; };
 		B2B06C981F15391E000A728E /* pauseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2B06C971F15391E000A728E /* pauseButton.png */; };
@@ -95,6 +96,8 @@
 		B218CA1B1F16971C00E560E9 /* PreviewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewScene.swift; sourceTree = "<group>"; };
 		B228DD241F17F89200E0C06F /* Level_1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_1.sks; sourceTree = "<group>"; };
 		B228DD281F18217D00E0C06F /* ChainSpike.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChainSpike.sks; sourceTree = "<group>"; };
+		B247DB541F2A4EFE00BA7E63 /* replayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replayButton.png; sourceTree = "<group>"; };
+		B247DB561F2A4F1900BA7E63 /* button_restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_restart.png; sourceTree = "<group>"; };
 		B24C35DD1F226540006CA8D6 /* Level_7.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_7.sks; sourceTree = "<group>"; };
 		B24C35DF1F226BCA006CA8D6 /* Level8pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level8pic.png; sourceTree = "<group>"; };
 		B24C35E01F226BCA006CA8D6 /* Level7pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level7pic.png; sourceTree = "<group>"; };
@@ -136,7 +139,6 @@
 		B2A307391F13E40C0059637F /* TheLabrunythUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheLabrunythUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2A3073D1F13E40C0059637F /* TheLab_runythUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheLab_runythUITests.swift; sourceTree = "<group>"; };
 		B2A3073F1F13E40C0059637F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B2B06C8F1F142CCE000A728E /* restart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "restart@2x.png"; sourceTree = "<group>"; };
 		B2B06C911F142DA9000A728E /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		B2B06C931F143B21000A728E /* MovingObstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovingObstacle.swift; sourceTree = "<group>"; };
 		B2B06C971F15391E000A728E /* pauseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseButton.png; sourceTree = "<group>"; };
@@ -237,7 +239,7 @@
 		B2B9F0701F2665B500C59318 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
-				B2B06C8F1F142CCE000A728E /* restart@2x.png */,
+				B247DB561F2A4F1900BA7E63 /* button_restart.png */,
 				B2B06C971F15391E000A728E /* pauseButton.png */,
 				B2B06C991F153B55000A728E /* playButton.png */,
 				B26D44DC1F26B87900E72C78 /* Level12pic.png */,
@@ -257,6 +259,7 @@
 				B2A001F91F2116D200E6C528 /* playLevelButton.png */,
 				B2F9AF151F295C7A00D13B56 /* theShopButton.png */,
 				B2F9AF171F295DAC00D13B56 /* backButton.png */,
+				B247DB541F2A4EFE00BA7E63 /* replayButton.png */,
 				B2A001FB1F21174700E6C528 /* levelSelectButton.png */,
 				B2B9F0771F266E2000C59318 /* settingsButton.png */,
 				B2B9F0781F266E2000C59318 /* levelsButton.png */,
@@ -428,7 +431,6 @@
 				B2B9F07E1F266EB100C59318 /* button_play.png in Resources */,
 				B260A0161F22A89600D3058B /* Level_10.sks in Resources */,
 				B2B06CA41F157123000A728E /* Level_11.sks in Resources */,
-				B2B06C901F142CCE000A728E /* restart@2x.png in Resources */,
 				B218CA161F16936B00E560E9 /* PreviewScene.sks in Resources */,
 				B2B06C9C1F157022000A728E /* LevelSelect.sks in Resources */,
 				B24C35EE1F22848E006CA8D6 /* Level_8.sks in Resources */,
@@ -444,6 +446,7 @@
 				B260A01D1F22ABE100D3058B /* Level11pic.png in Resources */,
 				B2B06C981F15391E000A728E /* pauseButton.png in Resources */,
 				B260A01E1F22ABE100D3058B /* Level10pic.png in Resources */,
+				B247DB571F2A4F1900BA7E63 /* button_restart.png in Resources */,
 				B29AD3D41F26A02A00EBD644 /* Level_12.sks in Resources */,
 				B2F9AF181F295DAC00D13B56 /* backButton.png in Resources */,
 				B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */,
@@ -456,6 +459,7 @@
 				B24C35E51F226BCA006CA8D6 /* Level8pic.png in Resources */,
 				B2A001FC1F21174700E6C528 /* levelSelectButton.png in Resources */,
 				B2A002041F2177C400E6C528 /* Level_4.sks in Resources */,
+				B247DB551F2A4EFE00BA7E63 /* replayButton.png in Resources */,
 				B24C35DE1F226540006CA8D6 /* Level_7.sks in Resources */,
 				B2B06CA01F15708E000A728E /* Level2pic.png in Resources */,
 				B2A002001F21325700E6C528 /* Level_3.sks in Resources */,

@@ -31,6 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeCool: SKLabelNode!
     var cameraNode: SKCameraNode!
     var restartButton: ButtonNode!
+    var replayButton: ButtonNode!
     var levelSelectButton: ButtonNode!
     var pauseButton: ButtonNode!
     var playButton: ButtonNode!
@@ -89,6 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
         restartButton = childNode(withName: "//restartButton") as! ButtonNode
+        replayButton = childNode(withName: "//replayButton") as! ButtonNode
         levelSelectButton = childNode(withName: "//levelSelectButton") as! ButtonNode
         pauseButton = childNode(withName: "//pauseButton") as! ButtonNode
         playButton = childNode(withName: "//playButton") as! ButtonNode
@@ -157,6 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         restartButton.state = .hidden
+        replayButton.state = .hidden
         levelSelectButton.state = .hidden
         playButton.state = .hidden
         nextButton.state = .hidden
@@ -216,7 +219,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             view.gestureRecognizers?.removeAll()
             scene.scaleMode = .aspectFit
-            scene.notMoved = false
+            self.view!.presentScene(scene)
+        }
+        
+        replayButton.selectedHandler = { [unowned self, unowned view] in
+            guard let scene = GameScene.level(GameScene.level) else {
+                print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
+                return
+            }
+            view.gestureRecognizers?.removeAll()
+            scene.scaleMode = .aspectFit
             self.view!.presentScene(scene)
         }
         
@@ -694,6 +706,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if heroPos.x >= finalDoor.position.x {
             nextButton.state = .active
+            replayButton.state = .active
             heroState = .stationary
             if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: treasureFound)) {
             LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level, treasureCollected: treasureFound)

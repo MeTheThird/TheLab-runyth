@@ -42,7 +42,7 @@ class LevelSelect: SKScene {
             print("You're half-decent")
         }
         
-        backButton.selectedHandler = {
+        backButton.selectedHandler = { [unowned self] in
             guard let skView = self.view as SKView! else {
                 print("Could not get Skview")
                 return

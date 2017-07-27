@@ -61,7 +61,7 @@ class TheShop: SKScene {
             }
         }
         
-        backButton.selectedHandler = {
+        backButton.selectedHandler = { [unowned self] in
             guard let skView = self.view as SKView! else {
                 print("Could not get Skview")
                 return
