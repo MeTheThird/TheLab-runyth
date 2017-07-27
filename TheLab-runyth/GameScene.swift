@@ -42,6 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var evilScientistLayer: SKSpriteNode!
     var movingSpikeLayer: SKSpriteNode!
     var finalDoor: SKSpriteNode!
+    var treasure: SKSpriteNode!
     var dummyDoor: MovingObstacle!
     var meowMeow: MovingObstacle!
     var ground: SKSpriteNode!
@@ -55,8 +56,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeReversed: TimeInterval = 0.0
     var enemyBullets = [Bullet]()
     var recentlyRemovedBullets = [Bullet]()
-    static var framesBack: Int = 150
-    static var phaseDurationMax: Double = 1.0
     var heroSpeed: CGFloat = 2.0
     var end: Bool = false
     var notMoved: Bool = false
@@ -65,6 +64,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var treasureFound: Bool = false
     var currencyIncreased: Bool = false
     static var level: Int = 1
+    static var framesBack: Int = 150
+    static var phaseDurationMax: Double = 1.0
     
     override func didMove(to view: SKView) {
         if GameScene.level == 1 || GameScene.level == 2 || GameScene.level == 3 || GameScene.level == 5 || GameScene.level == 7 {
@@ -85,6 +86,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 dummyDoor.previousPosition.append(CGPoint(x: x, y: y + CGFloat(150 - i)))
                 meowMeow.previousPosition.append(meowMeow.position)
             }
+        }
+        if GameScene.level > 7 {
+            
         }
         hero = childNode(withName: "//hero") as! SKSpriteNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
@@ -450,6 +454,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if let last = door.previousPosition.last {
                     door.position = last
                     door.previousPosition.removeLast()
+                }
+                if door.previousPosition.last == nil && heroState == .reversingOtherStuff {
+                    heroState = .running
+                    end = true
+                    if timeState == .backward {
+                        timeState = .forward
+                    }
+                    timeReversed = 0.0
                 }
             }
         }

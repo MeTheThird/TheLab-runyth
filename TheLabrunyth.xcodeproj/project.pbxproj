@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B20ED61C1F27F1C10034AC4F /* TheShopUpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20ED61B1F27F1C10034AC4F /* TheShopUpgradeButton.swift */; };
-		B20ED61E1F2800BE0034AC4F /* RandomPListStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20ED61D1F2800BE0034AC4F /* RandomPListStuff.swift */; };
+		B20ED61E1F2800BE0034AC4F /* levelBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20ED61D1F2800BE0034AC4F /* levelBeat.swift */; };
 		B218CA161F16936B00E560E9 /* PreviewScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B218CA151F16936B00E560E9 /* PreviewScene.sks */; };
 		B218CA191F16957400E560E9 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B218CA171F16957400E560E9 /* arrow.png */; };
 		B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218CA1B1F16971C00E560E9 /* PreviewScene.swift */; };
@@ -16,6 +16,9 @@
 		B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD281F18217D00E0C06F /* ChainSpike.sks */; };
 		B247DB551F2A4EFE00BA7E63 /* replayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B247DB541F2A4EFE00BA7E63 /* replayButton.png */; };
 		B247DB571F2A4F1900BA7E63 /* button_restart.png in Resources */ = {isa = PBXBuildFile; fileRef = B247DB561F2A4F1900BA7E63 /* button_restart.png */; };
+		B247DB5C1F2A661100BA7E63 /* levelBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B247DB5B1F2A661100BA7E63 /* levelBeatManager.swift */; };
+		B247DB5E1F2A664A00BA7E63 /* currencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B247DB5D1F2A664A00BA7E63 /* currencyManager.swift */; };
+		B247DB631F2A675F00BA7E63 /* phaseLabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B247DB621F2A675F00BA7E63 /* phaseLabelManager.swift */; };
 		B24C35DE1F226540006CA8D6 /* Level_7.sks in Resources */ = {isa = PBXBuildFile; fileRef = B24C35DD1F226540006CA8D6 /* Level_7.sks */; };
 		B24C35E51F226BCA006CA8D6 /* Level8pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B24C35DF1F226BCA006CA8D6 /* Level8pic.png */; };
 		B24C35E61F226BCA006CA8D6 /* Level7pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B24C35E01F226BCA006CA8D6 /* Level7pic.png */; };
@@ -33,6 +36,9 @@
 		B260A01D1F22ABE100D3058B /* Level11pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B260A01B1F22ABE100D3058B /* Level11pic.png */; };
 		B260A01E1F22ABE100D3058B /* Level10pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B260A01C1F22ABE100D3058B /* Level10pic.png */; };
 		B26D44DD1F26B87900E72C78 /* Level12pic.png in Resources */ = {isa = PBXBuildFile; fileRef = B26D44DC1F26B87900E72C78 /* Level12pic.png */; };
+		B2826C4F1F2A69F000E05583 /* timeLabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2826C4E1F2A69F000E05583 /* timeLabelManager.swift */; };
+		B2826C511F2A87AA00E05583 /* phaseDurationMaxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2826C501F2A87AA00E05583 /* phaseDurationMaxManager.swift */; };
+		B2826C531F2A891B00E05583 /* framesBackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2826C521F2A891B00E05583 /* framesBackManager.swift */; };
 		B29AD3D41F26A02A00EBD644 /* Level_12.sks in Resources */ = {isa = PBXBuildFile; fileRef = B29AD3D31F26A02A00EBD644 /* Level_12.sks */; };
 		B2A001FA1F2116D200E6C528 /* playLevelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A001F91F2116D200E6C528 /* playLevelButton.png */; };
 		B2A001FC1F21174700E6C528 /* levelSelectButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A001FB1F21174700E6C528 /* levelSelectButton.png */; };
@@ -90,7 +96,7 @@
 
 /* Begin PBXFileReference section */
 		B20ED61B1F27F1C10034AC4F /* TheShopUpgradeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheShopUpgradeButton.swift; sourceTree = "<group>"; };
-		B20ED61D1F2800BE0034AC4F /* RandomPListStuff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomPListStuff.swift; sourceTree = "<group>"; };
+		B20ED61D1F2800BE0034AC4F /* levelBeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = levelBeat.swift; sourceTree = "<group>"; };
 		B218CA151F16936B00E560E9 /* PreviewScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PreviewScene.sks; sourceTree = "<group>"; };
 		B218CA171F16957400E560E9 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B218CA1B1F16971C00E560E9 /* PreviewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewScene.swift; sourceTree = "<group>"; };
@@ -98,6 +104,9 @@
 		B228DD281F18217D00E0C06F /* ChainSpike.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChainSpike.sks; sourceTree = "<group>"; };
 		B247DB541F2A4EFE00BA7E63 /* replayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replayButton.png; sourceTree = "<group>"; };
 		B247DB561F2A4F1900BA7E63 /* button_restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_restart.png; sourceTree = "<group>"; };
+		B247DB5B1F2A661100BA7E63 /* levelBeatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = levelBeatManager.swift; sourceTree = "<group>"; };
+		B247DB5D1F2A664A00BA7E63 /* currencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = currencyManager.swift; sourceTree = "<group>"; };
+		B247DB621F2A675F00BA7E63 /* phaseLabelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phaseLabelManager.swift; sourceTree = "<group>"; };
 		B24C35DD1F226540006CA8D6 /* Level_7.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_7.sks; sourceTree = "<group>"; };
 		B24C35DF1F226BCA006CA8D6 /* Level8pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level8pic.png; sourceTree = "<group>"; };
 		B24C35E01F226BCA006CA8D6 /* Level7pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level7pic.png; sourceTree = "<group>"; };
@@ -115,6 +124,9 @@
 		B260A01B1F22ABE100D3058B /* Level11pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level11pic.png; sourceTree = "<group>"; };
 		B260A01C1F22ABE100D3058B /* Level10pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level10pic.png; sourceTree = "<group>"; };
 		B26D44DC1F26B87900E72C78 /* Level12pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Level12pic.png; sourceTree = "<group>"; };
+		B2826C4E1F2A69F000E05583 /* timeLabelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = timeLabelManager.swift; sourceTree = "<group>"; };
+		B2826C501F2A87AA00E05583 /* phaseDurationMaxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phaseDurationMaxManager.swift; sourceTree = "<group>"; };
+		B2826C521F2A891B00E05583 /* framesBackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = framesBackManager.swift; sourceTree = "<group>"; };
 		B29AD3D31F26A02A00EBD644 /* Level_12.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_12.sks; sourceTree = "<group>"; };
 		B2A001F91F2116D200E6C528 /* playLevelButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playLevelButton.png; sourceTree = "<group>"; };
 		B2A001FB1F21174700E6C528 /* levelSelectButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelSelectButton.png; sourceTree = "<group>"; };
@@ -184,6 +196,83 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B247DB581F2A657F00BA7E63 /* RandomPListStuff */ = {
+			isa = PBXGroup;
+			children = (
+				B20ED61D1F2800BE0034AC4F /* levelBeat.swift */,
+				B247DB5B1F2A661100BA7E63 /* levelBeatManager.swift */,
+				B247DB5D1F2A664A00BA7E63 /* currencyManager.swift */,
+				B247DB621F2A675F00BA7E63 /* phaseLabelManager.swift */,
+				B2826C4E1F2A69F000E05583 /* timeLabelManager.swift */,
+				B2826C501F2A87AA00E05583 /* phaseDurationMaxManager.swift */,
+				B2826C521F2A891B00E05583 /* framesBackManager.swift */,
+			);
+			name = RandomPListStuff;
+			sourceTree = "<group>";
+		};
+		B247DB591F2A65BD00BA7E63 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				B2A3071D1F13E40C0059637F /* GameScene.swift */,
+				B218CA1B1F16971C00E560E9 /* PreviewScene.swift */,
+				B2B06CA11F1570C4000A728E /* LevelSelect.swift */,
+				B2B9F0731F266C9900C59318 /* MainMenu.swift */,
+				B24FD64D1F27B5CD00331464 /* TheShop.swift */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		B247DB5A1F2A65DE00BA7E63 /* CodeObjects */ = {
+			isa = PBXGroup;
+			children = (
+				B2B06C911F142DA9000A728E /* ButtonNode.swift */,
+				B20ED61B1F27F1C10034AC4F /* TheShopUpgradeButton.swift */,
+				B2B06C931F143B21000A728E /* MovingObstacle.swift */,
+				B24D976D1F1D6A4D0098954E /* Bullet.swift */,
+				B2A002011F2133E700E6C528 /* LevelSelectButton.swift */,
+			);
+			name = CodeObjects;
+			sourceTree = "<group>";
+		};
+		B247DB5F1F2A668600BA7E63 /* Levels */ = {
+			isa = PBXGroup;
+			children = (
+				B228DD241F17F89200E0C06F /* Level_1.sks */,
+				B2A001FD1F212D8000E6C528 /* Level_2.sks */,
+				B2A001FF1F21325700E6C528 /* Level_3.sks */,
+				B2A002031F2177C400E6C528 /* Level_4.sks */,
+				B2A002051F2179A300E6C528 /* Level_5.sks */,
+				B2A002071F217B6300E6C528 /* Level_6.sks */,
+				B24C35DD1F226540006CA8D6 /* Level_7.sks */,
+				B24C35ED1F22848E006CA8D6 /* Level_8.sks */,
+				B260A0131F22A6BA00D3058B /* Level_9.sks */,
+				B260A0151F22A89600D3058B /* Level_10.sks */,
+				B2B06CA31F157123000A728E /* Level_11.sks */,
+				B29AD3D31F26A02A00EBD644 /* Level_12.sks */,
+			);
+			name = Levels;
+			sourceTree = "<group>";
+		};
+		B247DB601F2A669E00BA7E63 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				B2DF09C61F13FA7C009E833E /* Hero.sks */,
+				B228DD281F18217D00E0C06F /* ChainSpike.sks */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		B247DB611F2A66B400BA7E63 /* NavigableScenes */ = {
+			isa = PBXGroup;
+			children = (
+				B218CA151F16936B00E560E9 /* PreviewScene.sks */,
+				B2B06C9B1F157022000A728E /* LevelSelect.sks */,
+				B2B9F0751F266CC000C59318 /* MainMenu.sks */,
+				B24FD64B1F27AC8B00331464 /* TheShop.sks */,
+			);
+			name = NavigableScenes;
+			sourceTree = "<group>";
+		};
 		B2A3070B1F13E40C0059637F = {
 			isa = PBXGroup;
 			children = (
@@ -271,25 +360,10 @@
 		B2B9F0711F26664500C59318 /* SKScenes */ = {
 			isa = PBXGroup;
 			children = (
-				B218CA151F16936B00E560E9 /* PreviewScene.sks */,
+				B247DB611F2A66B400BA7E63 /* NavigableScenes */,
+				B247DB601F2A669E00BA7E63 /* Objects */,
+				B247DB5F1F2A668600BA7E63 /* Levels */,
 				B2A3071B1F13E40C0059637F /* Actions.sks */,
-				B2DF09C61F13FA7C009E833E /* Hero.sks */,
-				B228DD281F18217D00E0C06F /* ChainSpike.sks */,
-				B2B06C9B1F157022000A728E /* LevelSelect.sks */,
-				B2B9F0751F266CC000C59318 /* MainMenu.sks */,
-				B24FD64B1F27AC8B00331464 /* TheShop.sks */,
-				B228DD241F17F89200E0C06F /* Level_1.sks */,
-				B2A001FD1F212D8000E6C528 /* Level_2.sks */,
-				B2A001FF1F21325700E6C528 /* Level_3.sks */,
-				B2A002031F2177C400E6C528 /* Level_4.sks */,
-				B2A002051F2179A300E6C528 /* Level_5.sks */,
-				B2A002071F217B6300E6C528 /* Level_6.sks */,
-				B24C35DD1F226540006CA8D6 /* Level_7.sks */,
-				B24C35ED1F22848E006CA8D6 /* Level_8.sks */,
-				B260A0131F22A6BA00D3058B /* Level_9.sks */,
-				B260A0151F22A89600D3058B /* Level_10.sks */,
-				B2B06CA31F157123000A728E /* Level_11.sks */,
-				B29AD3D31F26A02A00EBD644 /* Level_12.sks */,
 			);
 			name = SKScenes;
 			sourceTree = "<group>";
@@ -297,19 +371,11 @@
 		B2B9F0721F26666E00C59318 /* SwiftFiles */ = {
 			isa = PBXGroup;
 			children = (
+				B247DB5A1F2A65DE00BA7E63 /* CodeObjects */,
+				B247DB591F2A65BD00BA7E63 /* Scenes */,
+				B247DB581F2A657F00BA7E63 /* RandomPListStuff */,
 				B2A307171F13E40C0059637F /* AppDelegate.swift */,
 				B2A3071F1F13E40C0059637F /* GameViewController.swift */,
-				B2A3071D1F13E40C0059637F /* GameScene.swift */,
-				B218CA1B1F16971C00E560E9 /* PreviewScene.swift */,
-				B2B06C911F142DA9000A728E /* ButtonNode.swift */,
-				B20ED61B1F27F1C10034AC4F /* TheShopUpgradeButton.swift */,
-				B2B06C931F143B21000A728E /* MovingObstacle.swift */,
-				B24D976D1F1D6A4D0098954E /* Bullet.swift */,
-				B2B06CA11F1570C4000A728E /* LevelSelect.swift */,
-				B2A002011F2133E700E6C528 /* LevelSelectButton.swift */,
-				B2B9F0731F266C9900C59318 /* MainMenu.swift */,
-				B24FD64D1F27B5CD00331464 /* TheShop.swift */,
-				B20ED61D1F2800BE0034AC4F /* RandomPListStuff.swift */,
 			);
 			name = SwiftFiles;
 			sourceTree = "<group>";
@@ -497,10 +563,16 @@
 				B2A3071E1F13E40C0059637F /* GameScene.swift in Sources */,
 				B2B06C941F143B21000A728E /* MovingObstacle.swift in Sources */,
 				B2B06C921F142DA9000A728E /* ButtonNode.swift in Sources */,
+				B2826C511F2A87AA00E05583 /* phaseDurationMaxManager.swift in Sources */,
+				B247DB5E1F2A664A00BA7E63 /* currencyManager.swift in Sources */,
 				B2A002021F2133E700E6C528 /* LevelSelectButton.swift in Sources */,
-				B20ED61E1F2800BE0034AC4F /* RandomPListStuff.swift in Sources */,
+				B20ED61E1F2800BE0034AC4F /* levelBeat.swift in Sources */,
 				B2B9F0741F266C9900C59318 /* MainMenu.swift in Sources */,
+				B2826C531F2A891B00E05583 /* framesBackManager.swift in Sources */,
 				B2A307201F13E40C0059637F /* GameViewController.swift in Sources */,
+				B2826C4F1F2A69F000E05583 /* timeLabelManager.swift in Sources */,
+				B247DB5C1F2A661100BA7E63 /* levelBeatManager.swift in Sources */,
+				B247DB631F2A675F00BA7E63 /* phaseLabelManager.swift in Sources */,
 				B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */,
 				B20ED61C1F27F1C10034AC4F /* TheShopUpgradeButton.swift in Sources */,
 				B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */,
