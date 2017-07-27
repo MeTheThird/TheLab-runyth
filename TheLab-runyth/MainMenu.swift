@@ -14,10 +14,6 @@ class MainMenu: SKScene {
     var theShopButton: ButtonNode!
     
     override func didMove(to view: SKView) {
-        for i in 1...6 {
-            LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: i, treasureCollected: false)
-        }
-        LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: 7, treasureCollected: true)
         playButton = childNode(withName: "playButton") as! ButtonNode
         settingsButton = childNode(withName: "settingsButton") as! ButtonNode
         theShopButton = childNode(withName: "theShopButton") as! ButtonNode
