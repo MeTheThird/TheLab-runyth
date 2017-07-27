@@ -12,11 +12,14 @@ class LevelSelect: SKScene {
     
     /* UI Connections */
     var levelSelectButtonLayer: SKSpriteNode!
+    var backButton: ButtonNode!
     static var beatenLevelManager = levelBeatManager()
+    static var previousFileName: String = "MainMenu"
     
     
     override func didMove(to view: SKView) {
         levelSelectButtonLayer = childNode(withName: "levelSelectButtonLayer") as! SKSpriteNode
+        backButton = childNode(withName: "backButton") as! ButtonNode
         
         var numOfLevels: Int = 0
         var level: Int = 1
@@ -28,21 +31,37 @@ class LevelSelect: SKScene {
         
         var numOfLevelsNotBeaten: Int = 0
         for i in 1...numOfLevels {
-            if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: i)) {
+            if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: i, treasureCollected: nil)) {
                 print("Level number \(i) has not been beaten yet...")
                 print("PATHETIC!")
                 numOfLevelsNotBeaten += 1
             }
         }
+        
         if numOfLevelsNotBeaten == 0 {
             print("You're half-decent")
+        }
+        
+        backButton.selectedHandler = {
+            guard let skView = self.view as SKView! else {
+                print("Could not get Skview")
+                return
+            }
+            
+            guard let scene = GameScene(fileNamed: "MainMenu") else {
+                print("no Main menu... :(")
+                return
+            }
+            
+            scene.scaleMode = .aspectFit
+            skView.presentScene(scene)
         }
         
         for a in levelSelectButtonLayer.children {
             let button = a as! LevelSelectButton
             button.selectedHandler = { [unowned self, unowned button] in
                 print(LevelSelect.beatenLevelManager.lastLevelBeatenNumber)
-                if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: button.number)) || button.number == LevelSelect.beatenLevelManager.lastLevelBeatenNumber + 1 {
+                if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: button.number, treasureCollected: nil)) || button.number == LevelSelect.beatenLevelManager.lastLevelBeatenNumber + 1 {
                     self.loadGame(level: button.number)
                 }
             }
@@ -67,6 +86,7 @@ class LevelSelect: SKScene {
         scene.scaleMode = .aspectFit
         
         GameScene.level = level
+        LevelSelect.previousFileName = "Level_\(level)"
         
         /* Show debug */
         skView.showsPhysics = false

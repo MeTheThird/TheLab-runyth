@@ -61,7 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var notMoved: Bool = false
     var phaseActive: Bool = true
     var timeActive: Bool = true
-    var treasureCollected: Bool = false
+    var treasureFound: Bool = false
     var currencyIncreased: Bool = false
     static var level: Int = 1
     
@@ -339,10 +339,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             nodeA.run(removal)
         } else if categoryA == 1 && categoryB == 0 {
             nodeB.run(removal)
-            treasureCollected = true
+            treasureFound = true
         } else if categoryA == 0 && categoryB == 1 {
             nodeA.run(removal)
-            treasureCollected = true
+            treasureFound = true
         } else if categoryA == 4 {
             let bullet = nodeA as! Bullet
             bullet.timeWhenDeleted = Date()
@@ -695,15 +695,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if heroPos.x >= finalDoor.position.x {
             nextButton.state = .active
             heroState = .stationary
-            if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level)) {
-            LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level)
+            if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: treasureFound)) {
+            LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level, treasureCollected: treasureFound)
             }
-            if treasureCollected && !currencyIncreased {
-                print("Your money went from \(TheShop.currency)")
-                TheShop.currency += 10
+            if treasureFound && !currencyIncreased {
+                print("Your money went from \(TheShop.managerOfCurrency.currency)")
+                TheShop.managerOfCurrency.addToCurrency(amount: 10)
                 currencyIncreased = true
-                print("To \(TheShop.currency)")
-                if TheShop.currency <= 1000 {
+                print("To \(TheShop.managerOfCurrency.currency)")
+                if TheShop.managerOfCurrency.currency <= 1000 {
                     print("Your funds are still somewhat LOW... :(")
                 }
             }

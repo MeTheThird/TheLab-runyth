@@ -14,13 +14,15 @@ class TheShop: SKScene {
     var phaseUpgradeButton: TheShopUpgradeButton!
     var timeUpgradeButton: TheShopUpgradeButton!
     var moneyLabel: SKLabelNode!
+    var backButton: ButtonNode!
     var phasingAnimationSequence: SKAction! = nil
     var phasingCharInitialPosition: CGPoint! = nil
-    static var currency: Int = 0
+    static var managerOfCurrency = currencyManager()
     
     // add time reversal animation - maybe a falling securtiy door, and the hero comes in and reverses it?
     // Also, make the phasing SKAction better - currently it moves, then fades after it's done moving - because of sequence
     // Every level has a chance of containing a treasure chest - buy upgrades/spend money to increase chance - need super expensive/cool item that ppl want to buy - maybe have something that costs money and gives 100 coins every day a user logs on for the next 30 days
+    // Increase price of upgrades - use label text
     
     override func didMove(to view: SKView) {
         phasingCharacter = childNode(withName: "phasingCharacter") as! SKSpriteNode
@@ -29,12 +31,13 @@ class TheShop: SKScene {
         phaseUpgradeButton = childNode(withName: "phaseUpgradeButton") as! TheShopUpgradeButton
         timeUpgradeButton = childNode(withName: "timeUpgradeButton") as! TheShopUpgradeButton
         moneyLabel = childNode(withName: "moneyLabel") as! SKLabelNode
+        backButton = childNode(withName: "backButton") as! ButtonNode
         
         phaseUpgradeButton.selectedHandler = {
-            if TheShop.currency >= 10 {
+            if TheShop.managerOfCurrency.currency >= 10 {
                 if GameScene.phaseDurationMax < 2.0 {
                     GameScene.phaseDurationMax += 0.125
-                    TheShop.currency -= 10
+                    TheShop.managerOfCurrency.addToCurrency(amount: -10)
                     print("increased phase")
                 } else {
                     print("NO PHASE UPGRADE FOR YOU!!!")
@@ -45,10 +48,10 @@ class TheShop: SKScene {
         }
         
         timeUpgradeButton.selectedHandler = {
-            if TheShop.currency >= 10 {
+            if TheShop.managerOfCurrency.currency >= 10 {
                 if GameScene.framesBack < 180 {
                     GameScene.framesBack += 5
-                    TheShop.currency -= 10
+                    TheShop.managerOfCurrency.addToCurrency(amount: -10)
                     print("Greater time abilities hath been granted to thee.")
                 } else {
                     print("THOU SHALT NOT OBTAIN TIME ABILITIES MORE POWERFUL THAN MINE!!!")
@@ -56,6 +59,21 @@ class TheShop: SKScene {
             } else {
                 print("YOUR LIFESTYLE'S HIIIIIIGH, BUT YOUR FUNDS ARE LOOOOOOW :(")
             }
+        }
+        
+        backButton.selectedHandler = {
+            guard let skView = self.view as SKView! else {
+                print("Could not get Skview")
+                return
+            }
+            
+            guard let scene = GameScene(fileNamed: "MainMenu") else {
+                print("no Main menu... :(")
+                return
+            }
+            
+            scene.scaleMode = .aspectFit
+            skView.presentScene(scene)
         }
         
         phasingAnimationSequence = SKAction.sequence([SKAction.move(to: CGPoint(x: phasingCharacter.position.x + 100, y: phasingCharacter.position.y), duration: 1), SKAction.fadeAlpha(to: 0.2, duration: 1), SKAction.move(to: phasingCharInitialPosition, duration: 1), SKAction.fadeAlpha(to: 1.0, duration: 1)])
@@ -67,6 +85,6 @@ class TheShop: SKScene {
             phasingCharacter.alpha = 0.9
         }
         
-        moneyLabel.text = "\(TheShop.currency)"
+        moneyLabel.text = "\(TheShop.managerOfCurrency.currency)"
     }
 }

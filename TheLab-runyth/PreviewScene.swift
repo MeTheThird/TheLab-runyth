@@ -12,13 +12,12 @@ import GameplayKit
 class PreviewScene: SKScene {
     
     var playLevelButton: ButtonNode!
+    var backButton: ButtonNode!
     var cameraNode: SKCameraNode!
     var finalDoor: SKSpriteNode!
     var instructionsLabel: SKLabelNode!
     var buttonTapLabel: SKLabelNode!
     var levelRealScene: SKScene!
-//    var moveRight: Bool = false
-//    var moveLeft: Bool = false
     
     override func didMove(to view: SKView) {
         guard let theRealGameScene = GameScene.level(GameScene.level) else {
@@ -27,9 +26,11 @@ class PreviewScene: SKScene {
         }
         levelRealScene = theRealGameScene.scene
         playLevelButton = childNode(withName: "//playLevelButton") as! ButtonNode
+        backButton = childNode(withName: "backButton") as! ButtonNode
         cameraNode = childNode(withName: "cameraNodePreview") as! SKCameraNode
         instructionsLabel = childNode(withName: "instructionsLabel") as! SKLabelNode
         buttonTapLabel = childNode(withName: "buttonTapLabel") as! SKLabelNode
+        
         physicsWorld.speed = 0
         self.camera = cameraNode
         
@@ -69,10 +70,6 @@ class PreviewScene: SKScene {
             }
         }
         
-//        let longRightPress = UILongPressGestureRecognizer(target: self, action: #selector(self.respondToLongPressGesture))
-//        longRightPress.minimumPressDuration = 0.1
-//        view.addGestureRecognizer(longRightPress)
-        
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToPanGesture))
         panGesture.minimumNumberOfTouches = 1
         view.addGestureRecognizer(panGesture)
@@ -101,19 +98,21 @@ class PreviewScene: SKScene {
             /* 4) Start game scene */
             skView.presentScene(scene)
         }
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-//        if moveRight {
-//            if cameraNode.position.x < finalDoor.position.x + 12.5 - size.width / 2 {
-//                cameraNode.position.x += 10
-//            }
-//        }
-//        if moveLeft {
-//            if cameraNode.position.x > 0.0 {
-//                cameraNode.position.x -= 10
-//            }
-//        }
+        
+        backButton.selectedHandler = {
+            guard let skView = self.view as SKView! else {
+                print("Could not get Skview")
+                return
+            }
+            
+            guard let scene = GameScene(fileNamed: "LevelSelect") else {
+                print("no Level Select... :(")
+                return
+            }
+            
+            scene.scaleMode = .aspectFit
+            skView.presentScene(scene)
+        }
     }
     
     func respondToPanGesture(gesture: UIGestureRecognizer) {
@@ -123,21 +122,4 @@ class PreviewScene: SKScene {
             cameraNode.position.x = x
         }
     }
-    
-//    func respondToLongPressGesture(gesture: UIGestureRecognizer) {
-//        if let longPressGesture = gesture as? UILongPressGestureRecognizer {
-//            let gesturePos = longPressGesture.location(in: self.view)
-//            if gesturePos.x >= cameraNode.position.x {
-//                moveRight = true
-//                moveLeft = false
-//            } else if gesturePos.x < cameraNode.position.x {
-//                moveLeft = true
-//                moveRight = false
-//            }
-//            if longPressGesture.state == .ended {
-//                moveLeft = false
-//                moveRight = false
-//            }
-//        }
-//    }
 }
