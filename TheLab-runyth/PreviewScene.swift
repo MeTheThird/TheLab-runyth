@@ -15,6 +15,7 @@ class PreviewScene: SKScene {
     var backButton: ButtonNode!
     var cameraNode: SKCameraNode!
     var finalDoor: SKSpriteNode!
+    var treasure: SKSpriteNode!
     var instructionsLabel: SKLabelNode!
     var buttonTapLabel: SKLabelNode!
     var levelRealScene: SKScene!
@@ -70,6 +71,11 @@ class PreviewScene: SKScene {
             }
         }
         
+        if GameScene.level > 7 {
+            treasure = childNode(withName: "treasure") as! SKSpriteNode
+            treasure.alpha = 1.0
+        }
+        
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToPanGesture))
         panGesture.minimumNumberOfTouches = 1
         view.addGestureRecognizer(panGesture)
@@ -88,6 +94,7 @@ class PreviewScene: SKScene {
             }
             
             view.gestureRecognizers?.removeAll()
+            GameScene.startLogged = false
             
             /* Show debug */
             skView.showsPhysics = false

@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import Answers
 
 func clamp<T: Comparable>(value: T, lower: T, upper: T) -> T {
     return min(max(value, lower), upper)
@@ -61,12 +62,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var phaseActive: Bool = true
     var timeActive: Bool = true
     var treasureFound: Bool = false
-    var currencyIncreased: Bool = false
+    var levelBeatenMethodCalled: Bool = false
     static var level: Int = 1
     static var framesBack: Int = 150
     static var phaseDurationMax: Double = 1.0
-    
+    static var startLogged: Bool = false
+        
     override func didMove(to view: SKView) {
+        if !GameScene.startLogged {
+            Answers.logLevelStart("Level_\(GameScene.level)", customAttributes: [:])
+            GameScene.startLogged = true
+        }
         if GameScene.level == 1 || GameScene.level == 2 || GameScene.level == 3 || GameScene.level == 5 || GameScene.level == 7 {
             notMoved = true
         }
@@ -252,6 +258,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             view.gestureRecognizers?.removeAll()
             scene.scaleMode = .aspectFit
+            GameScene.startLogged = false
             self.view!.presentScene(scene)
         }
         
@@ -264,6 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let scene = GameScene.levelPreview(GameScene.level + 1)!
             view.gestureRecognizers?.removeAll()
             scene.scaleMode = .aspectFit
+            GameScene.startLogged = false
             self.view!.presentScene(scene)
         }
         
@@ -274,6 +282,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             view.gestureRecognizers?.removeAll()
             scene.scaleMode = .aspectFit
+            GameScene.startLogged = false
             self.view!.presentScene(scene)
         }
     }
@@ -673,7 +682,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func checkIfHeroIsDEAD() {
-        if !cameraNode.contains(hero) {
+        if !cameraNode.contains(hero) || hero.convert(CGPoint(x: 0, y: 0), to: self).y > size.height / 2 {
             guard let scene = GameScene.level(GameScene.level) else {
                 print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
@@ -738,7 +747,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func checkIfLevelIsBEATEN() {
         let heroPos = hero.convert(CGPoint(x: 0, y: 0), to: self)
         
-        if heroPos.x >= finalDoor.position.x {
+        if heroPos.x >= finalDoor.position.x && !levelBeatenMethodCalled {
+            levelBeatenMethodCalled = true
+            Answers.logLevelEnd("Level_\(GameScene.level)", score: nil, success: true, customAttributes: ["treasureCollected": treasureFound])
             if GameScene.level(GameScene.level + 1) != nil {
                 nextButton.state = .active
                 replayButton.state = .active
@@ -755,10 +766,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: treasureFound)) {
                 LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level, treasureCollected: treasureFound)
             }
-            if treasureFound && !currencyIncreased {
+            if treasureFound {
                 print("Your money went from \(TheShop.managerOfCurrency.currency)")
                 TheShop.managerOfCurrency.addToCurrency(amount: 10)
-                currencyIncreased = true
                 print("To \(TheShop.managerOfCurrency.currency)")
                 if TheShop.managerOfCurrency.currency <= 1000 {
                     print("Your funds are still somewhat LOW... :(")

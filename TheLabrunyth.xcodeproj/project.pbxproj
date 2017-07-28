@@ -14,6 +14,9 @@
 		B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218CA1B1F16971C00E560E9 /* PreviewScene.swift */; };
 		B228DD251F17F89200E0C06F /* Level_1.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD241F17F89200E0C06F /* Level_1.sks */; };
 		B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD281F18217D00E0C06F /* ChainSpike.sks */; };
+		B241B9271F2BA311009F6601 /* Answers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B241B9251F2BA311009F6601 /* Answers.framework */; };
+		B241B9281F2BA311009F6601 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B241B9261F2BA311009F6601 /* Fabric.framework */; };
+		B241B92B1F2BA974009F6601 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B241B92A1F2BA974009F6601 /* Crashlytics.framework */; };
 		B247DB551F2A4EFE00BA7E63 /* replayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B247DB541F2A4EFE00BA7E63 /* replayButton.png */; };
 		B247DB571F2A4F1900BA7E63 /* button_restart.png in Resources */ = {isa = PBXBuildFile; fileRef = B247DB561F2A4F1900BA7E63 /* button_restart.png */; };
 		B247DB5C1F2A661100BA7E63 /* levelBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B247DB5B1F2A661100BA7E63 /* levelBeatManager.swift */; };
@@ -103,6 +106,9 @@
 		B218CA1B1F16971C00E560E9 /* PreviewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewScene.swift; sourceTree = "<group>"; };
 		B228DD241F17F89200E0C06F /* Level_1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_1.sks; sourceTree = "<group>"; };
 		B228DD281F18217D00E0C06F /* ChainSpike.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChainSpike.sks; sourceTree = "<group>"; };
+		B241B9251F2BA311009F6601 /* Answers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Answers.framework; sourceTree = "<group>"; };
+		B241B9261F2BA311009F6601 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		B241B92A1F2BA974009F6601 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B247DB541F2A4EFE00BA7E63 /* replayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replayButton.png; sourceTree = "<group>"; };
 		B247DB561F2A4F1900BA7E63 /* button_restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_restart.png; sourceTree = "<group>"; };
 		B247DB5B1F2A661100BA7E63 /* levelBeatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = levelBeatManager.swift; sourceTree = "<group>"; };
@@ -178,6 +184,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B241B9271F2BA311009F6601 /* Answers.framework in Frameworks */,
+				B241B92B1F2BA974009F6601 /* Crashlytics.framework in Frameworks */,
+				B241B9281F2BA311009F6601 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +288,9 @@
 		B2A3070B1F13E40C0059637F = {
 			isa = PBXGroup;
 			children = (
+				B241B9251F2BA311009F6601 /* Answers.framework */,
+				B241B9261F2BA311009F6601 /* Fabric.framework */,
+				B241B92A1F2BA974009F6601 /* Crashlytics.framework */,
 				B2A307161F13E40C0059637F /* TheLab-runyth */,
 				B2A3073C1F13E40C0059637F /* TheLab-runythUITests */,
 				B2A307311F13E40C0059637F /* TheLab-runythTests */,
@@ -393,6 +405,8 @@
 				B2A307101F13E40C0059637F /* Sources */,
 				B2A307111F13E40C0059637F /* Frameworks */,
 				B2A307121F13E40C0059637F /* Resources */,
+				B241B9291F2BA3E2009F6601 /* ShellScript */,
+				B241B92D1F2BAE49009F6601 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -557,6 +571,35 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B241B9291F2BA3E2009F6601 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" cf173d8b0d638becb454001175a59e3d08d4a8c8 e59c274d97f2871f559bacb5bc0ffff3e0c39407b5f382469f2fa9e6f82ffe3c";
+		};
+		B241B92D1F2BAE49009F6601 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/Fabric.framework/run\" cf173d8b0d638becb454001175a59e3d08d4a8c8 e59c274d97f2871f559bacb5bc0ffff3e0c39407b5f382469f2fa9e6f82ffe3c";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B2A307101F13E40C0059637F /* Sources */ = {
@@ -737,6 +780,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = TNR595CQ49;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "TheLab-runyth/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -753,6 +800,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = TNR595CQ49;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "TheLab-runyth/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
