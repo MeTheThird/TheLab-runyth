@@ -63,12 +63,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeActive: Bool = true
     var treasureFound: Bool = false
     var levelBeatenMethodCalled: Bool = false
+    let gravity = CGVector(dx: 0, dy: -6.0)
     static var level: Int = 1
     static var framesBack: Int = 150
     static var phaseDurationMax: Double = 1.0
     static var startLogged: Bool = false
         
     override func didMove(to view: SKView) {
+        self.physicsWorld.gravity = gravity
         if !GameScene.startLogged {
             Answers.logLevelStart("Level_\(GameScene.level)", customAttributes: [:])
             GameScene.startLogged = true
@@ -443,11 +445,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             case UISwipeGestureRecognizerDirection.up:
                 if heroState != .stationary {
-                    self.physicsWorld.gravity = CGVector(dx: 0, dy: 9.8)
+                    self.physicsWorld.gravity = CGVector(dx: 0, dy: -gravity.dy)
                 }
             case UISwipeGestureRecognizerDirection.down:
                 if heroState != .stationary {
-                    self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
+                    self.physicsWorld.gravity = gravity
                 }
             default:
                 break

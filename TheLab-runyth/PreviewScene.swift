@@ -56,6 +56,7 @@ class PreviewScene: SKScene {
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         if let movingCeilingDoorLayer = childNode(withName: "movingCeilingDoorLayer") as? SKSpriteNode {
             for node in movingCeilingDoorLayer.children {
+                node.position.y -= 75
                 let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow.png"))
                 self.addChild(arrow)
                 arrow.zRotation = -CGFloat.pi / 2
@@ -64,6 +65,7 @@ class PreviewScene: SKScene {
         }
         if let movingGroundDoorLayer = childNode(withName: "movingGroundDoorLayer") as? SKSpriteNode {
             for node in movingGroundDoorLayer.children {
+                node.position.y += 75
                 let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow.png"))
                 self.addChild(arrow)
                 arrow.zRotation = CGFloat.pi / 2
