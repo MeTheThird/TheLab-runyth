@@ -48,8 +48,10 @@ class PreviewScene: SKScene {
         
         for node in levelRealScene.children {
             if let sprite = node as? SKSpriteNode {
-                sprite.removeFromParent()
-                self.addChild(sprite)
+                if node.name != "forShow" {
+                    sprite.removeFromParent()
+                    self.addChild(sprite)
+                }
             }
         }
         

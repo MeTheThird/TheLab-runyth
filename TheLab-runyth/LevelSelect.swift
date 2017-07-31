@@ -13,6 +13,7 @@ class LevelSelect: SKScene {
     /* UI Connections */
     var levelSelectButtonLayer: SKSpriteNode!
     var backButton: ButtonNode!
+    var numOfLevels = 13
     static var beatenLevelManager = levelBeatManager()
     static var previousFileName: String = "MainMenu"
     
@@ -21,12 +22,6 @@ class LevelSelect: SKScene {
         levelSelectButtonLayer = childNode(withName: "levelSelectButtonLayer") as! SKSpriteNode
         backButton = childNode(withName: "backButton") as! ButtonNode
         
-        var numOfLevels: Int = 0
-        var level: Int = 1
-        while GameScene.level(level) != nil {
-            numOfLevels += 1
-            level += 1
-        }
         print(numOfLevels)
         
         for i in 1...numOfLevels {
