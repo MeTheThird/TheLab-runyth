@@ -29,17 +29,10 @@ class LevelSelect: SKScene {
         }
         print(numOfLevels)
         
-        var numOfLevelsNotBeaten: Int = 0
         for i in 1...numOfLevels {
             if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: i, treasureCollected: nil)) {
-                print("Level number \(i) has not been beaten yet...")
-                print("PATHETIC!")
-                numOfLevelsNotBeaten += 1
+                // display lock on level -- after new buttons and stuff
             }
-        }
-        
-        if numOfLevelsNotBeaten == 0 {
-            print("You're half-decent")
         }
         
         backButton.selectedHandler = { [unowned self] in

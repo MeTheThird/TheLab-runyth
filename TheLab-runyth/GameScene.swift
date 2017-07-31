@@ -64,7 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeActive: Bool = true
     var treasureFound: Bool = false
     var levelBeatenMethodCalled: Bool = false
-    let gravity = CGVector(dx: 0, dy: -6.0)
+    let gravity = CGVector(dx: 0, dy: -4.9)
     static var level: Int = 1
     static var framesBack: Int = 150
     static var phaseDurationMax: Double = 1.0
@@ -587,7 +587,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if door.previousPosition.count > GameScene.framesBack {
                     door.previousPosition.remove(at: 0)
                 }
-                if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y > 0.0 && !notMoved {
+                if door.position.x - cameraNode.position.x <= 1.25*size.width && door.position.y > 0.0 && !notMoved {
                     door.position.y -= 1
                 }
             }
@@ -602,7 +602,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if door.previousPosition.count > GameScene.framesBack {
                     door.previousPosition.remove(at: 0)
                 }
-                if door.position.x - cameraNode.position.x <= 1.5*size.width && door.position.y < 0.0 && !notMoved {
+                if door.position.x - cameraNode.position.x <= 1.25*size.width && door.position.y < 0.0 && !notMoved {
                     door.position.y += 1
                 }
             }
