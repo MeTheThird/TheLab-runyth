@@ -454,10 +454,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case UISwipeGestureRecognizerDirection.up:
                 if heroState != .stationary {
                     self.physicsWorld.gravity = CGVector(dx: 0, dy: -gravity.dy)
+                    hero.yScale = -1
                 }
             case UISwipeGestureRecognizerDirection.down:
                 if heroState != .stationary {
                     self.physicsWorld.gravity = gravity
+                    hero.yScale = 1
                 }
             default:
                 break
