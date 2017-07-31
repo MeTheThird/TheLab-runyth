@@ -42,11 +42,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var chainGroundSpikeLayer: SKSpriteNode!
     var evilScientistLayer: SKSpriteNode!
     var movingSpikeLayer: SKSpriteNode!
+    var background: SKSpriteNode!
+    var grass: SKSpriteNode!
     var finalDoor: SKSpriteNode!
     var treasure: SKSpriteNode!
     var dummyDoor: MovingObstacle!
     var meowMeow: MovingObstacle!
-    var ground: SKSpriteNode!
     var heroState: heroMovingState = .running
     var timeState: timeMovingState = .forward
     var phaseCoolDown: CFTimeInterval = 0.0
@@ -78,11 +79,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if GameScene.level == 1 || GameScene.level == 2 || GameScene.level == 3 || GameScene.level == 5 || GameScene.level == 7 {
             notMoved = true
         }
+        phaseCool = childNode(withName: "//phaseCool") as! SKLabelNode
+        timeCool = childNode(withName: "//timeCool") as! SKLabelNode
         if GameScene.level < 3 {
             timeActive = false
+            timeCool.isHidden = true
         }
         if GameScene.level < 5 {
             phaseActive = false
+            phaseCool.isHidden = true
         }
         if GameScene.level == 3 {
             dummyDoor = childNode(withName: "//dummyDoor") as! MovingObstacle
@@ -117,6 +122,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
+//        background = childNode(withName: "background") as! SKSpriteNode
+//        grass = childNode(withName: "grass") as! SKSpriteNode
         hero = childNode(withName: "//hero") as! SKSpriteNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
@@ -126,9 +133,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton = childNode(withName: "//pauseButton") as! ButtonNode
         playButton = childNode(withName: "//playButton") as! ButtonNode
         nextButton = childNode(withName: "//nextButton") as! ButtonNode
-        phaseCool = childNode(withName: "//phaseCool") as! SKLabelNode
-        timeCool = childNode(withName: "//timeCool") as! SKLabelNode
-        ground = childNode(withName: "ground") as! SKSpriteNode
         if let mCDL = childNode(withName: "movingCeilingDoorLayer") as? SKSpriteNode {
             movingCeilingDoorLayer = mCDL
         }
@@ -157,12 +161,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let chainTop = spike.childNode(withName: "chainTop") as! SKSpriteNode
                 let chainMid = spike.childNode(withName: "chainMid") as! SKSpriteNode
                 let chainBot = spike.childNode(withName: "chainBot") as! SKSpriteNode
+                let anchor = spike.childNode(withName: "anchor") as! SKSpriteNode
                 
                 var groundPinLocation = chainBot.position
                 groundPinLocation.x += 12.374
                 groundPinLocation.y -= 15.91
                 groundPinLocation = spike.convert(groundPinLocation, to: self)
-                let groundPinJoint = SKPhysicsJointPin.joint(withBodyA: ground.physicsBody!, bodyB: chainBot.physicsBody!, anchor: groundPinLocation)
+                let groundPinJoint = SKPhysicsJointPin.joint(withBodyA: anchor.physicsBody!, bodyB: chainBot.physicsBody!, anchor: groundPinLocation)
                 physicsWorld.add(groundPinJoint)
                 
                 var botMidPinLocation = chainMid.position
@@ -333,7 +338,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let targetX = hero.position.x
         let rightMostSideOfFinalDoor = finalDoor.position.x + finalDoor.size.width / 2
         let x = clamp(value: targetX - 75, lower: 0, upper: rightMostSideOfFinalDoor - size.width / 2)
+        // Only move camera, main background, and upper grass -- stretch the rest out as needed in the sks
         cameraNode.position.x = x
+//        background.position.x = x
+//        grass.position.x = x
         
         if !notMoved {
             updatePreviousMovingObstaclePositions()
