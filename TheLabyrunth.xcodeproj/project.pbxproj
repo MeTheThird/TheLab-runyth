@@ -398,9 +398,6 @@
 		B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2DF09C61F13FA7C009E833E /* Hero.sks */; };
 		B2F9AF161F295C7A00D13B56 /* theShopButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2F9AF151F295C7A00D13B56 /* theShopButton.png */; };
 		B2F9AF181F295DAC00D13B56 /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2F9AF171F295DAC00D13B56 /* backButton.png */; };
-		B2FE6ACA1F2D8F7E0079B676 /* 40359568-20-game-obstacles-with-background-license.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B2FE6AC71F2D8F7E0079B676 /* 40359568-20-game-obstacles-with-background-license.pdf */; };
-		B2FE6ACB1F2D8F7E0079B676 /* 40359569-256-vector-game-items-license.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B2FE6AC81F2D8F7E0079B676 /* 40359569-256-vector-game-items-license.pdf */; };
-		B2FE6ACC1F2D8F7E0079B676 /* 40359570-shadow-kid-game-character-license.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B2FE6AC91F2D8F7E0079B676 /* 40359570-shadow-kid-game-character-license.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -818,9 +815,6 @@
 		B2DF09C61F13FA7C009E833E /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
 		B2F9AF151F295C7A00D13B56 /* theShopButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theShopButton.png; sourceTree = "<group>"; };
 		B2F9AF171F295DAC00D13B56 /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
-		B2FE6AC71F2D8F7E0079B676 /* 40359568-20-game-obstacles-with-background-license.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "40359568-20-game-obstacles-with-background-license.pdf"; sourceTree = "<group>"; };
-		B2FE6AC81F2D8F7E0079B676 /* 40359569-256-vector-game-items-license.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "40359569-256-vector-game-items-license.pdf"; sourceTree = "<group>"; };
-		B2FE6AC91F2D8F7E0079B676 /* 40359570-shadow-kid-game-character-license.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "40359570-shadow-kid-game-character-license.pdf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1711,9 +1705,6 @@
 		B2FE65781F2D88BC0079B676 /* Art */ = {
 			isa = PBXGroup;
 			children = (
-				B2FE6AC71F2D8F7E0079B676 /* 40359568-20-game-obstacles-with-background-license.pdf */,
-				B2FE6AC81F2D8F7E0079B676 /* 40359569-256-vector-game-items-license.pdf */,
-				B2FE6AC91F2D8F7E0079B676 /* 40359570-shadow-kid-game-character-license.pdf */,
 				B22F26D71F2E55B000DBB8DF /* MainCharacter */,
 				B22F24A91F2E55A500DBB8DF /* GameItems */,
 				B22F20011F2E551200DBB8DF /* BackgroundAndObstacles */,
@@ -1889,7 +1880,6 @@
 				B22F26D01F2E55A500DBB8DF /* 250.png in Resources */,
 				B228DD251F17F89200E0C06F /* Level_1.sks in Resources */,
 				B22F26731F2E55A500DBB8DF /* ge1.png in Resources */,
-				B2FE6ACA1F2D8F7E0079B676 /* 40359568-20-game-obstacles-with-background-license.pdf in Resources */,
 				B22F20201F2E551200DBB8DF /* Game-Background-All.png in Resources */,
 				B22F25FF1F2E55A500DBB8DF /* a4.png in Resources */,
 				B22F26AD1F2E55A500DBB8DF /* 25.png in Resources */,
@@ -1925,7 +1915,6 @@
 				B22F26D21F2E55A500DBB8DF /* 41.png in Resources */,
 				B22F26B11F2E55A500DBB8DF /* 187.png in Resources */,
 				B22F20321F2E551200DBB8DF /* 12Obstacle.png in Resources */,
-				B2FE6ACC1F2D8F7E0079B676 /* 40359570-shadow-kid-game-character-license.pdf in Resources */,
 				B22F25DD1F2E55A500DBB8DF /* 255.png in Resources */,
 				B22F27001F2E55B000DBB8DF /* frame2Lose.png in Resources */,
 				B22F20371F2E551200DBB8DF /* 17Obstacle.png in Resources */,
@@ -2098,7 +2087,6 @@
 				B2B06C9F1F15708E000A728E /* Level1pic.png in Resources */,
 				B22F26721F2E55A500DBB8DF /* gb4.png in Resources */,
 				B2A001FE1F212D8000E6C528 /* Level_2.sks in Resources */,
-				B2FE6ACB1F2D8F7E0079B676 /* 40359569-256-vector-game-items-license.pdf in Resources */,
 				B22F26801F2E55A500DBB8DF /* he3.png in Resources */,
 				B241B9311F2BE682009F6601 /* Level_13.sks in Resources */,
 				B22F26D51F2E55A500DBB8DF /* 146.png in Resources */,

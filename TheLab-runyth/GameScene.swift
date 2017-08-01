@@ -65,15 +65,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var treasureFound: Bool = false
     var levelBeatenMethodCalled: Bool = false
     let gravity = CGVector(dx: 0, dy: -3.0)
+    // lose animation
+    var loseAnimation: SKAction? = nil
+    // run animation
+    var runningAnimation: SKAction? = nil
+    var runningBlock: SKAction? = nil
+    // roll to phase -- get rid of alpha change
+    var phasingAnimation: SKAction? = nil
+    // figure out time reversal animation
+    var timeReverseAnimation: SKAction? = nil
     static var level: Int = 1
     static var framesBack: Int = 150
     static var phaseDurationMax: Double = 1.0
     static var startLogged: Bool = false
-        
+    
     override func didMove(to view: SKView) {
         self.physicsWorld.gravity = gravity
-//        view.showsFPS = true
-//        view.showsPhysics = true
+        //        view.showsFPS = true
+        //        view.showsPhysics = true
+        loseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Lose"), SKTexture(imageNamed: "frame2Lose"), SKTexture(imageNamed: "frame3Lose"), SKTexture(imageNamed: "frame4Lose"), SKTexture(imageNamed: "frame5Lose")], timePerFrame: 1.0 / 5.0)
+        runningAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame2Run"), SKTexture(imageNamed: "frame3Run"), SKTexture(imageNamed: "frame4Run"), SKTexture(imageNamed: "frame1Run")], timePerFrame: 1.0 / 4.0)
+        runningBlock = SKAction.repeatForever(runningAnimation!)
+        phasingAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Roll"), SKTexture(imageNamed: "frame2Roll"), SKTexture(imageNamed: "frame3Roll")], timePerFrame: 1.0 / 3.0)
         if !GameScene.startLogged {
             Answers.logLevelStart("Level_\(GameScene.level)", customAttributes: [:])
             GameScene.startLogged = true
@@ -124,8 +137,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
-//        background = childNode(withName: "background") as! SKSpriteNode
-//        grass = childNode(withName: "grass") as! SKSpriteNode
+        //        background = childNode(withName: "background") as! SKSpriteNode
+        //        grass = childNode(withName: "grass") as! SKSpriteNode
         hero = childNode(withName: "//hero") as! SKSpriteNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
@@ -135,6 +148,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton = childNode(withName: "//pauseButton") as! ButtonNode
         playButton = childNode(withName: "//playButton") as! ButtonNode
         nextButton = childNode(withName: "//nextButton") as! ButtonNode
+        
         if let mCDL = childNode(withName: "movingCeilingDoorLayer") as? SKSpriteNode {
             movingCeilingDoorLayer = mCDL
         }
@@ -195,6 +209,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        hero.run(runningBlock!)
         
         restartButton.state = .hidden
         replayButton.state = .hidden
@@ -342,8 +357,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let x = clamp(value: targetX - 75, lower: 0, upper: rightMostSideOfFinalDoor - size.width / 2)
         // Only move camera, main background, and upper grass -- stretch the rest out as needed in the sks
         cameraNode.position.x = x
-//        background.position.x = x
-//        grass.position.x = x
+        //        background.position.x = x
+        //        grass.position.x = x
         
         if !notMoved {
             updatePreviousMovingObstaclePositions()
@@ -701,6 +716,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
             }
+            
+            hero.run(loseAnimation!)
             
             view!.gestureRecognizers?.removeAll()
             scene.scaleMode = .aspectFit
