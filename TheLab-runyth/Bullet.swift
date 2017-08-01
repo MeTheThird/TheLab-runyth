@@ -16,11 +16,12 @@ class Bullet: MovingObstacle {
     
     init() {
         let color = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
-        let size = CGSize(width: 15.0, height: 10.0)
+        let size = CGSize(width: 35.0, height: 35.0)
+        let texture = SKTexture(imageNamed: "137")
         
-        super.init(texture: nil, color: color, size: size)
+        super.init(texture: texture, color: color, size: size)
         
-        physicsBody = SKPhysicsBody(rectangleOf: size)
+        physicsBody = SKPhysicsBody(circleOfRadius: 17.5)
         physicsBody?.affectedByGravity = false
         physicsBody?.allowsRotation = false
         physicsBody?.categoryBitMask = 4
