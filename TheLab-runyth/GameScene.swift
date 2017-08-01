@@ -64,7 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeActive: Bool = true
     var treasureFound: Bool = false
     var levelBeatenMethodCalled: Bool = false
-    let gravity = CGVector(dx: 0, dy: -4.9)
+    let gravity = CGVector(dx: 0, dy: -3.0)
     static var level: Int = 1
     static var framesBack: Int = 150
     static var phaseDurationMax: Double = 1.0
@@ -72,6 +72,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     override func didMove(to view: SKView) {
         self.physicsWorld.gravity = gravity
+//        view.showsFPS = true
+//        view.showsPhysics = true
         if !GameScene.startLogged {
             Answers.logLevelStart("Level_\(GameScene.level)", customAttributes: [:])
             GameScene.startLogged = true
@@ -164,29 +166,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let anchor = spike.childNode(withName: "anchor") as! SKSpriteNode
                 
                 var groundPinLocation = chainBot.position
-                groundPinLocation.x += 12.374
-                groundPinLocation.y -= 15.91
+                groundPinLocation.x += 7.425
+                groundPinLocation.y -= 10.96
                 groundPinLocation = spike.convert(groundPinLocation, to: self)
                 let groundPinJoint = SKPhysicsJointPin.joint(withBodyA: anchor.physicsBody!, bodyB: chainBot.physicsBody!, anchor: groundPinLocation)
                 physicsWorld.add(groundPinJoint)
                 
                 var botMidPinLocation = chainMid.position
-                botMidPinLocation.y -= 15.91
-                botMidPinLocation.x -= 12.374
+                botMidPinLocation.y -= 10.96
+                botMidPinLocation.x -= 7.425
                 botMidPinLocation = spike.convert(botMidPinLocation, to: self)
                 let botMidPinJoint = SKPhysicsJointPin.joint(withBodyA: chainMid.physicsBody!, bodyB: chainBot.physicsBody!, anchor: botMidPinLocation)
                 physicsWorld.add(botMidPinJoint)
                 
                 var midTopPinLocation = chainTop.position
-                midTopPinLocation.y -= 15.91
-                midTopPinLocation.x += 12.374
+                midTopPinLocation.y -= 10.96
+                midTopPinLocation.x += 7.425
                 midTopPinLocation = spike.convert(midTopPinLocation, to: self)
                 let midTopPinJoint = SKPhysicsJointPin.joint(withBodyA: chainMid.physicsBody!, bodyB: chainTop.physicsBody!, anchor: midTopPinLocation)
                 physicsWorld.add(midTopPinJoint)
                 
                 var spikePinLocation = chainTop.position
-                spikePinLocation.y += 15.91
-                spikePinLocation.x -= 12.374
+                spikePinLocation.y += 10.96
+                spikePinLocation.x -= 7.425
                 spikePinLocation = spike.convert(spikePinLocation, to: self)
                 let spikePinJoint = SKPhysicsJointPin.joint(withBodyA: spike.physicsBody!, bodyB: chainTop.physicsBody!, anchor: spikePinLocation)
                 physicsWorld.add(spikePinJoint)
