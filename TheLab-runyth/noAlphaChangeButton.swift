@@ -12,7 +12,7 @@ enum buttonState {
     case active, selected, hidden
 }
 
-class TheShopUpgradeButton: SKSpriteNode {
+class noAlphaChangeButton: SKSpriteNode {
     
     var selectedHandler: () -> Void = { print("NADA!!!") }
     

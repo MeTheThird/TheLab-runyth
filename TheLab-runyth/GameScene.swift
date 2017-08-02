@@ -30,6 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var previousGravity = [CGVector]()
     var phaseCool: SKLabelNode!
     var timeCool: SKLabelNode!
+    var levelLabel: SKLabelNode!
     var cameraNode: SKCameraNode!
     var restartButton: ButtonNode!
     var replayButton: ButtonNode!
@@ -83,11 +84,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         self.physicsWorld.gravity = gravity
-//        view.showsFPS = true
-//        view.showsPhysics = true
+        //        view.showsFPS = true
+        //        view.showsPhysics = true
         loseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Lose"), SKTexture(imageNamed: "frame2Lose"), SKTexture(imageNamed: "frame3Lose"), SKTexture(imageNamed: "frame4Lose"), SKTexture(imageNamed: "frame5Lose")], timePerFrame: 0.25 / 5.0)
         
-        runningAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame2Run"), SKTexture(imageNamed: "frame3Run"), SKTexture(imageNamed: "frame4Run"), SKTexture(imageNamed: "frame1Run")], timePerFrame: 1.0 / 4.0)
+        runningAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame2Run"), SKTexture(imageNamed: "frame3Run"), SKTexture(imageNamed: "frame4Run"), SKTexture(imageNamed: "frame1Run")], timePerFrame: 0.5 / 4.0)
         runningBlock = SKAction.repeatForever(runningAnimation!)
         
         phasingAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Roll"), SKTexture(imageNamed: "frame2Roll"), SKTexture(imageNamed: "frame3Roll")], timePerFrame: 0.5 / 3.0)
@@ -103,6 +104,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         phaseCool = childNode(withName: "//phaseCool") as! SKLabelNode
         timeCool = childNode(withName: "//timeCool") as! SKLabelNode
+        levelLabel = childNode(withName: "//levelLabel") as! SKLabelNode
         if GameScene.level < 3 {
             timeActive = false
             timeCool.isHidden = true
@@ -208,10 +210,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for reference in chainGroundSpikeLayer.children {
                 spike = reference.children[0].children[0] as! MovingObstacle
                 
-//                spike.physicsBody = SKPhysicsBody(circleOfRadius: 15.0, center: CGPoint(x: 0, y: 0))
-//                spike.physicsBody?.categoryBitMask = 2
-//                spike.physicsBody?.collisionBitMask = 4294967293
-//                spike.physicsBody?.contactTestBitMask = 1
+                //                spike.physicsBody = SKPhysicsBody(circleOfRadius: 15.0, center: CGPoint(x: 0, y: 0))
+                //                spike.physicsBody?.categoryBitMask = 2
+                //                spike.physicsBody?.collisionBitMask = 4294967293
+                //                spike.physicsBody?.contactTestBitMask = 1
                 
                 let chainTop = spike.childNode(withName: "chainTop") as! SKSpriteNode
                 let chainMid = spike.childNode(withName: "chainMid") as! SKSpriteNode
@@ -254,6 +256,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             heroNotRunning = true
         }
         
+        levelLabel.isHidden = true
         restartButton.state = .hidden
         replayButton.state = .hidden
         levelSelectButton.state = .hidden
@@ -293,6 +296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.levelSelectButton.state = .active
             self.playButton.state = .active
             self.pauseButton.state = .hidden
+            self.levelLabel.isHidden = false
             view.gestureRecognizers?.removeAll()
         }
         
@@ -301,6 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.levelSelectButton.state = .hidden
             self.playButton.state = .hidden
             self.pauseButton.state = .active
+            self.levelLabel.isHidden = true
             self.isPaused = false
             view.addGestureRecognizer(swipeRight)
             view.addGestureRecognizer(swipeUp)
@@ -855,6 +860,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if heroPos.x >= finalDoor.position.x && !levelBeatenMethodCalled && cameraNode.contains(hero) {
             levelBeatenMethodCalled = true
+            view?.gestureRecognizers?.removeAll()
             Answers.logLevelEnd("Level_\(GameScene.level)", score: nil, success: true, customAttributes: ["treasureCollected": treasureFound])
             if GameScene.level(GameScene.level + 1) != nil {
                 nextButton.state = .active

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B20ED61C1F27F1C10034AC4F /* TheShopUpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20ED61B1F27F1C10034AC4F /* TheShopUpgradeButton.swift */; };
+		B20ED61C1F27F1C10034AC4F /* noAlphaChangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20ED61B1F27F1C10034AC4F /* noAlphaChangeButton.swift */; };
 		B20ED61E1F2800BE0034AC4F /* levelBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20ED61D1F2800BE0034AC4F /* levelBeat.swift */; };
 		B218CA161F16936B00E560E9 /* PreviewScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B218CA151F16936B00E560E9 /* PreviewScene.sks */; };
 		B218CA191F16957400E560E9 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B218CA171F16957400E560E9 /* arrow.png */; };
@@ -418,7 +418,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B20ED61B1F27F1C10034AC4F /* TheShopUpgradeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheShopUpgradeButton.swift; sourceTree = "<group>"; };
+		B20ED61B1F27F1C10034AC4F /* noAlphaChangeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = noAlphaChangeButton.swift; sourceTree = "<group>"; };
 		B20ED61D1F2800BE0034AC4F /* levelBeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = levelBeat.swift; sourceTree = "<group>"; };
 		B218CA151F16936B00E560E9 /* PreviewScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PreviewScene.sks; sourceTree = "<group>"; };
 		B218CA171F16957400E560E9 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
@@ -784,7 +784,7 @@
 		B2A307141F13E40C0059637F /* TheLabyrunth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheLabyrunth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2A307171F13E40C0059637F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2A3071B1F13E40C0059637F /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
-		B2A3071D1F13E40C0059637F /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		B2A3071D1F13E40C0059637F /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; usesTabs = 0; };
 		B2A3071F1F13E40C0059637F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B2A307221F13E40C0059637F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B2A307241F13E40C0059637F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1540,7 +1540,7 @@
 			isa = PBXGroup;
 			children = (
 				B2B06C911F142DA9000A728E /* ButtonNode.swift */,
-				B20ED61B1F27F1C10034AC4F /* TheShopUpgradeButton.swift */,
+				B20ED61B1F27F1C10034AC4F /* noAlphaChangeButton.swift */,
 				B2B06C931F143B21000A728E /* MovingObstacle.swift */,
 				B24D976D1F1D6A4D0098954E /* Bullet.swift */,
 				B2A002011F2133E700E6C528 /* LevelSelectButton.swift */,
@@ -2257,7 +2257,7 @@
 				B247DB5C1F2A661100BA7E63 /* levelBeatManager.swift in Sources */,
 				B247DB631F2A675F00BA7E63 /* phaseLabelManager.swift in Sources */,
 				B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */,
-				B20ED61C1F27F1C10034AC4F /* TheShopUpgradeButton.swift in Sources */,
+				B20ED61C1F27F1C10034AC4F /* noAlphaChangeButton.swift in Sources */,
 				B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */,
 				B24D976E1F1D6A4D0098954E /* Bullet.swift in Sources */,
 				B24FD64E1F27B5CD00331464 /* TheShop.swift in Sources */,

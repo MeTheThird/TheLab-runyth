@@ -12,7 +12,7 @@ class LevelSelect: SKScene {
     
     /* UI Connections */
     var levelSelectButtonLayer: SKSpriteNode!
-    var backButton: ButtonNode!
+    var backButton: noAlphaChangeButton!
     var numOfLevels = 13
     static var beatenLevelManager = levelBeatManager()
     static var previousFileName: String = "MainMenu"
@@ -20,7 +20,7 @@ class LevelSelect: SKScene {
     
     override func didMove(to view: SKView) {
         levelSelectButtonLayer = childNode(withName: "levelSelectButtonLayer") as! SKSpriteNode
-        backButton = childNode(withName: "backButton") as! ButtonNode
+        backButton = childNode(withName: "backButton") as! noAlphaChangeButton
         
         print(numOfLevels)
         
