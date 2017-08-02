@@ -74,25 +74,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // roll to phase -- get rid of alpha change
     var phasingAnimation: SKAction? = nil
     var currentlyPhasing: Bool = false
-    // figure out time reversal animation
+    // stand to reverse time
     var timeReverseAnimation: SKAction? = nil
     static var level: Int = 1
     static var framesBack: Int = 150
-    static var phaseDurationMax: Double = 1.0
+    static var phaseDurationMax: Double = 0.5
     static var startLogged: Bool = false
     
     override func didMove(to view: SKView) {
         self.physicsWorld.gravity = gravity
-        //        view.showsFPS = true
-        //        view.showsPhysics = true
+//        view.showsFPS = true
+//        view.showsPhysics = true
         loseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Lose"), SKTexture(imageNamed: "frame2Lose"), SKTexture(imageNamed: "frame3Lose"), SKTexture(imageNamed: "frame4Lose"), SKTexture(imageNamed: "frame5Lose")], timePerFrame: 0.25 / 5.0)
         
         runningAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame2Run"), SKTexture(imageNamed: "frame3Run"), SKTexture(imageNamed: "frame4Run"), SKTexture(imageNamed: "frame1Run")], timePerFrame: 1.0 / 4.0)
         runningBlock = SKAction.repeatForever(runningAnimation!)
         
-        phasingAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Roll"), SKTexture(imageNamed: "frame2Roll"), SKTexture(imageNamed: "frame3Roll")], timePerFrame: 1.0 / 3.0)
+        phasingAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Roll"), SKTexture(imageNamed: "frame2Roll"), SKTexture(imageNamed: "frame3Roll")], timePerFrame: 0.5 / 3.0)
         
-        timeReverseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), ], timePerFrame: 1.5 / 8.0)
+        timeReverseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame2Stand"), SKTexture(imageNamed: "frame3Stand"), SKTexture(imageNamed: "frame4Stand"), SKTexture(imageNamed: "frame5Stand"), SKTexture(imageNamed: "frame6Stand"), SKTexture(imageNamed: "frame7Stand"), SKTexture(imageNamed: "frame8Stand"), ], timePerFrame: 1.5 / 8.0)
         
         if !GameScene.startLogged {
             Answers.logLevelStart("Level_\(GameScene.level)", customAttributes: [:])
@@ -133,12 +133,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if GameScene.level > 7 {
             let randInt = arc4random_uniform(100)
             if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: true)) {
-                if randInt < 2 {
-                    treasure.alpha = 1.0
-                    treasure.physicsBody?.contactTestBitMask = 1
-                }
+                print("treasure previously collected...")
+                print("GET REKT!!!")
             } else {
-                if randInt < 5 {
+                if randInt < 100 {
                     treasure.alpha = 1.0
                     treasure.physicsBody?.contactTestBitMask = 1
                 }
@@ -147,6 +145,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //        background = childNode(withName: "background") as! SKSpriteNode
         //        grass = childNode(withName: "grass") as! SKSpriteNode
         hero = childNode(withName: "//hero") as! SKSpriteNode
+        
+        hero.physicsBody = SKPhysicsBody(circleOfRadius: 22.0, center: CGPoint(x: 0, y: 0))
+        hero.physicsBody?.allowsRotation = false
+        hero.physicsBody?.categoryBitMask = 1
+        hero.physicsBody?.contactTestBitMask = 1
+        
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
         restartButton = childNode(withName: "//restartButton") as! ButtonNode
@@ -156,6 +160,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playButton = childNode(withName: "//playButton") as! ButtonNode
         nextButton = childNode(withName: "//nextButton") as! ButtonNode
         
+        if let spikeLayer = childNode(withName: "spikeLayer") as? SKSpriteNode {
+            for spike in spikeLayer.children {
+                spike.physicsBody = SKPhysicsBody(circleOfRadius: 15.0, center: CGPoint(x: 0, y: 0))
+                spike.physicsBody?.isDynamic = false
+                spike.physicsBody?.affectedByGravity = false
+                spike.physicsBody?.allowsRotation = false
+                spike.physicsBody?.categoryBitMask = 2
+                spike.physicsBody?.collisionBitMask = 0
+                spike.physicsBody?.contactTestBitMask = 1
+            }
+        }
+        if let tallSpikeLayer = childNode(withName: "tallSpikeLayer") as? SKSpriteNode {
+            for tallSpike in tallSpikeLayer.children {
+                tallSpike.physicsBody = SKPhysicsBody(circleOfRadius: 22.0, center: CGPoint(x: 0, y: 0))
+                tallSpike.physicsBody?.isDynamic = false
+                tallSpike.physicsBody?.affectedByGravity = false
+                tallSpike.physicsBody?.allowsRotation = false
+                tallSpike.physicsBody?.categoryBitMask = 2
+                tallSpike.physicsBody?.collisionBitMask = 0
+                tallSpike.physicsBody?.contactTestBitMask = 1
+            }
+        }
         if let mCDL = childNode(withName: "movingCeilingDoorLayer") as? SKSpriteNode {
             movingCeilingDoorLayer = mCDL
         }
@@ -181,6 +207,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             var spike: SKSpriteNode
             for reference in chainGroundSpikeLayer.children {
                 spike = reference.children[0].children[0] as! MovingObstacle
+                
+//                spike.physicsBody = SKPhysicsBody(circleOfRadius: 15.0, center: CGPoint(x: 0, y: 0))
+//                spike.physicsBody?.categoryBitMask = 2
+//                spike.physicsBody?.collisionBitMask = 4294967293
+//                spike.physicsBody?.contactTestBitMask = 1
+                
                 let chainTop = spike.childNode(withName: "chainTop") as! SKSpriteNode
                 let chainMid = spike.childNode(withName: "chainMid") as! SKSpriteNode
                 let chainBot = spike.childNode(withName: "chainBot") as! SKSpriteNode
@@ -216,7 +248,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        hero.run(runningBlock!)
+        if !notMoved {
+            hero.run(runningBlock!)
+        } else {
+            heroNotRunning = true
+        }
         
         restartButton.state = .hidden
         replayButton.state = .hidden
@@ -331,9 +367,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         heroNotRunning = true
                     }
                     hero.physicsBody?.categoryBitMask = 0
-                    hero.physicsBody?.collisionBitMask = 2147483648
+                    hero.physicsBody?.collisionBitMask = 8
                     hero.physicsBody?.contactTestBitMask = 0
-                    hero.position.x += heroSpeed
+                    hero.position.x += 2*heroSpeed
                     hero.alpha = 0.6
                     phaseDuration += 1 / 60
                     currentlyPhasing = true
@@ -356,8 +392,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     moveObstacleBackInTime()
                 case .reversingEverything:
                     timeState = .backward
-                default:
-                    break
+                case .stationary:
+                    hero.removeAllActions()
                 }
             case .backward:
                 moveObstacleBackInTime()
@@ -453,13 +489,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func runLoseAnimation() {
         view?.gestureRecognizers?.removeAll()
-        hero.physicsBody?.pinned = true
-        let removeReference = SKAction.run({ [unowned self] in
-            self.hero.parent!.parent!.run(SKAction.removeFromParent())
-        })
-        hero.removeAllActions()
-        let sequence = SKAction.sequence([loseAnimation!, removeReference])
-        hero.run(sequence)
+        print("bye")
+        if !(hero.physicsBody?.pinned)! {
+            print("hi")
+            hero.removeAllActions()
+            hero.physicsBody?.categoryBitMask = 0
+            hero.physicsBody?.collisionBitMask = 0
+            hero.physicsBody?.contactTestBitMask = 0
+            hero.physicsBody?.pinned = true
+            let removeReference = SKAction.run({ [unowned self] in
+                self.hero.parent!.parent!.removeFromParent()
+            })
+            let sequence = SKAction.sequence([loseAnimation!, removeReference])
+            print("sequence defined")
+            hero.run(sequence)
+            print("hero ran sequence")
+        }
     }
     
     class func level(_ levelNumber: Int) -> GameScene? {
@@ -808,7 +853,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func checkIfLevelIsBEATEN() {
         let heroPos = hero.convert(CGPoint(x: 0, y: 0), to: self)
         
-        if heroPos.x >= finalDoor.position.x && !levelBeatenMethodCalled {
+        if heroPos.x >= finalDoor.position.x && !levelBeatenMethodCalled && cameraNode.contains(hero) {
             levelBeatenMethodCalled = true
             Answers.logLevelEnd("Level_\(GameScene.level)", score: nil, success: true, customAttributes: ["treasureCollected": treasureFound])
             if GameScene.level(GameScene.level + 1) != nil {
