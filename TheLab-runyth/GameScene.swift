@@ -70,8 +70,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // run animation
     var runningAnimation: SKAction? = nil
     var runningBlock: SKAction? = nil
+    var heroNotRunning: Bool = false
     // roll to phase -- get rid of alpha change
     var phasingAnimation: SKAction? = nil
+    var currentlyPhasing: Bool = false
     // figure out time reversal animation
     var timeReverseAnimation: SKAction? = nil
     static var level: Int = 1
@@ -83,10 +85,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = gravity
         //        view.showsFPS = true
         //        view.showsPhysics = true
-        loseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Lose"), SKTexture(imageNamed: "frame2Lose"), SKTexture(imageNamed: "frame3Lose"), SKTexture(imageNamed: "frame4Lose"), SKTexture(imageNamed: "frame5Lose")], timePerFrame: 1.0 / 5.0)
+        loseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Lose"), SKTexture(imageNamed: "frame2Lose"), SKTexture(imageNamed: "frame3Lose"), SKTexture(imageNamed: "frame4Lose"), SKTexture(imageNamed: "frame5Lose")], timePerFrame: 0.25 / 5.0)
+        
         runningAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame2Run"), SKTexture(imageNamed: "frame3Run"), SKTexture(imageNamed: "frame4Run"), SKTexture(imageNamed: "frame1Run")], timePerFrame: 1.0 / 4.0)
         runningBlock = SKAction.repeatForever(runningAnimation!)
+        
         phasingAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Roll"), SKTexture(imageNamed: "frame2Roll"), SKTexture(imageNamed: "frame3Roll")], timePerFrame: 1.0 / 3.0)
+        
+        timeReverseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), SKTexture(imageNamed: "frame1Stand"), ], timePerFrame: 1.5 / 8.0)
+        
         if !GameScene.startLogged {
             Answers.logLevelStart("Level_\(GameScene.level)", customAttributes: [:])
             GameScene.startLogged = true
@@ -318,14 +325,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .forward:
                 switch heroState {
                 case .phasing:
+                    if !currentlyPhasing {
+                        hero.removeAllActions()
+                        hero.run(phasingAnimation!)
+                        heroNotRunning = true
+                    }
                     hero.physicsBody?.categoryBitMask = 0
                     hero.physicsBody?.collisionBitMask = 2147483648
                     hero.physicsBody?.contactTestBitMask = 0
                     hero.position.x += heroSpeed
-                    hero.alpha = 0.4
+                    hero.alpha = 0.6
                     phaseDuration += 1 / 60
+                    currentlyPhasing = true
                     break
                 case .running:
+                    if heroNotRunning {
+                        hero.run(runningBlock!)
+                        heroNotRunning = false
+                    }
                     hero.alpha = 1.0
                     hero.physicsBody?.categoryBitMask = 1
                     hero.physicsBody?.collisionBitMask = 4294967295
@@ -333,6 +350,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     hero.position.x += heroSpeed
                     break
                 case .reversingOtherStuff:
+                    hero.removeAllActions()
+                    hero.run(timeReverseAnimation!)
+                    heroNotRunning = true
                     moveObstacleBackInTime()
                 case .reversingEverything:
                     timeState = .backward
@@ -347,6 +367,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         if phaseDuration >= GameScene.phaseDurationMax {
+            currentlyPhasing = false
             if heroState == .phasing {
                 heroState = .running
             }
@@ -392,20 +413,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let removal = SKAction.removeFromParent()
         
         if categoryA == 1 && categoryB == 2 {
-            nodeA.parent!.parent!.run(removal)
+            runLoseAnimation()
         } else if categoryA == 2 && categoryB == 1 {
-            nodeB.parent!.parent!.run(removal)
+            runLoseAnimation()
         } else if categoryA == 1 && categoryB == 4 {
-            nodeA.parent!.parent!.run(removal)
+            runLoseAnimation()
             let bullet = nodeB as! Bullet
             bullet.timeWhenDeleted = Date()
             enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
             recentlyRemovedBullets.append(bullet)
             nodeB.run(removal)
         } else if categoryA == 4 && categoryB == 1 {
+            runLoseAnimation()
             let bullet = nodeA as! Bullet
             bullet.timeWhenDeleted = Date()
-            nodeB.parent!.parent!.run(removal)
             enemyBullets.remove(at: enemyBullets.index(of: bullet)!)
             recentlyRemovedBullets.append(bullet)
             nodeA.run(removal)
@@ -428,6 +449,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             recentlyRemovedBullets.append(bullet)
             nodeB.run(removal)
         }
+    }
+    
+    func runLoseAnimation() {
+        view?.gestureRecognizers?.removeAll()
+        hero.physicsBody?.pinned = true
+        let removeReference = SKAction.run({ [unowned self] in
+            self.hero.parent!.parent!.run(SKAction.removeFromParent())
+        })
+        hero.removeAllActions()
+        let sequence = SKAction.sequence([loseAnimation!, removeReference])
+        hero.run(sequence)
     }
     
     class func level(_ levelNumber: Int) -> GameScene? {
@@ -716,8 +748,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("Bye scene?!?!?!?!?!?!?!?!?!?!?!?!?!?!?!?")
                 return
             }
-            
-            hero.run(loseAnimation!)
             
             view!.gestureRecognizers?.removeAll()
             scene.scaleMode = .aspectFit
