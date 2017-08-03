@@ -13,6 +13,7 @@
 		B218CA191F16957400E560E9 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B218CA171F16957400E560E9 /* arrow.png */; };
 		B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218CA1B1F16971C00E560E9 /* PreviewScene.swift */; };
 		B21B741B1F33A53100797F92 /* WinScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21B741A1F33A53100797F92 /* WinScreen.swift */; };
+		B21B741F1F33CBE300797F92 /* Luminari.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B21B741E1F33CBE300797F92 /* Luminari.ttf */; };
 		B228DD251F17F89200E0C06F /* Level_1.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD241F17F89200E0C06F /* Level_1.sks */; };
 		B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD281F18217D00E0C06F /* ChainSpike.sks */; };
 		B22F20201F2E551200DBB8DF /* Game-Background-All.png in Resources */ = {isa = PBXBuildFile; fileRef = B22F20031F2E551200DBB8DF /* Game-Background-All.png */; };
@@ -425,6 +426,7 @@
 		B218CA171F16957400E560E9 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B218CA1B1F16971C00E560E9 /* PreviewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewScene.swift; sourceTree = "<group>"; };
 		B21B741A1F33A53100797F92 /* WinScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinScreen.swift; sourceTree = "<group>"; };
+		B21B741E1F33CBE300797F92 /* Luminari.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Luminari.ttf; sourceTree = "<group>"; };
 		B228DD241F17F89200E0C06F /* Level_1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_1.sks; sourceTree = "<group>"; };
 		B228DD281F18217D00E0C06F /* ChainSpike.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChainSpike.sks; sourceTree = "<group>"; };
 		B22F20031F2E551200DBB8DF /* Game-Background-All.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Game-Background-All.png"; sourceTree = "<group>"; };
@@ -1618,6 +1620,7 @@
 		B2A307161F13E40C0059637F /* TheLab-runyth */ = {
 			isa = PBXGroup;
 			children = (
+				B21B741E1F33CBE300797F92 /* Luminari.ttf */,
 				B252F1A91F2F9813005F03D9 /* LUNCH___.TTF */,
 				B2FE65781F2D88BC0079B676 /* Art */,
 				B2B9F0721F26666E00C59318 /* SwiftFiles */,
@@ -2004,6 +2007,7 @@
 				B22F26921F2E55A500DBB8DF /* ingred1.png in Resources */,
 				B22F26101F2E55A500DBB8DF /* f1.png in Resources */,
 				B22F26CB1F2E55A500DBB8DF /* 112.png in Resources */,
+				B21B741F1F33CBE300797F92 /* Luminari.ttf in Resources */,
 				B2B06CA61F157D2F000A728E /* nextLevel.png in Resources */,
 				B22F26791F2E55A500DBB8DF /* 37.png in Resources */,
 				B22F26361F2E55A500DBB8DF /* wa2.png in Resources */,

@@ -90,8 +90,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         self.physicsWorld.gravity = gravity
-        //        view.showsFPS = true
-        //        view.showsPhysics = true
+//                view.showsFPS = true
+//                view.showsPhysics = true
         loseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Lose"), SKTexture(imageNamed: "frame2Lose"), SKTexture(imageNamed: "frame3Lose"), SKTexture(imageNamed: "frame4Lose"), SKTexture(imageNamed: "frame5Lose")], timePerFrame: 0.25 / 5.0)
         
         runningAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame2Run"), SKTexture(imageNamed: "frame3Run"), SKTexture(imageNamed: "frame4Run"), SKTexture(imageNamed: "frame1Run")], timePerFrame: 0.5 / 4.0)
@@ -217,45 +217,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if let cSL = childNode(withName: "chainGroundSpikeLayer") as? SKSpriteNode {
             chainGroundSpikeLayer = cSL
-            var spike: SKSpriteNode
             for reference in chainGroundSpikeLayer.children {
-                spike = reference.children[0].children[0] as! MovingObstacle
+                let node = reference.children[0]
                 
-                //                spike.physicsBody = SKPhysicsBody(circleOfRadius: 15.0, center: CGPoint(x: 0, y: 0))
-                //                spike.physicsBody?.categoryBitMask = 2
-                //                spike.physicsBody?.collisionBitMask = 4294967293
-                //                spike.physicsBody?.contactTestBitMask = 1
-                
-                let chainTop = spike.childNode(withName: "chainTop") as! SKSpriteNode
-                let chainMid = spike.childNode(withName: "chainMid") as! SKSpriteNode
-                let chainBot = spike.childNode(withName: "chainBot") as! SKSpriteNode
-                let anchor = spike.childNode(withName: "anchor") as! SKSpriteNode
+                let spike = node.childNode(withName: "spike") as! MovingObstacle
+                let chainTop = node.childNode(withName: "chainTop") as! MovingObstacle
+                let chainMid = node.childNode(withName: "chainMid") as! MovingObstacle
+                let chainBot = node.childNode(withName: "chainBot") as! MovingObstacle
+                let anchor = node.childNode(withName: "anchor") as! SKSpriteNode
                 
                 var groundPinLocation = chainBot.position
                 groundPinLocation.x += 7.425
                 groundPinLocation.y -= 10.96
-                groundPinLocation = spike.convert(groundPinLocation, to: self)
+                groundPinLocation = node.convert(groundPinLocation, to: self)
                 let groundPinJoint = SKPhysicsJointPin.joint(withBodyA: anchor.physicsBody!, bodyB: chainBot.physicsBody!, anchor: groundPinLocation)
                 physicsWorld.add(groundPinJoint)
                 
                 var botMidPinLocation = chainMid.position
                 botMidPinLocation.y -= 10.96
                 botMidPinLocation.x -= 7.425
-                botMidPinLocation = spike.convert(botMidPinLocation, to: self)
+                botMidPinLocation = node.convert(botMidPinLocation, to: self)
                 let botMidPinJoint = SKPhysicsJointPin.joint(withBodyA: chainMid.physicsBody!, bodyB: chainBot.physicsBody!, anchor: botMidPinLocation)
                 physicsWorld.add(botMidPinJoint)
                 
                 var midTopPinLocation = chainTop.position
                 midTopPinLocation.y -= 10.96
                 midTopPinLocation.x += 7.425
-                midTopPinLocation = spike.convert(midTopPinLocation, to: self)
+                midTopPinLocation = node.convert(midTopPinLocation, to: self)
                 let midTopPinJoint = SKPhysicsJointPin.joint(withBodyA: chainMid.physicsBody!, bodyB: chainTop.physicsBody!, anchor: midTopPinLocation)
                 physicsWorld.add(midTopPinJoint)
                 
                 var spikePinLocation = chainTop.position
                 spikePinLocation.y += 10.96
                 spikePinLocation.x -= 7.425
-                spikePinLocation = spike.convert(spikePinLocation, to: self)
+                spikePinLocation = node.convert(spikePinLocation, to: self)
                 let spikePinJoint = SKPhysicsJointPin.joint(withBodyA: spike.physicsBody!, bodyB: chainTop.physicsBody!, anchor: spikePinLocation)
                 physicsWorld.add(spikePinJoint)
             }
@@ -662,10 +657,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if chainGroundSpikeLayer != nil {
             for i in chainGroundSpikeLayer.children {
-                let chainSpike = i.children[0].children[0] as! MovingObstacle
+                let node = i.children[0]
+                let chainSpike = node.childNode(withName: "spike") as! MovingObstacle
+                let chainTop = node.childNode(withName: "chainTop") as! MovingObstacle
+                let chainMid = node.childNode(withName: "chainMid") as! MovingObstacle
+                let chainBot = node.childNode(withName: "chainBot") as! MovingObstacle
                 if let last = chainSpike.previousPosition.last {
                     chainSpike.position = last
                     chainSpike.previousPosition.removeLast()
+                    chainBot.position = last
+                    chainBot.previousPosition.removeLast()
+                    chainMid.position = last
+                    chainMid.previousPosition.removeLast()
+                    chainTop.position = last
+                    chainTop.previousPosition.removeLast()
                 }
             }
         }
@@ -757,12 +762,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if chainGroundSpikeLayer != nil {
             for i in chainGroundSpikeLayer.children {
-                let spike = i.children[0].children[0] as! MovingObstacle
+                let node = i.children[0]
+                let spike = node.childNode(withName: "spike") as! MovingObstacle
+                let chainTop = node.childNode(withName: "chainTop") as! MovingObstacle
+                let chainBot = node.childNode(withName: "chainBot") as! MovingObstacle
+                let chainMid = node.childNode(withName: "chainMid") as! MovingObstacle
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     spike.previousPosition.append(spike.position)
+                    chainBot.previousPosition.append(chainBot.position)
+                    chainMid.previousPosition.append(chainMid.position)
+                    chainTop.previousPosition.append(chainTop.position)
                 }
                 if spike.previousPosition.count > GameScene.framesBack {
                     spike.previousPosition.remove(at: 0)
+                    chainTop.previousPosition.remove(at: 0)
+                    chainMid.previousPosition.remove(at: 0)
+                    chainBot.previousPosition.remove(at: 0)
                 }
             }
         }
