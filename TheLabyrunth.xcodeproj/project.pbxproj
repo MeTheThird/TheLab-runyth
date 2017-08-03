@@ -12,6 +12,7 @@
 		B218CA161F16936B00E560E9 /* PreviewScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B218CA151F16936B00E560E9 /* PreviewScene.sks */; };
 		B218CA191F16957400E560E9 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B218CA171F16957400E560E9 /* arrow.png */; };
 		B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218CA1B1F16971C00E560E9 /* PreviewScene.swift */; };
+		B21B741B1F33A53100797F92 /* WinScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21B741A1F33A53100797F92 /* WinScreen.swift */; };
 		B228DD251F17F89200E0C06F /* Level_1.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD241F17F89200E0C06F /* Level_1.sks */; };
 		B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD281F18217D00E0C06F /* ChainSpike.sks */; };
 		B22F20201F2E551200DBB8DF /* Game-Background-All.png in Resources */ = {isa = PBXBuildFile; fileRef = B22F20031F2E551200DBB8DF /* Game-Background-All.png */; };
@@ -423,6 +424,7 @@
 		B218CA151F16936B00E560E9 /* PreviewScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PreviewScene.sks; sourceTree = "<group>"; };
 		B218CA171F16957400E560E9 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B218CA1B1F16971C00E560E9 /* PreviewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewScene.swift; sourceTree = "<group>"; };
+		B21B741A1F33A53100797F92 /* WinScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinScreen.swift; sourceTree = "<group>"; };
 		B228DD241F17F89200E0C06F /* Level_1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_1.sks; sourceTree = "<group>"; };
 		B228DD281F18217D00E0C06F /* ChainSpike.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChainSpike.sks; sourceTree = "<group>"; };
 		B22F20031F2E551200DBB8DF /* Game-Background-All.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Game-Background-All.png"; sourceTree = "<group>"; };
@@ -1532,6 +1534,7 @@
 				B2B06CA11F1570C4000A728E /* LevelSelect.swift */,
 				B2B9F0731F266C9900C59318 /* MainMenu.swift */,
 				B24FD64D1F27B5CD00331464 /* TheShop.swift */,
+				B21B741A1F33A53100797F92 /* WinScreen.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -2258,6 +2261,7 @@
 				B247DB631F2A675F00BA7E63 /* phaseLabelManager.swift in Sources */,
 				B2A307181F13E40C0059637F /* AppDelegate.swift in Sources */,
 				B20ED61C1F27F1C10034AC4F /* noAlphaChangeButton.swift in Sources */,
+				B21B741B1F33A53100797F92 /* WinScreen.swift in Sources */,
 				B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */,
 				B24D976E1F1D6A4D0098954E /* Bullet.swift in Sources */,
 				B24FD64E1F27B5CD00331464 /* TheShop.swift in Sources */,

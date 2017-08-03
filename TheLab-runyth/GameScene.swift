@@ -32,12 +32,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timeCool: SKLabelNode!
     var levelLabel: SKLabelNode!
     var cameraNode: SKCameraNode!
-    var restartButton: ButtonNode!
-    var replayButton: ButtonNode!
-    var levelSelectButton: ButtonNode!
-    var pauseButton: ButtonNode!
-    var playButton: ButtonNode!
-    var nextButton: ButtonNode!
+    var restartButton: noAlphaChangeButton!
+    var replayButton: noAlphaChangeButton!
+    var levelSelectButton: noAlphaChangeButton!
+    var pauseButton: noAlphaChangeButton!
+    var playButton: noAlphaChangeButton!
+    var nextButton: noAlphaChangeButton!
+    var restartBack: SKSpriteNode!
+    var replayBack: SKSpriteNode!
+    var levelsBack: SKSpriteNode!
+    var playBack: SKSpriteNode!
+    var nextBack: SKSpriteNode!
     var movingCeilingDoorLayer: SKSpriteNode!
     var movingGroundDoorLayer: SKSpriteNode!
     var chainGroundSpikeLayer: SKSpriteNode!
@@ -77,6 +82,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentlyPhasing: Bool = false
     // stand to reverse time
     var timeReverseAnimation: SKAction? = nil
+    var previousVelocity: CGVector? = nil
     static var level: Int = 1
     static var framesBack: Int = 150
     static var phaseDurationMax: Double = 0.5
@@ -155,12 +161,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
-        restartButton = childNode(withName: "//restartButton") as! ButtonNode
-        replayButton = childNode(withName: "//replayButton") as! ButtonNode
-        levelSelectButton = childNode(withName: "//levelSelectButton") as! ButtonNode
-        pauseButton = childNode(withName: "//pauseButton") as! ButtonNode
-        playButton = childNode(withName: "//playButton") as! ButtonNode
-        nextButton = childNode(withName: "//nextButton") as! ButtonNode
+        restartButton = childNode(withName: "//restartButton") as! noAlphaChangeButton
+        replayButton = childNode(withName: "//replayButton") as! noAlphaChangeButton
+        levelSelectButton = childNode(withName: "//levelSelectButton") as! noAlphaChangeButton
+        pauseButton = childNode(withName: "//pauseButton") as! noAlphaChangeButton
+        playButton = childNode(withName: "//playButton") as! noAlphaChangeButton
+        nextButton = childNode(withName: "//nextButton") as! noAlphaChangeButton
+        restartBack = childNode(withName: "//restartBack") as! SKSpriteNode
+        replayBack = childNode(withName: "//replayBack") as! SKSpriteNode
+        levelsBack = childNode(withName: "//levelsBack") as! SKSpriteNode
+        playBack = childNode(withName: "//playBack") as! SKSpriteNode
+        nextBack = childNode(withName: "//nextBack") as! SKSpriteNode
         
         if let spikeLayer = childNode(withName: "spikeLayer") as? SKSpriteNode {
             for spike in spikeLayer.children {
@@ -256,12 +267,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             heroNotRunning = true
         }
         
+        nextButton.position.y -= 25
+        nextBack.position.y -= 25
+        replayButton.position.y -= 25
+        replayBack.position.y -= 25
+        
         levelLabel.isHidden = true
         restartButton.state = .hidden
+        restartBack.isHidden = true
         replayButton.state = .hidden
+        replayBack.isHidden = true
         levelSelectButton.state = .hidden
+        levelsBack.isHidden = true
         playButton.state = .hidden
+        playBack.isHidden = true
         nextButton.state = .hidden
+        nextBack.isHidden = true
         self.camera = cameraNode
         physicsWorld.contactDelegate = self
         
@@ -293,8 +314,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.selectedHandler = { [unowned self, unowned view] in
             self.isPaused = true
             self.restartButton.state = .active
+            self.restartBack.isHidden = false
             self.levelSelectButton.state = .active
+            self.levelsBack.isHidden = false
             self.playButton.state = .active
+            self.playBack.isHidden = false
             self.pauseButton.state = .hidden
             self.levelLabel.isHidden = false
             view.gestureRecognizers?.removeAll()
@@ -302,8 +326,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         playButton.selectedHandler = { [unowned self, unowned view] in
             self.restartButton.state = .hidden
+            self.restartBack.isHidden = true
             self.levelSelectButton.state = .hidden
+            self.levelsBack.isHidden = true
             self.playButton.state = .hidden
+            self.playBack.isHidden = true
             self.pauseButton.state = .active
             self.levelLabel.isHidden = true
             self.isPaused = false
@@ -391,6 +418,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     hero.position.x += heroSpeed
                     break
                 case .reversingOtherStuff:
+                    hero.physicsBody?.affectedByGravity = false
+                    previousVelocity = hero.physicsBody?.velocity
+                    hero.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                     hero.removeAllActions()
                     hero.run(timeReverseAnimation!)
                     heroNotRunning = true
@@ -574,6 +604,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 if longPressGesture.state == .ended {
                     heroState = .running
+                    hero.physicsBody?.affectedByGravity = true
+                    hero.physicsBody?.velocity = previousVelocity!
                     if timeState == .backward {
                         timeState = .forward
                     }
@@ -601,6 +633,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 if door.previousPosition.last == nil && heroState == .reversingOtherStuff {
                     heroState = .running
+                    hero.physicsBody?.affectedByGravity = true
+                    hero.physicsBody?.velocity = previousVelocity!
                     if timeState == .backward {
                         timeState = .forward
                     }
@@ -671,6 +705,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func updatePreviousMovingObstaclePositions() {
         if timeReversed > 2.5 {
             heroState = .running
+            hero.physicsBody?.affectedByGravity = true
+            hero.physicsBody?.velocity = previousVelocity!
             if timeState == .backward {
                 timeState = .forward
             }
@@ -785,6 +821,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if heroState == .reversingOtherStuff || timeState == .backward {
             if heroPrevPos.last == nil {
                 heroState = .running
+                hero.physicsBody?.affectedByGravity = true
+                hero.physicsBody?.velocity = previousVelocity!
                 if timeState == .backward {
                     timeState = .forward
                 }
@@ -863,8 +901,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             view?.gestureRecognizers?.removeAll()
             Answers.logLevelEnd("Level_\(GameScene.level)", score: nil, success: true, customAttributes: ["treasureCollected": treasureFound])
             if GameScene.level(GameScene.level + 1) != nil {
+                pauseButton.state = .hidden
                 nextButton.state = .active
+                nextBack.isHidden = false
                 replayButton.state = .active
+                replayBack.isHidden = false
             } else {
                 guard let scene = SKScene(fileNamed: "WinScreen") else {
                     print("YOU'LL NEVER WIN!!! HAHAHAHAHAHAHAHAHA!!!")

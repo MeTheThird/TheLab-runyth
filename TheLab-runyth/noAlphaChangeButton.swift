@@ -21,11 +21,13 @@ class noAlphaChangeButton: SKSpriteNode {
             switch state {
             case .active:
                 isUserInteractionEnabled = true
+                self.alpha = 0.001
                 break
             case .selected:
                 break
             case .hidden:
                 isUserInteractionEnabled = false
+                self.alpha = 0.0
                 break
             }
         }

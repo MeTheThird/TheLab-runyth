@@ -55,31 +55,29 @@ class PreviewScene: SKScene {
             }
         }
         
+        
+        
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         if let movingCeilingDoorLayer = childNode(withName: "movingCeilingDoorLayer") as? SKSpriteNode {
             for node in movingCeilingDoorLayer.children {
                 if node.name != "dummyDoor" {
                     node.position.y -= 75
-                    let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow.png"))
-                    self.addChild(arrow)
-                    arrow.zRotation = -CGFloat.pi / 2
-                    arrow.position = CGPoint(x: movingCeilingDoorLayer.convert(node.position, to: self).x, y: 0)
                 }
             }
         }
         if let movingGroundDoorLayer = childNode(withName: "movingGroundDoorLayer") as? SKSpriteNode {
             for node in movingGroundDoorLayer.children {
                 node.position.y += 75
-                let arrow = SKSpriteNode(texture: SKTexture(imageNamed: "arrow.png"))
-                self.addChild(arrow)
-                arrow.zRotation = CGFloat.pi / 2
-                arrow.position = CGPoint(x: movingGroundDoorLayer.convert(node.position, to: self).x, y: 0)
             }
         }
         
-        if GameScene.level > 7 {
+        if GameScene.level >= 7 {
             treasure = childNode(withName: "treasure") as! SKSpriteNode
-            treasure.alpha = 1.0
+            if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: true)) {
+                treasure.alpha = 0.0
+            } else {
+                treasure.alpha = 1.0
+            }
         }
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToPanGesture))
@@ -131,7 +129,8 @@ class PreviewScene: SKScene {
     func respondToPanGesture(gesture: UIGestureRecognizer) {
         if let gestureOfPan = gesture as? UIPanGestureRecognizer {
             let targetX = cameraNode.position.x - 0.03*gestureOfPan.velocity(in: self.view!).x
-            let x = clamp(value: targetX, lower: 0, upper: finalDoor.position.x + 12.5 - size.width / 2)
+            let rightMostSideOfFinalDoor = finalDoor.position.x + finalDoor.size.width / 2
+            let x = clamp(value: targetX, lower: 0, upper: rightMostSideOfFinalDoor - size.width / 2)
             cameraNode.position.x = x
         }
     }

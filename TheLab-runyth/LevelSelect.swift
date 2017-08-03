@@ -13,6 +13,8 @@ class LevelSelect: SKScene {
     /* UI Connections */
     var levelSelectButtonLayer: SKSpriteNode!
     var levelSelectLockLayer: SKSpriteNode!
+    var finalDoor: SKSpriteNode!
+    var cameraNode: SKCameraNode!
     var backButton: noAlphaChangeButton!
     var numOfLevels = 13
     static var beatenLevelManager = levelBeatManager()
@@ -20,13 +22,19 @@ class LevelSelect: SKScene {
     override func didMove(to view: SKView) {
         levelSelectButtonLayer = childNode(withName: "levelSelectButtonLayer") as! SKSpriteNode
         levelSelectLockLayer = childNode(withName: "levelSelectLockLayer") as! SKSpriteNode
-        backButton = childNode(withName: "backButton") as! noAlphaChangeButton
+        backButton = childNode(withName: "//backButton") as! noAlphaChangeButton
+        cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
+        finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToPanGesture))
+        panGesture.minimumNumberOfTouches = 1
+        view.addGestureRecognizer(panGesture)
         
         print(numOfLevels)
         
         for i in levelSelectLockLayer.children {
             let lock = i as! LevelSelectLock
-            if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: lock.number, treasureCollected: nil)) {
+            if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: lock.number, treasureCollected: nil)) || lock.number == LevelSelect.beatenLevelManager.lastLevelBeatenNumber + 1 {
                 lock.alpha = 0.0
             }
         }
@@ -84,5 +92,14 @@ class LevelSelect: SKScene {
         
         /* 4) Start game scene */
         skView.presentScene(scene)
+    }
+    
+    func respondToPanGesture(gesture: UIGestureRecognizer) {
+        if let gestureOfPan = gesture as? UIPanGestureRecognizer {
+            let targetX = cameraNode.position.x - 0.03*gestureOfPan.velocity(in: self.view!).x
+            let rightMostSideOfFinalDoor = finalDoor.position.x + finalDoor.size.width / 2
+            let x = clamp(value: targetX, lower: 0, upper: rightMostSideOfFinalDoor - size.width / 2)
+            cameraNode.position.x = x
+        }
     }
 }
