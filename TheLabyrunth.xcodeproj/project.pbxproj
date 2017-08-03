@@ -366,7 +366,7 @@
 		B2A001FC1F21174700E6C528 /* levelSelectButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A001FB1F21174700E6C528 /* levelSelectButton.png */; };
 		B2A001FE1F212D8000E6C528 /* Level_2.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A001FD1F212D8000E6C528 /* Level_2.sks */; };
 		B2A002001F21325700E6C528 /* Level_3.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A001FF1F21325700E6C528 /* Level_3.sks */; };
-		B2A002021F2133E700E6C528 /* LevelSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A002011F2133E700E6C528 /* LevelSelectButton.swift */; };
+		B2A002021F2133E700E6C528 /* LevelSelectButtonAndLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A002011F2133E700E6C528 /* LevelSelectButtonAndLock.swift */; };
 		B2A002041F2177C400E6C528 /* Level_4.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A002031F2177C400E6C528 /* Level_4.sks */; };
 		B2A002061F2179A300E6C528 /* Level_5.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A002051F2179A300E6C528 /* Level_5.sks */; };
 		B2A002081F217B6300E6C528 /* Level_6.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2A002071F217B6300E6C528 /* Level_6.sks */; };
@@ -777,7 +777,7 @@
 		B2A001FB1F21174700E6C528 /* levelSelectButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = levelSelectButton.png; sourceTree = "<group>"; };
 		B2A001FD1F212D8000E6C528 /* Level_2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_2.sks; sourceTree = "<group>"; };
 		B2A001FF1F21325700E6C528 /* Level_3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_3.sks; sourceTree = "<group>"; };
-		B2A002011F2133E700E6C528 /* LevelSelectButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectButton.swift; sourceTree = "<group>"; };
+		B2A002011F2133E700E6C528 /* LevelSelectButtonAndLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectButtonAndLock.swift; sourceTree = "<group>"; };
 		B2A002031F2177C400E6C528 /* Level_4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_4.sks; sourceTree = "<group>"; };
 		B2A002051F2179A300E6C528 /* Level_5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_5.sks; sourceTree = "<group>"; };
 		B2A002071F217B6300E6C528 /* Level_6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_6.sks; sourceTree = "<group>"; };
@@ -1543,7 +1543,7 @@
 				B20ED61B1F27F1C10034AC4F /* noAlphaChangeButton.swift */,
 				B2B06C931F143B21000A728E /* MovingObstacle.swift */,
 				B24D976D1F1D6A4D0098954E /* Bullet.swift */,
-				B2A002011F2133E700E6C528 /* LevelSelectButton.swift */,
+				B2A002011F2133E700E6C528 /* LevelSelectButtonAndLock.swift */,
 			);
 			name = CodeObjects;
 			sourceTree = "<group>";
@@ -2248,7 +2248,7 @@
 				B2B06C921F142DA9000A728E /* ButtonNode.swift in Sources */,
 				B2826C511F2A87AA00E05583 /* phaseDurationMaxManager.swift in Sources */,
 				B247DB5E1F2A664A00BA7E63 /* currencyManager.swift in Sources */,
-				B2A002021F2133E700E6C528 /* LevelSelectButton.swift in Sources */,
+				B2A002021F2133E700E6C528 /* LevelSelectButtonAndLock.swift in Sources */,
 				B20ED61E1F2800BE0034AC4F /* levelBeat.swift in Sources */,
 				B2B9F0741F266C9900C59318 /* MainMenu.swift in Sources */,
 				B2826C531F2A891B00E05583 /* framesBackManager.swift in Sources */,

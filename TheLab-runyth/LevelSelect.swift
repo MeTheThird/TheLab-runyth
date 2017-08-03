@@ -12,21 +12,22 @@ class LevelSelect: SKScene {
     
     /* UI Connections */
     var levelSelectButtonLayer: SKSpriteNode!
+    var levelSelectLockLayer: SKSpriteNode!
     var backButton: noAlphaChangeButton!
     var numOfLevels = 13
     static var beatenLevelManager = levelBeatManager()
-    static var previousFileName: String = "MainMenu"
-    
     
     override func didMove(to view: SKView) {
         levelSelectButtonLayer = childNode(withName: "levelSelectButtonLayer") as! SKSpriteNode
+        levelSelectLockLayer = childNode(withName: "levelSelectLockLayer") as! SKSpriteNode
         backButton = childNode(withName: "backButton") as! noAlphaChangeButton
         
         print(numOfLevels)
         
-        for i in 1...numOfLevels {
-            if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: i, treasureCollected: nil)) {
-                // display lock on level -- after new buttons and stuff
+        for i in levelSelectLockLayer.children {
+            let lock = i as! LevelSelectLock
+            if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: lock.number, treasureCollected: nil)) {
+                lock.alpha = 0.0
             }
         }
         
@@ -74,7 +75,6 @@ class LevelSelect: SKScene {
         scene.scaleMode = .aspectFit
         
         GameScene.level = level
-        LevelSelect.previousFileName = "Level_\(level)"
         
         /* Show debug */
         skView.showsPhysics = false

@@ -22,7 +22,7 @@ class MainMenu: SKScene {
                 return
             }
             
-            guard let scene = GameScene(fileNamed: "LevelSelect") else {
+            guard let scene = LevelSelect(fileNamed: "LevelSelect") else {
                 print("no level select...")
                 return
             }

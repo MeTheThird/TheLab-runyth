@@ -8,7 +8,17 @@
 
 import SpriteKit
 
-class LevelSelectButton: ButtonNode {
+class LevelSelectButton: noAlphaChangeButton {
+    
+    var number: Int = 0
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        number = Int(self.name!)!
+    }
+}
+
+class LevelSelectLock: SKSpriteNode {
     
     var number: Int = 0
     

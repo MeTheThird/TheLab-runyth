@@ -12,7 +12,7 @@ import GameplayKit
 class PreviewScene: SKScene {
     
     var playLevelButton: ButtonNode!
-    var backButton: ButtonNode!
+    var backButton: noAlphaChangeButton!
     var cameraNode: SKCameraNode!
     var finalDoor: SKSpriteNode!
     var treasure: SKSpriteNode!
@@ -27,7 +27,7 @@ class PreviewScene: SKScene {
         }
         levelRealScene = theRealGameScene.scene
         playLevelButton = childNode(withName: "//playLevelButton") as! ButtonNode
-        backButton = childNode(withName: "//backButton") as! ButtonNode
+        backButton = childNode(withName: "//backButton") as! noAlphaChangeButton
         cameraNode = childNode(withName: "cameraNodePreview") as! SKCameraNode
         instructionsLabel = childNode(withName: "instructionsLabel") as! SKLabelNode
         buttonTapLabel = childNode(withName: "buttonTapLabel") as! SKLabelNode

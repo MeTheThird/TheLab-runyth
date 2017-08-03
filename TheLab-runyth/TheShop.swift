@@ -11,7 +11,7 @@ import SpriteKit
 class TheShop: SKScene {
     
     var moneyLabel: SKLabelNode!
-    var backButton: ButtonNode!
+    var backButton: noAlphaChangeButton!
     static var managerOfCurrency = currencyManager()
     
     // logo = char phasing? (no animation for the logo) - 0.2 alpha, 0.6, 1.0???
@@ -21,7 +21,7 @@ class TheShop: SKScene {
     
     override func didMove(to view: SKView) {
         moneyLabel = childNode(withName: "moneyLabel") as! SKLabelNode
-        backButton = childNode(withName: "backButton") as! ButtonNode
+        backButton = childNode(withName: "backButton") as! noAlphaChangeButton
         
         backButton.selectedHandler = { [unowned self] in
             guard let skView = self.view as SKView! else {
