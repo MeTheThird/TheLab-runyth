@@ -419,7 +419,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     break
                 case .reversingOtherStuff:
                     hero.physicsBody?.affectedByGravity = false
-                    previousVelocity = hero.physicsBody?.velocity
                     hero.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                     hero.removeAllActions()
                     hero.run(timeReverseAnimation!)
@@ -613,6 +612,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 } else if longPressGesture.state == .began {
                     if timeCoolDown <= 0.0 {
                         timeCoolDown = 5.0
+                        previousVelocity = hero.physicsBody?.velocity
                         heroState = .reversingOtherStuff
                         dateReversalStarted = Date()
                     }
