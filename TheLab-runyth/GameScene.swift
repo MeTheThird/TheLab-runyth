@@ -226,6 +226,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let chainBot = node.childNode(withName: "chainBot") as! MovingObstacle
                 let anchor = node.childNode(withName: "anchor") as! SKSpriteNode
                 
+                spike.physicsBody = SKPhysicsBody(circleOfRadius: 15.0, center: CGPoint(x: 0, y: 0))
+                spike.physicsBody?.categoryBitMask = 2
+                spike.physicsBody?.collisionBitMask = 4294967293
+                spike.physicsBody?.contactTestBitMask = 1
+                
                 var groundPinLocation = chainBot.position
                 groundPinLocation.x += 7.425
                 groundPinLocation.y -= 10.96
@@ -659,18 +664,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for i in chainGroundSpikeLayer.children {
                 let node = i.children[0]
                 let chainSpike = node.childNode(withName: "spike") as! MovingObstacle
-                let chainTop = node.childNode(withName: "chainTop") as! MovingObstacle
-                let chainMid = node.childNode(withName: "chainMid") as! MovingObstacle
-                let chainBot = node.childNode(withName: "chainBot") as! MovingObstacle
                 if let last = chainSpike.previousPosition.last {
                     chainSpike.position = last
                     chainSpike.previousPosition.removeLast()
-                    chainBot.position = last
-                    chainBot.previousPosition.removeLast()
-                    chainMid.position = last
-                    chainMid.previousPosition.removeLast()
-                    chainTop.position = last
-                    chainTop.previousPosition.removeLast()
                 }
             }
         }
@@ -764,20 +760,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for i in chainGroundSpikeLayer.children {
                 let node = i.children[0]
                 let spike = node.childNode(withName: "spike") as! MovingObstacle
-                let chainTop = node.childNode(withName: "chainTop") as! MovingObstacle
-                let chainBot = node.childNode(withName: "chainBot") as! MovingObstacle
-                let chainMid = node.childNode(withName: "chainMid") as! MovingObstacle
                 if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
                     spike.previousPosition.append(spike.position)
-                    chainBot.previousPosition.append(chainBot.position)
-                    chainMid.previousPosition.append(chainMid.position)
-                    chainTop.previousPosition.append(chainTop.position)
                 }
                 if spike.previousPosition.count > GameScene.framesBack {
                     spike.previousPosition.remove(at: 0)
-                    chainTop.previousPosition.remove(at: 0)
-                    chainMid.previousPosition.remove(at: 0)
-                    chainBot.previousPosition.remove(at: 0)
                 }
             }
         }
@@ -915,24 +902,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             levelBeatenMethodCalled = true
             view?.gestureRecognizers?.removeAll()
             Answers.logLevelEnd("Level_\(GameScene.level)", score: nil, success: true, customAttributes: ["treasureCollected": treasureFound])
-            if GameScene.level(GameScene.level + 1) != nil {
-                pauseButton.state = .hidden
-                nextButton.state = .active
-                nextBack.isHidden = false
-                replayButton.state = .active
-                replayBack.isHidden = false
-            } else {
-                guard let scene = SKScene(fileNamed: "WinScreen") else {
-                    print("YOU'LL NEVER WIN!!! HAHAHAHAHAHAHAHAHA!!!")
-                    return
-                }
-                scene.scaleMode = .aspectFit
-                view?.gestureRecognizers?.removeAll()
-                self.view!.presentScene(scene)
-            }
-            heroState = .stationary
             if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: treasureFound)) {
-                LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level, treasureCollected: treasureFound)
+                LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level, treasureCollected: self.treasureFound)
             }
             if treasureFound {
                 print("Your money went from \(TheShop.managerOfCurrency.currency)")
@@ -942,6 +913,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     print("Your funds are still somewhat LOW... :(")
                 }
             }
+            if GameScene.level(GameScene.level + 1) != nil && GameScene.level != 20 {
+                pauseButton.state = .hidden
+                nextButton.state = .active
+                nextBack.isHidden = false
+                replayButton.state = .active
+                replayBack.isHidden = false
+            } else if GameScene.level == 20 {
+                guard let scene = SKScene(fileNamed: "WinScreen") else {
+                    print("YOU'LL NEVER WIN!!! HAHAHAHAHAHAHAHAHA!!!")
+                    return
+                }
+                scene.scaleMode = .aspectFit
+                view?.gestureRecognizers?.removeAll()
+                self.view!.presentScene(scene)
+            } else if GameScene.level == 21 {
+                guard let scene = MainMenu(fileNamed: "MainMenu") else {
+                    print("no main menu :(")
+                    return
+                }
+                scene.scaleMode = .aspectFit
+                view?.gestureRecognizers?.removeAll()
+                self.view!.presentScene(scene)
+            } else {
+                print("missing Level \(GameScene.level + 1)")
+            }
+            heroState = .stationary
         }
     }
 }

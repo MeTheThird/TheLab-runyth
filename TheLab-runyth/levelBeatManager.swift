@@ -69,8 +69,8 @@ class levelBeatManager {
     
     func toString() -> String {
         var ans: String = ""
-        for i in 1..<self.beatenLevels.count {
-            ans += "\(i): levelNumber: \(beatenLevels[i].levelNumber), treasureCollected: \(String(describing: beatenLevels[i].treasureCollected)) \n"
+        for i in 0..<self.beatenLevels.count {
+            ans += "\(i): levelNumber: \(beatenLevels[i].levelNumber), treasureCollected: \(beatenLevels[i].treasureCollected) \n"
         }
         return ans
     }

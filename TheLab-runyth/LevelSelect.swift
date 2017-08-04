@@ -16,7 +16,6 @@ class LevelSelect: SKScene {
     var finalDoor: SKSpriteNode!
     var cameraNode: SKCameraNode!
     var backButton: noAlphaChangeButton!
-    var numOfLevels = 13
     static var beatenLevelManager = levelBeatManager()
     
     override func didMove(to view: SKView) {
@@ -26,12 +25,12 @@ class LevelSelect: SKScene {
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
         
+        self.camera = cameraNode
+        
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.respondToPanGesture))
         panGesture.minimumNumberOfTouches = 1
         view.addGestureRecognizer(panGesture)
-        
-        print(numOfLevels)
-        
+                
         for i in levelSelectLockLayer.children {
             let lock = i as! LevelSelectLock
             if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: lock.number, treasureCollected: nil)) || lock.number == LevelSelect.beatenLevelManager.lastLevelBeatenNumber + 1 {
