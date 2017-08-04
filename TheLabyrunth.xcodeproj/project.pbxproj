@@ -14,6 +14,7 @@
 		B218CA1C1F16971C00E560E9 /* PreviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B218CA1B1F16971C00E560E9 /* PreviewScene.swift */; };
 		B21B741B1F33A53100797F92 /* WinScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21B741A1F33A53100797F92 /* WinScreen.swift */; };
 		B21B741F1F33CBE300797F92 /* Luminari.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B21B741E1F33CBE300797F92 /* Luminari.ttf */; };
+		B21B74231F33E6C900797F92 /* Level_14.sks in Resources */ = {isa = PBXBuildFile; fileRef = B21B74221F33E6C900797F92 /* Level_14.sks */; };
 		B228DD251F17F89200E0C06F /* Level_1.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD241F17F89200E0C06F /* Level_1.sks */; };
 		B228DD291F18217D00E0C06F /* ChainSpike.sks in Resources */ = {isa = PBXBuildFile; fileRef = B228DD281F18217D00E0C06F /* ChainSpike.sks */; };
 		B22F20201F2E551200DBB8DF /* Game-Background-All.png in Resources */ = {isa = PBXBuildFile; fileRef = B22F20031F2E551200DBB8DF /* Game-Background-All.png */; };
@@ -427,6 +428,7 @@
 		B218CA1B1F16971C00E560E9 /* PreviewScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewScene.swift; sourceTree = "<group>"; };
 		B21B741A1F33A53100797F92 /* WinScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinScreen.swift; sourceTree = "<group>"; };
 		B21B741E1F33CBE300797F92 /* Luminari.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Luminari.ttf; sourceTree = "<group>"; };
+		B21B74221F33E6C900797F92 /* Level_14.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_14.sks; sourceTree = "<group>"; };
 		B228DD241F17F89200E0C06F /* Level_1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level_1.sks; sourceTree = "<group>"; };
 		B228DD281F18217D00E0C06F /* ChainSpike.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChainSpike.sks; sourceTree = "<group>"; };
 		B22F20031F2E551200DBB8DF /* Game-Background-All.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Game-Background-All.png"; sourceTree = "<group>"; };
@@ -1569,6 +1571,7 @@
 				B2B06CA31F157123000A728E /* Level_11.sks */,
 				B29AD3D31F26A02A00EBD644 /* Level_12.sks */,
 				B241B9301F2BE682009F6601 /* Level_13.sks */,
+				B21B74221F33E6C900797F92 /* Level_14.sks */,
 			);
 			name = Levels;
 			sourceTree = "<group>";
@@ -2144,6 +2147,7 @@
 				B22F26501F2E55A500DBB8DF /* Box3.png in Resources */,
 				B22F25FE1F2E55A500DBB8DF /* a3.png in Resources */,
 				B247DB551F2A4EFE00BA7E63 /* replayButton.png in Resources */,
+				B21B74231F33E6C900797F92 /* Level_14.sks in Resources */,
 				B22F26981F2E55A500DBB8DF /* 27.png in Resources */,
 				B22F26191F2E55A500DBB8DF /* 125.png in Resources */,
 				B22F26441F2E55A500DBB8DF /* eg5.png in Resources */,
