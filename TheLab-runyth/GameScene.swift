@@ -904,6 +904,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             Answers.logLevelEnd("Level_\(GameScene.level)", score: nil, success: true, customAttributes: ["treasureCollected": treasureFound])
             if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: treasureFound)) {
                 LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level, treasureCollected: self.treasureFound)
+                print(self.treasureFound)
+                print(LevelSelect.beatenLevelManager.beatenLevels.last!.treasureCollected)
+                print(LevelSelect.beatenLevelManager.toString())
             }
             if treasureFound {
                 print("Your money went from \(TheShop.managerOfCurrency.currency)")

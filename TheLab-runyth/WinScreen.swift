@@ -14,7 +14,7 @@ class WinScreen: SKScene {
     var backButton: noAlphaChangeButton!
     
     override func didMove(to view: SKView) {
-        backButton = childNode(withName: "//backButton") as! noAlphaChangeButton
+        backButton = childNode(withName: "backButton") as! noAlphaChangeButton
         
         backButton.selectedHandler = { [unowned self] in
             guard let skView = self.view as SKView! else {
@@ -22,7 +22,7 @@ class WinScreen: SKScene {
                 return
             }
             
-            guard let scene = GameScene(fileNamed: "LevelSelect") else {
+            guard let scene = LevelSelect(fileNamed: "LevelSelect") else {
                 print("no Level Select... :(")
                 return
             }

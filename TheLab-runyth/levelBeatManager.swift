@@ -58,7 +58,7 @@ class levelBeatManager {
         }
     }
     
-    func addNewBeatenLevel(beatenLevelNumber: Int, treasureCollected: Bool) {
+    func addNewBeatenLevel(beatenLevelNumber: Int, treasureCollected: Bool?) {
         let newBeatenLevel = levelBeat(levelNum: beatenLevelNumber, treasureCollected: treasureCollected)
         if beatenLevelNumber > lastLevelBeatenNumber {
             lastLevelBeatenNumber = beatenLevelNumber
