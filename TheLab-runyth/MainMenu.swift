@@ -23,10 +23,6 @@ class MainMenu: SKScene {
             bonusLayer.alpha = 1.0
         }
         
-        for i in 1...11 {
-            LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: i, treasureCollected: false)
-        }
-        
         playButton.selectedHandler = { [unowned self] in
             guard let skView = self.view as SKView! else {
                 print("Could not get Skview")

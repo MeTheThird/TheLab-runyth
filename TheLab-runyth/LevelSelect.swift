@@ -13,6 +13,7 @@ class LevelSelect: SKScene {
     /* UI Connections */
     var levelSelectButtonLayer: SKSpriteNode!
     var levelSelectLockLayer: SKSpriteNode!
+    var coinLayer: SKSpriteNode!
     var finalDoor: SKSpriteNode!
     var cameraNode: SKCameraNode!
     var backButton: noAlphaChangeButton!
@@ -21,6 +22,7 @@ class LevelSelect: SKScene {
     override func didMove(to view: SKView) {
         levelSelectButtonLayer = childNode(withName: "levelSelectButtonLayer") as! SKSpriteNode
         levelSelectLockLayer = childNode(withName: "levelSelectLockLayer") as! SKSpriteNode
+        coinLayer = childNode(withName: "coinLayer") as! SKSpriteNode
         backButton = childNode(withName: "//backButton") as! noAlphaChangeButton
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
@@ -35,6 +37,13 @@ class LevelSelect: SKScene {
             let lock = i as! LevelSelectLock
             if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: lock.number, treasureCollected: nil)) || lock.number == LevelSelect.beatenLevelManager.lastLevelBeatenNumber + 1 {
                 lock.alpha = 0.0
+            }
+        }
+        
+        for i in coinLayer.children {
+            let coin = i as! LevelSelectLock
+            if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: coin.number, treasureCollected: true)) {
+                coin.alpha = 0.0
             }
         }
         
@@ -56,7 +65,6 @@ class LevelSelect: SKScene {
         for a in levelSelectButtonLayer.children {
             let button = a as! LevelSelectButton
             button.selectedHandler = { [unowned self, unowned button] in
-                print(LevelSelect.beatenLevelManager.lastLevelBeatenNumber)
                 if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: button.number, treasureCollected: nil)) || button.number == LevelSelect.beatenLevelManager.lastLevelBeatenNumber + 1 {
                     self.loadGame(level: button.number)
                 }

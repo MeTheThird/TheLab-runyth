@@ -44,6 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var levelsBack: SKSpriteNode!
     var playBack: SKSpriteNode!
     var nextBack: SKSpriteNode!
+    var pauseBack: SKSpriteNode!
     var backOfBackButton: SKSpriteNode!
     var movingCeilingDoorLayer: SKSpriteNode!
     var movingGroundDoorLayer: SKSpriteNode!
@@ -92,8 +93,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         self.physicsWorld.gravity = gravity
-//                view.showsFPS = true
-//                view.showsPhysics = true
+        //                view.showsFPS = true
+        //                view.showsPhysics = true
         loseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Lose"), SKTexture(imageNamed: "frame2Lose"), SKTexture(imageNamed: "frame3Lose"), SKTexture(imageNamed: "frame4Lose"), SKTexture(imageNamed: "frame5Lose")], timePerFrame: 0.25 / 5.0)
         
         runningAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame2Run"), SKTexture(imageNamed: "frame3Run"), SKTexture(imageNamed: "frame4Run"), SKTexture(imageNamed: "frame1Run")], timePerFrame: 0.5 / 4.0)
@@ -142,10 +143,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if GameScene.level > 7 {
             let randInt = arc4random_uniform(100)
-            if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: true)) {
-                print("treasure previously collected...")
-                print("GET REKT!!!")
-            } else {
+            if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: true)) {
                 if randInt < 100 {
                     treasure.alpha = 1.0
                     treasure.physicsBody?.contactTestBitMask = 1
@@ -176,6 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playBack = childNode(withName: "//playBack") as! SKSpriteNode
         nextBack = childNode(withName: "//nextBack") as! SKSpriteNode
         backOfBackButton = childNode(withName: "//backOfBackButton") as! SKSpriteNode
+        pauseBack = childNode(withName: "//pauseBack") as! SKSpriteNode
         
         if let spikeLayer = childNode(withName: "spikeLayer") as? SKSpriteNode {
             for spike in spikeLayer.children {
@@ -341,6 +340,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.playButton.state = .active
             self.playBack.isHidden = false
             self.pauseButton.state = .hidden
+            self.pauseBack.isHidden = true
             self.levelLabel.isHidden = false
             view.gestureRecognizers?.removeAll()
         }
@@ -353,6 +353,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.playButton.state = .hidden
             self.playBack.isHidden = true
             self.pauseButton.state = .active
+            self.pauseBack.isHidden = false
             self.levelLabel.isHidden = true
             self.isPaused = false
             view.addGestureRecognizer(swipeRight)
@@ -547,9 +548,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func runLoseAnimation() {
         view?.gestureRecognizers?.removeAll()
-        print("bye")
         if !(hero.physicsBody?.pinned)! {
-            print("hi")
             hero.removeAllActions()
             hero.physicsBody?.categoryBitMask = 0
             hero.physicsBody?.collisionBitMask = 0
@@ -559,9 +558,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.hero.parent!.parent!.removeFromParent()
             })
             let sequence = SKAction.sequence([loseAnimation!, removeReference])
-            print("sequence defined")
             hero.run(sequence)
-            print("hero ran sequence")
         }
     }
     
@@ -652,6 +649,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for i in movingCeilingDoorLayer.children {
                 let door = i as! MovingObstacle
                 if let last = door.previousPosition.last {
+                    if last.y > 180.0 {
+                        door.frameCounter += 1
+                    }
                     door.position = last
                     door.previousPosition.removeLast()
                 }
@@ -670,6 +670,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for i in movingGroundDoorLayer.children {
                 let door = i as! MovingObstacle
                 if let last = door.previousPosition.last {
+                    if last.y > 180.0 {
+                        door.frameCounter += 1
+                    }
                     door.position = last
                     door.previousPosition.removeLast()
                 }
@@ -747,8 +750,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if door.previousPosition.count > GameScene.framesBack {
                     door.previousPosition.remove(at: 0)
                 }
-                if door.position.x - cameraNode.position.x <= 1.25*size.width && door.position.y > 0.0 && !notMoved {
+                if door.position.x - cameraNode.position.x <= 1.25*size.width && door.position.y > 0.0 && !notMoved && heroState != .reversingOtherStuff && door.frameCounter <= 0 {
                     door.position.y -= 1
+                } else if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff && !notMoved && door.frameCounter > 0 {
+                    door.frameCounter -= 1
                 }
             }
         }
@@ -756,14 +761,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if movingGroundDoorLayer != nil {
             for i in movingGroundDoorLayer.children {
                 let door = i as! MovingObstacle
-                if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff {
+                if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff && door.frameCounter <= 0 {
                     door.previousPosition.append(door.position)
+                } else if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff && door.frameCounter > 0 {
+                    door.frameCounter -= 1
                 }
                 if door.previousPosition.count > GameScene.framesBack {
                     door.previousPosition.remove(at: 0)
                 }
-                if door.position.x - cameraNode.position.x <= 1.25*size.width && door.position.y < 0.0 && !notMoved {
+                if door.position.x - cameraNode.position.x <= 1.25*size.width && door.position.y < 0.0 && !notMoved && heroState != .reversingOtherStuff && door.frameCounter <= 0 {
                     door.position.y += 1
+                } else if timeState != .backward && heroState != .reversingEverything && heroState != .reversingOtherStuff && !notMoved && door.frameCounter > 0 {
+                    door.frameCounter -= 1
                 }
             }
         }
@@ -928,20 +937,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             Answers.logLevelEnd("Level_\(GameScene.level)", score: nil, success: true, customAttributes: ["treasureCollected": treasureFound])
             if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: GameScene.level, treasureCollected: treasureFound)) {
                 LevelSelect.beatenLevelManager.addNewBeatenLevel(beatenLevelNumber: GameScene.level, treasureCollected: self.treasureFound)
-                print(self.treasureFound)
-                print(LevelSelect.beatenLevelManager.beatenLevels.last!.treasureCollected)
-                print(LevelSelect.beatenLevelManager.toString())
             }
             if treasureFound {
-                print("Your money went from \(TheShop.managerOfCurrency.currency)")
                 TheShop.managerOfCurrency.addToCurrency(amount: 10)
-                print("To \(TheShop.managerOfCurrency.currency)")
-                if TheShop.managerOfCurrency.currency <= 1000 {
-                    print("Your funds are still somewhat LOW... :(")
-                }
             }
-            if GameScene.level(GameScene.level + 1) != nil && GameScene.level != 20 {
+            if GameScene.level(GameScene.level + 1) != nil && GameScene.level != 20 && GameScene.level != 21 {
                 pauseButton.state = .hidden
+                pauseBack.isHidden = true
                 nextButton.state = .active
                 nextBack.isHidden = false
                 replayButton.state = .active

@@ -10,4 +10,5 @@ import SpriteKit
 
 class MovingObstacle: SKSpriteNode {
     var previousPosition = [CGPoint]()
+    var frameCounter: Int = 0
 }

@@ -21,7 +21,7 @@ class Bullet: MovingObstacle {
         
         super.init(texture: texture, color: color, size: size)
         
-        physicsBody = SKPhysicsBody(circleOfRadius: 15.0)
+        physicsBody = SKPhysicsBody(circleOfRadius: 10.0)
         physicsBody?.affectedByGravity = false
         physicsBody?.allowsRotation = false
         physicsBody?.categoryBitMask = 4
