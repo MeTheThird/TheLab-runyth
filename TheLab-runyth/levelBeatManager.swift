@@ -66,7 +66,7 @@ class levelBeatManager {
         self.beatenLevels.append(newBeatenLevel)
         self.save()
     }
-    
+    /*
     func toString() -> String {
         var ans: String = ""
         for i in 0..<self.beatenLevels.count {
@@ -74,4 +74,5 @@ class levelBeatManager {
         }
         return ans
     }
+ */
 }
