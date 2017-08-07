@@ -38,11 +38,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var pauseButton: noAlphaChangeButton!
     var playButton: noAlphaChangeButton!
     var nextButton: noAlphaChangeButton!
+    var backButton: noAlphaChangeButton!
     var restartBack: SKSpriteNode!
     var replayBack: SKSpriteNode!
     var levelsBack: SKSpriteNode!
     var playBack: SKSpriteNode!
     var nextBack: SKSpriteNode!
+    var backOfBackButton: SKSpriteNode!
     var movingCeilingDoorLayer: SKSpriteNode!
     var movingGroundDoorLayer: SKSpriteNode!
     var chainGroundSpikeLayer: SKSpriteNode!
@@ -167,11 +169,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton = childNode(withName: "//pauseButton") as! noAlphaChangeButton
         playButton = childNode(withName: "//playButton") as! noAlphaChangeButton
         nextButton = childNode(withName: "//nextButton") as! noAlphaChangeButton
+        backButton = childNode(withName: "//backButton") as! noAlphaChangeButton
         restartBack = childNode(withName: "//restartBack") as! SKSpriteNode
         replayBack = childNode(withName: "//replayBack") as! SKSpriteNode
         levelsBack = childNode(withName: "//levelsBack") as! SKSpriteNode
         playBack = childNode(withName: "//playBack") as! SKSpriteNode
         nextBack = childNode(withName: "//nextBack") as! SKSpriteNode
+        backOfBackButton = childNode(withName: "//backOfBackButton") as! SKSpriteNode
         
         if let spikeLayer = childNode(withName: "spikeLayer") as? SKSpriteNode {
             for spike in spikeLayer.children {
@@ -283,6 +287,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playBack.isHidden = true
         nextButton.state = .hidden
         nextBack.isHidden = true
+        backButton.state = .hidden
+        backOfBackButton.isHidden = true
         self.camera = cameraNode
         physicsWorld.contactDelegate = self
         
@@ -310,6 +316,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.respondToLongPressGesture))
         longPress.minimumPressDuration = 0.2
         view.addGestureRecognizer(longPress)
+        
+        backButton.selectedHandler = { [unowned self] in
+            guard let skView = self.view as SKView! else {
+                print("Could not get Skview")
+                return
+            }
+            
+            guard let scene = LevelSelect(fileNamed: "LevelSelect") else {
+                print("no Level Select... :(")
+                return
+            }
+            
+            scene.scaleMode = .aspectFit
+            skView.presentScene(scene)
+        }
         
         pauseButton.selectedHandler = { [unowned self, unowned view] in
             self.isPaused = true
@@ -420,6 +441,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 case .reversingOtherStuff:
                     hero.physicsBody?.affectedByGravity = false
                     hero.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    hero.physicsBody?.categoryBitMask = 0
+                    hero.physicsBody?.collisionBitMask = 8
+                    hero.physicsBody?.contactTestBitMask = 0
                     hero.removeAllActions()
                     hero.run(timeReverseAnimation!)
                     heroNotRunning = true
@@ -922,6 +946,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 nextBack.isHidden = false
                 replayButton.state = .active
                 replayBack.isHidden = false
+                backButton.state = .active
+                backOfBackButton.isHidden = false
+                
             } else if GameScene.level == 20 {
                 guard let scene = SKScene(fileNamed: "WinScreen") else {
                     print("YOU'LL NEVER WIN!!! HAHAHAHAHAHAHAHAHA!!!")

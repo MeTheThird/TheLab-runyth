@@ -116,7 +116,7 @@ class PreviewScene: SKScene {
                 return
             }
             
-            guard let scene = GameScene(fileNamed: "LevelSelect") else {
+            guard let scene = LevelSelect(fileNamed: "LevelSelect") else {
                 print("no Level Select... :(")
                 return
             }
