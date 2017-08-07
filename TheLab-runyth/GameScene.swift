@@ -93,8 +93,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         self.physicsWorld.gravity = gravity
-        //                view.showsFPS = true
-        //                view.showsPhysics = true
         loseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Lose"), SKTexture(imageNamed: "frame2Lose"), SKTexture(imageNamed: "frame3Lose"), SKTexture(imageNamed: "frame4Lose"), SKTexture(imageNamed: "frame5Lose")], timePerFrame: 0.25 / 5.0)
         
         runningAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame2Run"), SKTexture(imageNamed: "frame3Run"), SKTexture(imageNamed: "frame4Run"), SKTexture(imageNamed: "frame1Run")], timePerFrame: 0.5 / 4.0)
@@ -150,8 +148,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
-        //        background = childNode(withName: "background") as! SKSpriteNode
-        //        grass = childNode(withName: "grass") as! SKSpriteNode
         hero = childNode(withName: "//hero") as! SKSpriteNode
         
         hero.physicsBody = SKPhysicsBody(circleOfRadius: 22.0, center: CGPoint(x: 0, y: 0))
@@ -291,18 +287,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.camera = cameraNode
         physicsWorld.contactDelegate = self
         
-        //        let targetX = hero.position.x
-        //        cameraNode.position.x = targetX
-        
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
-        
-        /*
-         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-         swipeLeft.direction = .left
-         view.addGestureRecognizer(swipeLeft)
-         */
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeUp.direction = .up
@@ -471,11 +458,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let targetX = hero.position.x
         let rightMostSideOfFinalDoor = finalDoor.position.x + finalDoor.size.width / 2
         let x = clamp(value: targetX - 75, lower: 0, upper: rightMostSideOfFinalDoor - size.width / 2)
-        // Only move camera, main background, and upper grass -- stretch the rest out as needed in the sks
         cameraNode.position.x = x
-        //        background.position.x = x
-        //        grass.position.x = x
-        
+                
         if !notMoved {
             updatePreviousMovingObstaclePositions()
         }
