@@ -381,6 +381,7 @@
 		B2B9F0741F266C9900C59318 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B9F0731F266C9900C59318 /* MainMenu.swift */; };
 		B2B9F0761F266CC000C59318 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2B9F0751F266CC000C59318 /* MainMenu.sks */; };
 		B2D5D91D1F2AA13D003B0917 /* WinScreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2D5D91C1F2AA13D003B0917 /* WinScreen.sks */; };
+		B2DE23891F39372300A1D6AF /* Screen Shot 2017-08-07 at 5.02.32 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = B2DE23881F39372300A1D6AF /* Screen Shot 2017-08-07 at 5.02.32 PM.png */; };
 		B2DF09C71F13FA7C009E833E /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2DF09C61F13FA7C009E833E /* Hero.sks */; };
 /* End PBXBuildFile section */
 
@@ -782,6 +783,7 @@
 		B2B9F0731F266C9900C59318 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		B2B9F0751F266CC000C59318 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		B2D5D91C1F2AA13D003B0917 /* WinScreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WinScreen.sks; sourceTree = "<group>"; };
+		B2DE23881F39372300A1D6AF /* Screen Shot 2017-08-07 at 5.02.32 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2017-08-07 at 5.02.32 PM.png"; sourceTree = "<group>"; };
 		B2DF09C61F13FA7C009E833E /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1594,6 +1596,7 @@
 			children = (
 				B21B741E1F33CBE300797F92 /* Luminari.ttf */,
 				B252F1A91F2F9813005F03D9 /* LUNCH___.TTF */,
+				B2DE23881F39372300A1D6AF /* Screen Shot 2017-08-07 at 5.02.32 PM.png */,
 				B2FE65781F2D88BC0079B676 /* Art */,
 				B2B9F0721F26666E00C59318 /* SwiftFiles */,
 				B2B9F0711F26664500C59318 /* SKScenes */,
@@ -1852,6 +1855,7 @@
 				B22F26141F2E55A500DBB8DF /* g1.png in Resources */,
 				B22F25FD1F2E55A500DBB8DF /* a2.png in Resources */,
 				B22F26771F2E55A500DBB8DF /* 134.png in Resources */,
+				B2DE23891F39372300A1D6AF /* Screen Shot 2017-08-07 at 5.02.32 PM.png in Resources */,
 				B22F26D21F2E55A500DBB8DF /* 41.png in Resources */,
 				B22F26B11F2E55A500DBB8DF /* 187.png in Resources */,
 				B22F20321F2E551200DBB8DF /* 12Obstacle.png in Resources */,
