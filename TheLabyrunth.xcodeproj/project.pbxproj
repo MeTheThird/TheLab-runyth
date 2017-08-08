@@ -1729,7 +1729,7 @@
 				TargetAttributes = {
 					B2A307131F13E40C0059637F = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = TNR595CQ49;
+						DevelopmentTeam = 6P6A5GJ8BJ;
 						ProvisioningStyle = Automatic;
 					};
 					B2A3072D1F13E40C0059637F = {
@@ -2350,7 +2350,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMPRESS_PNG_FILES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = TNR595CQ49;
+				DEVELOPMENT_TEAM = 6P6A5GJ8BJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2358,7 +2358,7 @@
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "TheLab-runyth/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rohanthakur.thelabyrunth;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rohant.thelabyrunth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = debugging;
@@ -2371,7 +2371,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMPRESS_PNG_FILES = YES;
-				DEVELOPMENT_TEAM = TNR595CQ49;
+				DEVELOPMENT_TEAM = 6P6A5GJ8BJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2379,7 +2379,7 @@
 				GENERATE_PROFILING_CODE = NO;
 				INFOPLIST_FILE = "TheLab-runyth/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rohanthakur.thelabyrunth;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rohant.thelabyrunth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = debugging;
