@@ -86,6 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // stand to reverse time
     var timeReverseAnimation: SKAction? = nil
     var previousVelocity: CGVector? = nil
+    var personalPaused: Bool = false
     static var level: Int = 1
     static var framesBack: Int = 150
     static var phaseDurationMax: Double = 0.5
@@ -93,6 +94,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         self.physicsWorld.gravity = gravity
+        
+//        Show Debug
+//        self.view!.showsPhysics = true
+//        self.view!.showsFPS = true
+        
         loseAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame1Lose"), SKTexture(imageNamed: "frame2Lose"), SKTexture(imageNamed: "frame3Lose"), SKTexture(imageNamed: "frame4Lose"), SKTexture(imageNamed: "frame5Lose")], timePerFrame: 0.25 / 5.0)
         
         runningAnimation = SKAction.animate(with: [SKTexture(imageNamed: "frame2Run"), SKTexture(imageNamed: "frame3Run"), SKTexture(imageNamed: "frame4Run"), SKTexture(imageNamed: "frame1Run")], timePerFrame: 0.5 / 4.0)
@@ -204,6 +210,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             evilScientistLayer = eSL
             for i in evilScientistLayer.children {
                 let scientist = i as! MovingObstacle
+                scientist.physicsBody = SKPhysicsBody(circleOfRadius: 15.0)
+                scientist.physicsBody?.isDynamic = false
+                scientist.physicsBody?.affectedByGravity = false
+                scientist.physicsBody?.allowsRotation = false
+                scientist.physicsBody?.categoryBitMask = 2
+                scientist.physicsBody?.contactTestBitMask = 1
                 scientist.physicsBody?.restitution = 0.5
             }
         }
@@ -320,6 +332,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         pauseButton.selectedHandler = { [unowned self, unowned view] in
             self.isPaused = true
+            self.personalPaused = true
             self.restartButton.state = .active
             self.restartBack.isHidden = false
             self.levelSelectButton.state = .active
@@ -343,6 +356,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.pauseBack.isHidden = false
             self.levelLabel.isHidden = true
             self.isPaused = false
+            self.personalPaused = false
             view.addGestureRecognizer(swipeRight)
             view.addGestureRecognizer(swipeUp)
             view.addGestureRecognizer(swipeDown)
@@ -397,6 +411,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        
+        self.isPaused = self.personalPaused
+        
+        if let dy = hero.physicsBody?.velocity.dy {
+            let grav: CGFloat = 150
+            if dy > grav {
+                hero.physicsBody?.velocity.dy = grav
+            }
+            if dy < -grav {
+                hero.physicsBody?.velocity.dy = -grav
+            }
+        }
+        
         if !notMoved {
             switch timeState {
             case .forward:

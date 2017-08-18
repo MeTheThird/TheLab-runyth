@@ -17,6 +17,8 @@ class LevelSelect: SKScene {
     var finalDoor: SKSpriteNode!
     var cameraNode: SKCameraNode!
     var backButton: noAlphaChangeButton!
+    var swipeLabel: SKLabelNode!
+    static var tutorialManager = levelSelectTutorialManager()
     static var beatenLevelManager = levelBeatManager()
     
     override func didMove(to view: SKView) {
@@ -26,6 +28,11 @@ class LevelSelect: SKScene {
         backButton = childNode(withName: "//backButton") as! noAlphaChangeButton
         cameraNode = childNode(withName: "cameraNode") as! SKCameraNode
         finalDoor = childNode(withName: "finalDoor") as! SKSpriteNode
+        swipeLabel = childNode(withName: "swipeLabel") as! SKLabelNode
+        
+        if LevelSelect.tutorialManager.seenTutorial {
+            swipeLabel.alpha = 0.0
+        }
         
         self.camera = cameraNode
         
@@ -42,6 +49,7 @@ class LevelSelect: SKScene {
         
         for i in coinLayer.children {
             let coin = i as! LevelSelectLock
+//            coin.isUserInteractionEnabled = false
             if !LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: coin.number, treasureCollected: true)) {
                 coin.alpha = 0.0
             }
@@ -71,6 +79,20 @@ class LevelSelect: SKScene {
             }
         }
         
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let touchPos = touch.location(in: self)
+        
+        for i in levelSelectButtonLayer.children {
+            let button = i as! LevelSelectButton
+            let buttonPos = levelSelectButtonLayer.convert(i.position, to: self)
+            if abs(buttonPos.y - touchPos.y) <= 30 && abs(buttonPos.x - touchPos.x) <= 30 && LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: button.number, treasureCollected: nil)) {
+                button.touchesEnded(touches, with: event)
+                break
+            }
+        }
     }
     
     func loadGame(level: Int) {

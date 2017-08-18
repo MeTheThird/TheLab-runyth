@@ -25,6 +25,11 @@ class PreviewScene: SKScene {
             print("NO NEXT LEVEL FOR YOU!!!")
             return
         }
+        
+        if !LevelSelect.tutorialManager.seenTutorial {
+            LevelSelect.tutorialManager.changeTo(value: true)
+        }
+        
         levelRealScene = theRealGameScene.scene
         playLevelButton = childNode(withName: "//playLevelButton") as! noAlphaChangeButton
         backButton = childNode(withName: "//backButton") as! noAlphaChangeButton

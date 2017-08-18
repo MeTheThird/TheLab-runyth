@@ -19,6 +19,10 @@ class MainMenu: SKScene {
         theShopButton = childNode(withName: "theShopButton") as! noAlphaChangeButton
         bonusLayer = childNode(withName: "bonusLayer") as! SKSpriteNode
         
+        LevelSelect.beatenLevelManager.beatenLevels.removeAll()
+        
+        LevelSelect.beatenLevelManager.lastLevelBeatenNumber = 0
+        
         if LevelSelect.beatenLevelManager.beatenLevels.contains(levelBeat(levelNum: 21, treasureCollected: nil)) {
             bonusLayer.alpha = 1.0
         }
